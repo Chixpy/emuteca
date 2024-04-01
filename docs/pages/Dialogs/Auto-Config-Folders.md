@@ -10,34 +10,34 @@ Esta página explicará de forma resumida el propósito que tienen las carpetas 
 
 ## Qué hace ese botón
 
-Ese botón es para facilitar la configuración de un sistema. Una vez se tiene seleccionada una carpeta base del sistema, si se pulsa dicho botón creará un árbol de carpetas dentro de el y las autoasignará para que se usen para texto, imágenes, vídeos y música.
+Ese botón es para facilitar la configuración de un sistema. Una vez se tiene seleccionada una carpeta base del sistema, si se pulsa dicho botón creará un árbol de carpetas dentro de él y las autoasignará para que se usen para texto, imágenes, vídeos y música.
 
-Esto evita la tediosa tarea de estar creando carpetas y asignandolas después para cada sistema. Usando la estructura por defecto, para algunos sistemas (p.e. Arcade) tal vez no sean del todo aplicables pero en general ayuda con la tarea.
+Esto evita la tediosa tarea de estar creando carpetas y asignándolas después para cada sistema. Usando la estructura por defecto, para algunos sistemas (p.e. Arcade) tal vez no sean del todo aplicables pero en general ayuda con la tarea.
 
 ## Carpetas por defecto
 
 Si no se ha cambiado la configuración por defecto, este es el listado de carpetas que se crean al usar el botón de autoconfiguración.
 
   - **BIOS**: Carpeta para tener una copia de seguridad de las BIOS o datos del sistema usados por los emuladores.
-  - **Image**: Carpeta donde están las subcarpetas de imágenes. Las carpetas creadas automáticamente se añaden a las carpetas de imágenes del sistema. Excepto la de iconos que se asigna a su lugar correspondiente.
-    - **Ad**: Anuncios escaneado en la prensa.
+  - **Image**: Carpeta donde están las subcarpetas de imágenes. Las subcarpetas creadas automáticamente se añaden a las carpetas de imágenes del sistema. Excepto la de iconos y los logos que se asigna a su lugar correspondiente.
+    - **Ad**: Anuncios escaneados en la prensa.
     - **Back**: Carátulas traseras de la caja del juego.
     - **Front**: Carátulas frontales de la caja del juego.
     - **Icon**: Icono para la lista de juegos.
     - **Logo**: Logo del juego.
-    - **In game**: Imágenes mientras se juega.
-    - **Other**: Otro tipo de imágenes: Noticias en la prensa que no son análisis, FanArt, etc.
-    - **Manual**: Manuales escaneados (en .cbX)
+    - **In game**: Imágenes mientras se juega, lo que normalmente se llaman *Screenshots*.
+    - **Other**: Otro tipo de imágenes relacionadas, que no entren en los otros apartados: Noticias en la prensa que no son análisis, FanArt, informes de prensa que no son reviews.
+    - **Manual**: Manuales escaneados
     - **Map**: Imágenes con mapas y guías en la prensa del juego.
     - **Media**: Imágenes del soporte físico del juego, discos, cassette, CD, DVD, etc.
     - **Review**: Análisis escaneados en la prensa con nota y valoraciones.
-    - **Spine**: Laterales de la caja / Logotipos
+    - **Spine**: Laterales de la caja.
     - **Title**: Imágenes de título.
   - **Music**: Carpeta donde están las subcarpetas de música. Las carpetas creadas automáticamente se añaden a las carpetas de música del sistema. 
-    - **Autoplay**: Música para reproducir en el Front-End al seleccionar un juego. (Por el momento esto no es funcional)
+    - **Autoplay**: Música / Sonido para reproducir en el Front-End al seleccionar un juego. 
     - **OST**: Banda sonora del juego
   - **Soft**: Carpeta para guardar los juegos/software.
-  - **Save**: Carpeta para los guardados intrísecos del sistema. Más que nada está pensados para las tarjetas de memoria de la PSX/PS2. Pero se puede usar para la NVRAM, SRAM, etc. si los emuladores usados son compatibles entre sí.
+  - **Save**: Carpeta para los guardados intrínsecos del sistema. Más que nada está pensados para las tarjetas de memoria de la PSX/PS2. Pero se puede usar para la NVRAM, SRAM, etc. si los emuladores usados son compatibles entre sí.
   - **Temp**: Para usar de forma temporal o otros usos variados.
   - **Text**: Carpeta donde están las subcarpetas de textos. Las carpetas creadas automáticamente se añaden a las carpetas de textos del sistema.
     - **Info**: Información general del juego.

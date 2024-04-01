@@ -36,50 +36,50 @@ type
   { TfmEmutecaActExportSoftData }
 
   TfmEmutecaActExportSoftData = class(TfmCHXPropEditor)
-    chkCopyInBaseFolder: TCheckBox;
+    chkCopyInBaseFolder : TCheckBox;
     chkReplaceEGL : TCheckBox;
-    eExportFile: TFileNameEdit;
-    eSoft: TEdit;
-    eSoftIDType: TEdit;
-    eGroups: TEdit;
-    gbxExportFile: TGroupBox;
-    gbxSystemInfo: TGroupBox;
-    lExportInfo: TLabel;
-    lGroups: TLabel;
-    lSoftware: TLabel;
-    lSoftIDType: TLabel;
-    lWarning: TLabel;
-    pSelectSystem: TPanel;
-    procedure eExportFileButtonClick(Sender: TObject);
+    eExportFile : TFileNameEdit;
+    eSoft : TEdit;
+    eSoftIDType : TEdit;
+    eGroups : TEdit;
+    gbxExportFile : TGroupBox;
+    gbxSystemInfo : TGroupBox;
+    lExportInfo : TLabel;
+    lGroups : TLabel;
+    lSoftware : TLabel;
+    lSoftIDType : TLabel;
+    lWarning : TLabel;
+    pSelectSystem : TPanel;
+    procedure eExportFileButtonClick(Sender : TObject);
+
   private
-    FEmuteca: cEmuteca;
-    FfmSystemCBX: TfmEmutecaSystemCBX;
-    FfmProgressBar: TfmCHXProgressBar;
-    FSystem: cEmutecaSystem;
-    procedure SetEmuteca(AValue: cEmuteca);
-    procedure SetSystem(AValue: cEmutecaSystem);
+    FEmuteca : cEmuteca;
+    FfmSystemCBX : TfmEmutecaSystemCBX;
+    FfmProgressBar : TfmCHXProgressBar;
+    FSystem : cEmutecaSystem;
+    procedure SetEmuteca(AValue : cEmuteca);
+    procedure SetSystem(AValue : cEmutecaSystem);
 
   protected
-    property fmSystemCBX: TfmEmutecaSystemCBX read FfmSystemCBX;
-    property fmProgressBar: TfmCHXProgressBar read FfmProgressBar;
+    property fmSystemCBX : TfmEmutecaSystemCBX read FfmSystemCBX;
+    property fmProgressBar : TfmCHXProgressBar read FfmProgressBar;
 
-
-    property System: cEmutecaSystem read FSystem write SetSystem;
+    property System : cEmutecaSystem read FSystem write SetSystem;
 
   public
-    property Emuteca: cEmuteca read FEmuteca write SetEmuteca;
+    property Emuteca : cEmuteca read FEmuteca write SetEmuteca;
     //< Emuteca
 
     procedure ClearFrameData; override;
     procedure LoadFrameData; override;
     procedure SaveFrameData; override;
 
-    class function SimpleForm(aEmuteca: cEmuteca;
-      SelectedSystem: cEmutecaSystem;
-      const aGUIConfigIni, aGUIIconsIni: string): integer;
+    class function SimpleForm(aEmuteca : cEmuteca;
+      SelectedSystem : cEmutecaSystem;
+      const aGUIConfigIni, aGUIIconsIni : string) : integer;
     //< Creates a form with AddFolder frame.
 
-    constructor Create(TheOwner: TComponent); override;
+    constructor Create(TheOwner : TComponent); override;
     destructor Destroy; override;
   end;
 
@@ -89,13 +89,13 @@ implementation
 
 { TfmEmutecaActExportSoftData }
 
-procedure TfmEmutecaActExportSoftData.eExportFileButtonClick(Sender: TObject);
+procedure TfmEmutecaActExportSoftData.eExportFileButtonClick(Sender : TObject);
 begin
   if Assigned(Emuteca) then
     SetFileEditInitialDir(eExportFile, Emuteca.BaseFolder);
 end;
 
-procedure TfmEmutecaActExportSoftData.SetEmuteca(AValue: cEmuteca);
+procedure TfmEmutecaActExportSoftData.SetEmuteca(AValue : cEmuteca);
 begin
   if FEmuteca = AValue then
     Exit;
@@ -110,10 +110,10 @@ begin
   LoadFrameData;
 end;
 
-procedure TfmEmutecaActExportSoftData.SetSystem(AValue: cEmutecaSystem);
+procedure TfmEmutecaActExportSoftData.SetSystem(AValue : cEmutecaSystem);
 var
-  aSoft: cEmutecaSoftware;
-  iNotCached: integer;
+  aSoft : cEmutecaSoftware;
+  iNotCached : integer;
 begin
   if FSystem = AValue then
     Exit;
@@ -156,9 +156,8 @@ begin
 
   lWarning.Caption := '';
 
-  eExportFile.FileName :=
-    ExtractFilePath(eExportFile.FileName) + System.ListFileName +
-    krsFileExtSoft;
+  eExportFile.FileName := ExtractFilePath(eExportFile.FileName) +
+    System.ListFileName + krsFileExtSoft;
   eExportFile.Enabled := True;
 
   bSave.Enabled := True;
@@ -187,8 +186,8 @@ end;
 
 procedure TfmEmutecaActExportSoftData.SaveFrameData;
 var
-  SysPBCB: TEmutecaProgressCallBack; // System PB Backup
-  aFileWOExt: string;
+  SysPBCB : TEmutecaProgressCallBack; // System PB Backup
+  aFileWOExt : string;
 begin
   inherited SaveFrameData;
 
@@ -203,7 +202,8 @@ begin
   aFileWOExt := ChangeFileExt(eExportFile.FileName, '');
 
   // We can modify cSystem.ExportSoftGroupLists to use 2 parameters...
-  if chkReplaceEGL.Checked and FileExistsUTF8(aFileWOExt + krsFileExtGroup) then
+  if chkReplaceEGL.Checked and FileExistsUTF8(aFileWOExt +
+    krsFileExtGroup) then
     DeleteFileUTF8(aFileWOExt + krsFileExtGroup);
 
   System.ExportSoftGroupLists(aFileWOExt, False);
@@ -225,11 +225,11 @@ begin
   Self.Enabled := True;
 end;
 
-class function TfmEmutecaActExportSoftData.SimpleForm(aEmuteca: cEmuteca;
-  SelectedSystem: cEmutecaSystem;
-  const aGUIConfigIni, aGUIIconsIni: string): integer;
+class function TfmEmutecaActExportSoftData.SimpleForm(aEmuteca : cEmuteca;
+  SelectedSystem : cEmutecaSystem;
+  const aGUIConfigIni, aGUIIconsIni : string) : integer;
 var
-  aFrame: TfmEmutecaActExportSoftData;
+  aFrame : TfmEmutecaActExportSoftData;
 begin
   aFrame := TfmEmutecaActExportSoftData.Create(nil);
 
@@ -247,7 +247,7 @@ begin
     aGUIConfigIni, aGUIIconsIni);
 end;
 
-constructor TfmEmutecaActExportSoftData.Create(TheOwner: TComponent);
+constructor TfmEmutecaActExportSoftData.Create(TheOwner : TComponent);
 
   procedure CreateFrames;
   begin

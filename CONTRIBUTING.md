@@ -2,10 +2,13 @@
 
 ### Beautifier
 
-Use internal JEDI Code Formater in Lazarus (`Ctrl+D`), with next settings:
+Use internal JEDI Code Formater in Lazarus (`Ctrl+D`), with next settings changed:
 
-  - Width length = 80
-  - Tabs to spaces = 2
+  - Spaces 
+    - Spaces before colon in = 1 in all cases (Var, Const, Procedure, etc.)
+    - Tabs to spaces = 2
+  - Line Breaking
+    - Width length = 80
 
 ### For / While / Repeat
 

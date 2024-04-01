@@ -44,8 +44,10 @@ Pero esto se puede complicar mucho:
       - SNES "Final Fantasy III" (US) -> "Final Fantasy VI"
       - "Dragon Warrior" -> "Dragon Quest"
   - Si solo salió en Japón: **Aquí deberían usarse caracteres japoneses** (y de igual forma con cirílico, griego, árabe si se da el caso).
-  - Si hay incongruencias entre manual, frontal, pantalla de título, &c.; elegir el que mejor convenga para la saga 
-    - Title Screen = "David Crane's A Boy and His Blob in... The Rescue of Princess Blobette" ~ Box Front = "David Crane's The Rescue of Princess Blobette starring A Boy and His Blob" -> Elegir el primero
+  - Si hay incongruencias entre manual, frontal, pantalla de título, &c.; elegir el que mejor convenga para la saga:
+    - Title Screen = "David Crane's A Boy and His Blob in... The Rescue of Princess Blobette"
+    - Box Front = "David Crane's The Rescue of Princess Blobette starring A Boy and His Blob"
+    - En este caso elegir el primero.
   - Añadir los "Algo's" como puede ser "Disney's", "David Crane's", "Hudson's", "John Romero's", etc.
   
  En caso de estar vacío se usará el identificador del grupo.

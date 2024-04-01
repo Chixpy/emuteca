@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectGroup FileVersion="2">
+    <Targets>
+      <Target FileName="EmutecaGUI\EmutecaGUI.lpi">
+        <BuildModes>
+          <Mode Name="Debug" Compile="True"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="ETKDBEditor\ETKDBEditor.lpi">
+        <BuildModes>
+          <Mode Name="Debug" Compile="True"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="ETKIconBorder\ETKIconBorder.lpi">
+        <BuildModes>
+          <Mode Name="Debug" Compile="True"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="ETKMagCut\ETKMagCut.lpi">
+        <BuildModes>
+          <Mode Name="Debug" Compile="True"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="ETKPDF2CBX\ETKPDF2CBX.lpi">
+        <BuildModes>
+          <Mode Name="Debug" Compile="True"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+    </Targets>
+  </ProjectGroup>
+</CONFIG>

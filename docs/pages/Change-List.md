@@ -6,16 +6,16 @@ EmuVer: 0.8
 
 Si quieres ver la evolución visual del programa puedes ir a la [galería de imágenes](Screenshots)
 
-## 0.8.0.XX
+## 0.8.0.155
 
-Para un futuro lejano... [Aunque si la quieres compilar...](https://github.com/Chixpy/Emuteca/wiki/v0_8-Building)
+[Descarga](https://github.com/Chixpy/Emuteca/releases/tag/v0.8.0.155)
 
-La versión que está en desarrollo actualmente vuelve estar comenzada desde cero (otra vez..). Tampoco se quiere añadir muchas más cosas de las que tiene la versión 0.7.
+Vuelve estar comenzada desde cero (otra vez..). Tampoco se quiere añadir muchas más cosas de las que tiene la versión 0.7.
 
-En principio comenzó a ser desarrollada en CodeTyphon, pero posteriormente portada a Lazarus limpio y se necesita intalar un par de librerías externas.
+En principio comenzó a ser desarrollada en CodeTyphon, pero posteriormente portada a Lazarus limpio y se necesita instalar un par de librerías externas.
 
   - [VirualTreeView para Lazarus](https://github.com/blikblum/VirtualTreeView-Lazarus.git), la rama _lazarus_v5_. Que hay que instalar en el propio Lazarus. Posiblemente si durante el desarrollo se actualiza Lazarus se pase a usar la versión 6 ya que esta requiere actualmente la versión Trunk de FPC. (Aunque implicará rehacer todo el código de dichos componentes)
-  - Y hasta la version 0.8.0.155: [TMPlayerControl](http://wiki.freepascal.org/TMPlayerControl). También ha de instalarse en el propio Lazarus. Pero parece que ha dejado de funcionar.
+  - Y hasta la version 0.8.0.154: [TMPlayerControl](http://wiki.freepascal.org/TMPlayerControl). También ha de instalarse en el propio Lazarus. Pero parece que ha dejado de funcionar.
 
 Ambos componentes se instalan a través de Administrador de Paquetes en Línea del propio Lazarus.
   
@@ -98,7 +98,7 @@ Una de las ideas barajadas y probadas había sido poder agrupar juegos de distin
   - ***ETKPDF2CBX***: Interfaz para extraer páginas de revistas escaneadas en PDF, mediante PDFImages (o PDFToPNG como último recurso). Originalmente es parte de Comicteca para crear CBX con las imágenes; pero aunque se haya quitado el soporte de archivos comprimidos en Emuteca, puede extraerlas en una carpeta sin comprimir.
   - ***ETKMagCut***: Programa para recortar artículos de las revistas escaneadas (es decir, normalmente para usar después de haber extraído las imágenes con ETKPDF2CBX); puesto que para Emuteca interesa recortar el artículo, noticia, guía, mapa, etc. que corresponda el juego únicamente en vez de páginas completas.
 
-## Emuteca 0.7.0.XX Beta
+## Emuteca 0.7.0.59 Beta
 
 [Descarga](https://github.com/Chixpy/Emuteca/releases/tag/v0.7.0.59-beta)
 

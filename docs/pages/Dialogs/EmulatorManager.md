@@ -12,7 +12,7 @@ Para poder seleccionar un emulador en cualquier otra parte de Emuteca, éste deb
 
 Además contiene incrustado a la derecha el [Editor de Emuladores](EmulatorEditor) para poder editarlos también desde este cuadro de diálogo. Para más detalles sobre la configuración de los emuladores [ve a su correspondiente página](EmulatorEditor).
 
-Dejando la descripción del Editor de Emuladores para su página correspondienete, el Gestor cuenta con una barra de botones, una lista con todos los emuladores y los habituales botones para aceptar los cambios hechos en el Gestor.
+Dejando la descripción del Editor de Emuladores para su página correspondiente, el Gestor cuenta con una barra de botones, una lista con todos los emuladores y los habituales botones para aceptar los cambios hechos en el Gestor.
 
 NOTA: El Editor de Emuladores tiene sus propios botones para aceptar los cambios hechos en la configuración del emulador seleccionado, recuerda aceptarlos antes de guardar la lista o cambiar de emulador.
 

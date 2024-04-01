@@ -18,5 +18,5 @@ Al elegir un fichero Emuteca además comprueba si el fichero ya se encuentra en 
 
 Con esto ya se puede añadir el fichero seleccionado y será añadido.
 
-En la parte derecha se encuentra el [Editor de Software](Dialogs/SoftwareEditor) donde se puede editar la información del juego. Aunque si se desea se puede editar posteriormente una vez está añadido a la lista.
+En la parte derecha se encuentra el [Editor de Software](Dialogs/SoftwareEditor) donde se puede editar la información del juego. Aunque si se desea, esa información se puede editar posteriormente una vez está el archivo añadido a la lista.
 

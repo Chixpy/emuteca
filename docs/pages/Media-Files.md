@@ -15,6 +15,7 @@ Para algunos sistemas existen unos repositorios creados para ser usados directam
 
 De forma general, y en caso de no estar actualizada esta lista la lista, puedes verlos en los [Repositorios de Chixpy en GitHub](https://github.com/Chixpy?tab=repositories&q=ETKRes&type=&language=&sort=name)
 
+  - [Adobe Flash](https://github.com/Chixpy/ETKRes-Flash)
   - [Amstrad CPC](https://github.com/Chixpy/ETKRes-CPC)
   - [Amstrad GX4000](https://github.com/Chixpy/ETKRes-GX4000)
   - [Atari 2600](https://github.com/Chixpy/ETKRes-2600)
@@ -24,6 +25,9 @@ De forma general, y en caso de no estar actualizada esta lista la lista, puedes 
   - [Atari Lynx](https://github.com/Chixpy/ETKRes-Lynx)
   - [Bandai WonderSwan](https://github.com/Chixpy/ETKRes-WonderSwan)
   - [Bally Astrocade](https://github.com/Chixpy/ETKRes-Astrocade)
+  - [Coleco Colecovision](https://github.com/Chixpy/ETKRes-Colecovision)
+  - [Fairchild Channel F](https://github.com/Chixpy/ETKRes-ChannelF)
+  - [Mattel Intellivision](https://github.com/Chixpy/ETKRes-Intellivision)
   - [Microsoft MSDOS](https://github.com/Chixpy/ETKRes-MSDOS)
   - [Misc - Arcade (MAME)](https://github.com/Chixpy/ETKRes-Arcade) (*ATENCIÓN: Hay que configurar a mano los directorios, al ser diferentes del resto de sistemas*)
   - [NEC Turbografx 16 / PC Engine](https://github.com/Chixpy/ETKRes-TG16)  - 
@@ -33,6 +37,7 @@ De forma general, y en caso de no estar actualizada esta lista la lista, puedes 
   - [Nintendo NES](https://github.com/Chixpy/ETKRes-NES)
   - [Nintendo SNES](https://github.com/Chixpy/ETKRes-SNES)
   - [Nintendo Virtual Boy](https://github.com/Chixpy/ETKRes-VirtualBoy)
+  - [Sega 32X](https://github.com/Chixpy/ETKRes-32X)
   - [Sega GameGear](https://github.com/Chixpy/ETKRes-GameGear) 
   - [Sega Master System](https://github.com/Chixpy/ETKRes-MasterSystem)
   - [Sega MegaDrive / Genesis](https://github.com/Chixpy/ETKRes-MegaDrive)

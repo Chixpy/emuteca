@@ -45,15 +45,15 @@ En Emuteca no existe el concepto de *juego padre* como en MAME; sino que son gru
 
 Por otra parte, Emuteca NO realiza un escaneo profundo de los juegos y sus archivos. Es decir, no comprueba si las ROMs están completas o tienen todas las dependencias necesarias para funcionar. Al igual que el resto de sistemas, se limita a añadir los archivos que encuentre que tengan las extensiones soportadas por el sistema.
 
-Emuteca, desde la versión 0.8, **NO** soporta la búsqueda de imagenes, texto y demás multimedia que estén dentro de un único zip y puede ser bastante común que se tenga de esta forma (p.ej., *snap\snap.zip*). Esto es así por ser muy lento si se usa junto a los otros métodos de búsqueda que tiene Emuteca. Por tanto estos deben estar descomprimidos, pudiendo estar cada juego en carpetas separadas (que es como guarda las capturas MAME por defecto).
+Emuteca, desde la versión 0.8, **NO** soporta la búsqueda de imágenes, texto y demás multimedia que estén dentro de un único zip y puede ser bastante común que se tenga de esta forma (p.ej., *snap\snap.zip*). Esto es así por ser muy lento si se usa junto a los otros métodos de búsqueda que tiene Emuteca. Por tanto estos deben estar descomprimidos, pudiendo estar cada juego en carpetas separadas (que es como guarda las capturas MAME por defecto).
 
-También respecto a esto, a diferencia de otros Front-End, Emuteca soporta asignar varias imágenes tanto a un grupo (juego) como a una versión. Esto hace que en algunos packs de imágenes, vamos a poner por ejemlo *Bosses*, las imágenes que pueden corresponder a un juego (y todas sus versiones) estén repartidos entre todas las versiones hijo (un *boss* por hijo), cuando en Emuteca se pueden asignar todas a un mismo juego.
+También respecto a esto, a diferencia de otros Front-End, Emuteca soporta asignar varias imágenes tanto a un grupo (juego) como a una versión. Esto hace que en algunos packs de imágenes, vamos a poner por ejemplo *Bosses*, las imágenes que pueden corresponder a un juego (y todas sus versiones) estén repartidos entre todas las versiones hijo (un *boss* por hijo), cuando en Emuteca se pueden asignar todas a un mismo juego.
 
 ### Crear una base de datos específica para importar 
 
 #### Método antiguo 
 
-  - ***NOTA:*** Ya se pueden extraer los datos de MAME a partir del XML generado con ´-listXML´. A su vez es descargable directamente de la [página de descargas de MAME](https://www.mamedev.org/release.html) sin necesidad de usar la línea de comandos. Así que este método no se recomienda usarlo
+  - ***NOTA:*** Ya se pueden extraer los datos de MAME a partir del XML generado con `-listXML`. A su vez es descargable directamente de la [página de descargas de MAME](https://www.mamedev.org/release.html) sin necesidad de usar la línea de comandos. Así que este método no se recomienda usarlo
 
 En principio Emuteca incluye una base de datos de MAME que muy posiblemente se quede anticuada, y por tanto con el transcurso de las versiones algunos juegos han ido cambiando el identificador, puede que falten o no coincidan correctamente.
 
