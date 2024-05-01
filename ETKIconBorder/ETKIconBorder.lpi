@@ -22,9 +22,9 @@
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
-      <MinorVersionNr Value="5"/>
-      <RevisionNr Value="8"/>
-      <BuildNr Value="26"/>
+      <MinorVersionNr Value="6"/>
+      <RevisionNr Value="1"/>
+      <BuildNr Value="30"/>
     </VersionInfo>
     <BuildModes Count="2">
       <Item1 Name="Debug" Default="True"/>
@@ -37,7 +37,7 @@
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir)"/>
-            <OtherUnitFiles Value="src\forms;..\CHXPas\Units;..\CHXPas\Forms;..\CHXPas\Abstract;..\CHXPas\Frames;src\classes;..\CHXPas\Misc"/>
+            <OtherUnitFiles Value="src\forms;..\CHXPas\Units;..\CHXPas\Forms;..\CHXPas\Abstract;..\CHXPas\Frames;src\classes;..\CHXPas\Misc;src\frames"/>
             <UnitOutputDirectory Value="..\lib\$(TargetCPU)-$(TargetOS)"/>
           </SearchPaths>
           <CodeGeneration>
@@ -76,7 +76,7 @@
         <PackageName Value="LCL"/>
       </Item2>
     </RequiredPackages>
-    <Units Count="14">
+    <Units Count="18">
       <Unit0>
         <Filename Value="ETKIconBorder.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -127,6 +127,7 @@
         <Filename Value="..\CHXPas\Frames\ufCHXFrame.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="fmCHXFrame"/>
+        <HasResources Value="True"/>
         <ResourceBaseClass Value="Frame"/>
       </Unit10>
       <Unit11>
@@ -141,6 +142,31 @@
         <Filename Value="..\CHXPas\Misc\uVersionSupport.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit13>
+      <Unit14>
+        <Filename Value="src\frames\ufETKIBMain.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="fmETKIBMain"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Frame"/>
+      </Unit14>
+      <Unit15>
+        <Filename Value="..\CHXPas\Frames\ufCHXBGRAImgViewerEx.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="fmCHXBGRAImgViewerEx"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Frame"/>
+      </Unit15>
+      <Unit16>
+        <Filename Value="..\CHXPas\Frames\ufCHXBGRAImgViewer.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="fmCHXBGRAImgViewer"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Frame"/>
+      </Unit16>
+      <Unit17>
+        <Filename Value="..\CHXPas\Units\uCHXMath.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit17>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -151,7 +177,7 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
-      <OtherUnitFiles Value="src\forms;..\CHXPas\Units;..\CHXPas\Forms;..\CHXPas\Abstract;..\CHXPas\Frames;src\classes;..\CHXPas\Misc"/>
+      <OtherUnitFiles Value="src\forms;..\CHXPas\Units;..\CHXPas\Forms;..\CHXPas\Abstract;..\CHXPas\Frames;src\classes;..\CHXPas\Misc;src\frames"/>
       <UnitOutputDirectory Value="..\lib\$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
     <Parsing>

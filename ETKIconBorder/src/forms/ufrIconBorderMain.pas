@@ -1,5 +1,5 @@
 unit ufrIconBorderMain;
-
+{ (C) 2020-2024 Chixpy https://github.com/Chixpy }
 {$mode objfpc}{$H+}
 
 interface
@@ -11,11 +11,12 @@ uses
   // Misc units
   uVersionSupport,
   // CHX units
-  uCHXConst, uCHXRscStr, uCHXDlgUtils, uCHXFileUtils, uCHXStrUtils,
+  uCHXConst, uCHXRscStr, uCHXDlgUtils, uCHXFileUtils, uCHXStrUtils, uCHXMath,
   // CHX classes
   ucEIBConfig,
   // CHX forms
-  ufrCHXForm;
+  ufrCHXForm,
+  ufETKIBMain;
 
 { TODO:
     - Move logic to CHXFrames.
@@ -79,76 +80,84 @@ type
     alMain : TActionList;
     bAddFile : TButton;
     bAddFolder : TButton;
-    bAutoZoomInput : TButton;
+    bInputAutoZoom : TButton;
     bAutoZoomOutput : TButton;
     bClearList : TButton;
-    bColorFillInput : TColorButton;
-    bColorPaintInput : TColorButton;
-    bColorBorderEmutecaIcon : TColorButton;
-    bColorReplaceInput : TColorButton;
-    bCutSelectionInput : TButton;
+    bInputCutSelection : TButton;
     bDefaultIconBorder : TButton;
     bBlackIconBorder : TButton;
     bDeleteInputFile : TButton;
-    bFlipHInput : TButton;
-    bFlipVInput : TButton;
+    bInputReplaceOpaque : TButton;
+    bInputReplaceTransparent : TButton;
+    bInputFlipH : TButton;
+    bInputFlipV : TButton;
+    bInputFillOpaque : TButton;
+    bInputFillTransparent : TButton;
+    bOpenBetaForm : TButton;
     bOpenInputDir : TButton;
     bOpenOutputDir : TButton;
     bProcessOutput : TButton;
     bRemoveItem : TButton;
     bReplaceInputFile : TButton;
-    bRotateCCWInput : TButton;
-    bRotateCWInput : TButton;
+    bInputRotateCCW : TButton;
+    bInputRotateCW : TButton;
     bSaveInput : TButton;
     bSaveOutput : TButton;
-    bSelectionTransparentInput : TButton;
-    bTransparentPaint : TButton;
-    bTransparentFill : TButton;
-    bTransparentReplace : TButton;
+    bInputSelectionTransparent : TButton;
+    bInputPaintTransparent : TButton;
+    bInputPaintOpaque : TButton;
     bZoom1xOutput : TButton;
-    bZoomInInput : TButton;
-    bZoom1xInput : TButton;
+    bInputZoomIn : TButton;
+    bInputZoom1x : TButton;
     bZoomInOutput : TButton;
-    bZoomOutInput : TButton;
+    bInputZoomOut : TButton;
     bZoomOutOutput : TButton;
     cbxColorBackground : TColorBox;
+    cbxOutputBorderColor : TColorBox;
+    cbxInputReplaceColor : TColorBox;
+    cbxInputPaintColor : TColorBox;
+    cbxInputFillColor : TColorBox;
     chkAutoCropTransparency : TCheckBox;
-    chkCopyReplaceToFill : TCheckBox;
-    chkDiagonalNeightbours : TCheckBox;
+    chkInputCopyReplaceToFill : TCheckBox;
+    chkInputFillDiagonal : TCheckBox;
     chkOverwriteOutput : TCheckBox;
     chkRemoveTransEmutecaIcon : TCheckBox;
-    eOpacityReplaceInput : TSpinEdit;
-    eToleranceFillInput : TSpinEdit;
-    eOpacityPaintInput : TSpinEdit;
+    eInputReplaceOpacity : TSpinEdit;
+    eInputFillTolerance : TSpinEdit;
+    eInputPaintOpacity : TSpinEdit;
+    eInputFillOpacity : TSpinEdit;
     eOpacityBorderEmutecaIcon : TSpinEdit;
-    eOpacityFillInput : TSpinEdit;
     eOutputFolder : TDirectoryEdit;
     FileList : TListBox;
     gbxFileInput : TGroupBox;
     gbxFileOutput : TGroupBox;
+    gbxInputReplaceColor : TGroupBox;
+    gbxInputPaintColor : TGroupBox;
+    gbxInputFillColor : TGroupBox;
+    gbxInputSelectRemove : TGroupBox;
     gbxOutputImage : TGroupBox;
     gbxInputImage : TGroupBox;
-    gbxTransformInput : TGroupBox;
-    gbxZoomInput : TGroupBox;
+    gbxInputTransform : TGroupBox;
+    gbxInputZoom : TGroupBox;
     gbxZoomOuput : TGroupBox;
-    lColorPaintInput : TLabel;
-    lColorFillInput : TLabel;
-    lColorReplaceInput : TLabel;
-    lOpacityPaintInput : TLabel;
-    lOpacityFillInput : TLabel;
-    lOpacityReplaceInput : TLabel;
+    lInputReplaceOpacity : TLabel;
+    lInputPaintOpacity : TLabel;
+    lInputFillOpacity : TLabel;
     lOutputFolder : TLabel;
-    lToleranceFillInput : TLabel;
-    lZoomInput : TLabel;
+    lInputFillTolerance : TLabel;
+    lInputZoom : TLabel;
     lZoomOutput : TLabel;
     OpenFilesDialog : TOpenDialog;
     pButtonsFile : TPanel;
     pbxOutputImage : TPaintBox;
-    pgcImageInput : TPageControl;
+    pgcInputImage : TPageControl;
     pgcImageOutput : TPageControl;
+    pInputReplaceOpacity : TPanel;
+    pInputPaintOpacity : TPanel;
+    pInputFillOpacity : TPanel;
     pOptions : TPanel;
-    pToolsInput : TPanel;
-    pZoomInput : TPanel;
+    pInputTools : TPanel;
+    pInputZoom : TPanel;
     gbxLeft : TGroupBox;
     pbxInputImage : TPaintBox;
     pToolsOutput : TPanel;
@@ -161,13 +170,13 @@ type
     Splitter1 : TSplitter;
     Splitter2 : TSplitter;
     StatusBar : TStatusBar;
-    pagCommonInput : TTabSheet;
-    pagSelectInput : TTabSheet;
-    pagPaintInput : TTabSheet;
-    pagFillInput : TTabSheet;
+    pagInputCommon : TTabSheet;
+    pagInputSelect : TTabSheet;
+    pagInputPaint : TTabSheet;
+    pagInputFill : TTabSheet;
     pagEmutecaIconBorder : TTabSheet;
     pagRemoveEmutecaBorder : TTabSheet;
-    pagReplaceInput : TTabSheet;
+    pagInputReplace : TTabSheet;
 
     procedure actAddFileExecute(Sender : TObject);
     procedure actAddFolderExecute(Sender : TObject);
@@ -179,32 +188,36 @@ type
     procedure actReplaceFileExecute(Sender : TObject);
     procedure actReplaceInpFileExecute(Sender : TObject);
     procedure actSaveOutputExecute(Sender : TObject);
-    procedure bAutoZoomInputClick(Sender : TObject);
+    procedure bInputAutoZoomClick(Sender : TObject);
     procedure bAutoZoomOutputClick(Sender : TObject);
     procedure bBlackIconBorderClick(Sender : TObject);
-    procedure bCutSelectionInputClick(Sender : TObject);
+    procedure bInputCutSelectionClick(Sender : TObject);
     procedure bDefaultIconBorderClick(Sender : TObject);
-    procedure bFlipHInputClick(Sender : TObject);
-    procedure bFlipVInputClick(Sender : TObject);
+    procedure bInputFillOpaqueClick(Sender : TObject);
+    procedure bInputFillTransparentClick(Sender : TObject);
+    procedure bInputFlipHClick(Sender : TObject);
+    procedure bInputFlipVClick(Sender : TObject);
+    procedure bInputPaintOpaqueClick(Sender : TObject);
+    procedure bInputReplaceOpaqueClick(Sender : TObject);
+    procedure bInputReplaceTransparentClick(Sender : TObject);
+    procedure bOpenBetaFormClick(Sender : TObject);
     procedure bProcessOutputClick(Sender : TObject);
-    procedure bRotateCCWInputClick(Sender : TObject);
-    procedure bRotateCWInputClick(Sender : TObject);
-    procedure bSelectionTransparentInputClick(Sender : TObject);
-    procedure bTransparentFillClick(Sender : TObject);
-    procedure bTransparentReplaceClick(Sender : TObject);
-    procedure bTransparentPaintClick(Sender : TObject);
-    procedure bZoom1xInputClick(Sender : TObject);
+    procedure bInputRotateCCWClick(Sender : TObject);
+    procedure bInputRotateCWClick(Sender : TObject);
+    procedure bInputSelectionTransparentClick(Sender : TObject);
+    procedure bInputPaintTransparentClick(Sender : TObject);
+    procedure bInputZoom1xClick(Sender : TObject);
     procedure bZoom1xOutputClick(Sender : TObject);
-    procedure bZoomInInputClick(Sender : TObject);
+    procedure bInputZoomInClick(Sender : TObject);
     procedure bZoomInOutputClick(Sender : TObject);
-    procedure bZoomOutInputClick(Sender : TObject);
+    procedure bInputZoomOutClick(Sender : TObject);
     procedure bZoomOutOutputClick(Sender : TObject);
     procedure cbxColorBackgroundChange(Sender : TObject);
-    procedure eOpacityFillInputChange(Sender : TObject);
-    procedure eOpacityPaintInputChange(Sender : TObject);
-    procedure eOpacityReplaceInputChange(Sender : TObject);
+    procedure eInputFillOpacityChange(Sender : TObject);
+    procedure eInputPaintOpacityChange(Sender : TObject);
+    procedure eInputReplaceOpacityChange(Sender : TObject);
     procedure eOutputFolderChange(Sender : TObject);
-    procedure FormCloseQuery(Sender : TObject; var CanClose : boolean);
+    procedure FormCloseQuery(Sender : TObject; var CanClose : Boolean);
     procedure FormCreate(Sender : TObject);
     procedure FileListClick(Sender : TObject);
     procedure FormDestroy(Sender : TObject);
@@ -223,7 +236,7 @@ type
     procedure pbxOutputImageMouseUp(Sender : TObject;
       Button : TMouseButton; Shift : TShiftState; X, Y : integer);
     procedure pbxOutputImagePaint(Sender : TObject);
-    procedure pgcImageInputChange(Sender : TObject);
+    procedure pgcInputImageChange(Sender : TObject);
     procedure pgcImageOutputChange(Sender : TObject);
     procedure rgbBackGroundSelectionChanged(Sender : TObject);
 
@@ -257,7 +270,7 @@ type
 
     property XOffset : LongInt read FXOffset write SetXOffset;
     property YOffset : LongInt read FYOffset write SetYOffset;
-    { Offset diference between Input image and Output image.
+    {< Offset diference between Input image and Output image.
 
       if we click on output image we can know what pixels is in the input image.
     }
@@ -279,7 +292,6 @@ type
       Shift : TShiftState; ImgX, ImgY : LongInt);
 
     function SelectionZoomInput : TRect;
-
   public
     property ActualInputImage : TBGRABitmap read FActualInputImage;
     property ActualOutputImage : TBGRABitmap read FActualOutputImage;
@@ -303,25 +315,10 @@ type
 
   end;
 
-function GCD(a, b : integer) : integer;
-
 var
   frmIconBorder : TfrmIconBorder;
 
 implementation
-
-function GCD(a, b : integer) : integer;
-var
-  temp : integer;
-begin
-  while b <> 0 do
-  begin
-    temp := b;
-    b := a mod b;
-    a := temp;
-  end;
-  Result := a;
-end;
 
 {$R *.lfm}
 
@@ -348,14 +345,14 @@ begin
   FMouseActionInput := AValue;
 
   case MouseActionInput of
-    maiSelectRect: aHint := rsHintSelect;
-    maiSelectingRect: aHint := rsHintSelecting;
-    maiPaintPixel: aHint := rsHintPaintPixel;
-    maiPaintingPixel: aHint := rsHintPaintingPixel;
-    maiPickingPaintColor: aHint := rsHintPickingPaintColor;
-    maiFillColor, maiFillingColor: aHint := rsFillColor;
-    maiReplaceColor: aHint := rsHintReplaceColor;
-    maiReplacingColor: aHint := rsHintReplacingColor;
+    maiSelectRect : aHint := rsHintSelect;
+    maiSelectingRect : aHint := rsHintSelecting;
+    maiPaintPixel : aHint := rsHintPaintPixel;
+    maiPaintingPixel : aHint := rsHintPaintingPixel;
+    maiPickingPaintColor : aHint := rsHintPickingPaintColor;
+    maiFillColor, maiFillingColor : aHint := rsFillColor;
+    maiReplaceColor : aHint := rsHintReplaceColor;
+    maiReplacingColor : aHint := rsHintReplacingColor;
     else
       aHint := '';
   end;
@@ -375,7 +372,7 @@ begin
   if not Assigned(ActualInputImage) then
   begin
     FZoomInput := 1;
-    lZoomInput.Caption := Format('%dx', [ZoomInput]);
+    lInputZoom.Caption := Format('%dx', [ZoomInput]);
     Exit;
   end;
 
@@ -389,7 +386,7 @@ begin
 
   FZoomInput := AValue;
 
-  lZoomInput.Caption := Format('%dx', [ZoomInput]);
+  lInputZoom.Caption := Format('%dx', [ZoomInput]);
 
   DrawImageInput;
 end;
@@ -463,8 +460,8 @@ begin
   FVisibleInputImage := TBGRABitmap.Create(ZWidth, ZHeight);
 
   case rgbBackGround.ItemIndex of
-    1: VisibleInputImage.Fill(BGRA(255,0,255)); // Magenta
-    2: // Custom Color
+    1 : VisibleInputImage.Fill(BGRA(255, 0, 255)); // Magenta
+    2 : // Custom Color
       VisibleInputImage.Fill(ColorToBGRA(cbxColorBackground.Selected));
     else
     begin
@@ -517,8 +514,8 @@ begin
   FVisibleOutputImage := TBGRABitmap.Create(ZWidth, ZHeight);
 
   case rgbBackGround.ItemIndex of
-    1: VisibleOutputImage.Fill(BGRA(255,0,255)); // Magenta
-    2: // Color
+    1 : VisibleOutputImage.Fill(BGRA(255, 0, 255)); // Magenta
+    2 : // Color
       VisibleOutputImage.Fill(ColorToBGRA(cbxColorBackground.Selected));
     else
     begin
@@ -586,10 +583,10 @@ begin
   Pix := ActualInputImage.Scanline[Y] + X;
 
   // Full transparency -> Black
-  if eOpacityPaintInput.Value = 0 then
+  if eInputPaintOpacity.Value = 0 then
     Pix^ := BGRAPixelTransparent
   else
-    Pix^.FromColor(bColorPaintInput.ButtonColor, eOpacityPaintInput.Value);
+    Pix^.FromColor(cbxInputPaintColor.Selected, eInputPaintOpacity.Value);
 
   ActualInputImage.InvalidateBitmap;
   DrawImageInput;
@@ -631,7 +628,7 @@ DiagFloodFill(FromColor, ToColor, X + 1, Y + 1);
   var
     S : TBGRAPixel;
     SX, EX, I : integer;
-    Added : boolean;
+    Added : Boolean;
 
     Visited : array of longword;
     VisitedLineSize : integer;
@@ -640,7 +637,7 @@ DiagFloodFill(FromColor, ToColor, X + 1, Y + 1);
     StackCount : integer;
     pScan : PBGRAPixel;
 
-    function CheckPixel(AX, AY : integer) : boolean; inline;
+    function CheckPixel(AX, AY : integer) : Boolean; inline;
     begin
       if Visited[AX shr 5 + AY * VisitedLineSize] and
         (1 shl (AX and 31)) <> 0 then
@@ -664,8 +661,8 @@ DiagFloodFill(FromColor, ToColor, X + 1, Y + 1);
         exit;
       StartMask := $FFFFFFFF shl (X1 and 31);
       case X2 and 31 of
-        31: EndMask := $FFFFFFFF;
-        30: EndMask := $7FFFFFFF;
+        31 : EndMask := $FFFFFFFF;
+        30 : EndMask := $7FFFFFFF;
         else
           EndMask := 1 shl ((X2 and 31) + 1) - 1;
       end;
@@ -770,7 +767,7 @@ DiagFloodFill(FromColor, ToColor, X + 1, Y + 1);
   end;
 
 begin
-  if not chkDiagonalNeightbours.Checked then
+  if not chkInputFillDiagonal.Checked then
   begin
     // TBGRABitmap.FloodFill don't check Diagonal Neightbours
     ActualInputImage.FloodFill(X, Y, ToColor, fmSet, Tolerance);
@@ -803,7 +800,7 @@ begin
 
 
   case MouseActionInput of
-    maiSelectingRect:
+    maiSelectingRect :
     begin
       // Removing previous Rect
       CurrSelection := SelectionZoomInput;
@@ -825,18 +822,18 @@ begin
       sbxInputImage.Canvas.DrawFocusRect(CurrSelection);
     end;
 
-    maiPaintingPixel: RemovePixelInput(ImgX, ImgY);
+    maiPaintingPixel : RemovePixelInput(ImgX, ImgY);
 
     // maiPickingPaintColor: ;
 
-    maiFillingColor:
+    maiFillingColor :
     begin
       if ssRight in Shift then // Right: Removing while painting
       begin
         RemoveSameColorNeighboursInput(ImgX, ImgY,
-          ColorToBGRA(bColorFillInput.ButtonColor,
-          eOpacityFillInput.Value),
-          eToleranceFillInput.Value);
+          ColorToBGRA(cbxInputFillColor.Selected,
+          eInputFillOpacity.Value),
+          eInputFillTolerance.Value);
         ActualInputImage.InvalidateBitmap;
         DrawImageInput;
       end; // Left: Wait until mouse up
@@ -861,9 +858,9 @@ begin
     aPixel := ActualInputImage.ScanLine[ImgY] + ImgX;
 
   case MouseActionInput of
-    maiSelectingRect:
+    maiSelectingRect :
       case Button of
-        mbLeft:
+        mbLeft :
         begin
           // Removing previous Rect, because can be drawn outside pbxInputImage
           CurrSelection := SelectionZoomInput;
@@ -880,68 +877,68 @@ begin
           MouseActionInput := maiSelectRect;
         end;
 
-        mbRight: ;
-        mbMiddle: ;
-        mbExtra1: ;
-        mbExtra2: ;
+        mbRight : ;
+        mbMiddle : ;
+        mbExtra1 : ;
+        mbExtra2 : ;
         else
           ;
       end;
 
-    maiPaintingPixel:
+    maiPaintingPixel :
     begin
       ActualInputImage.InvalidateBitmap;
       DrawImageInput;
       MouseActionInput := maiPaintPixel;
     end;
 
-    maiPickingPaintColor:
+    maiPickingPaintColor :
     begin
       if Assigned(aPixel) then
       begin
         if aPixel^.alpha <> 0 then
         begin
-          bColorPaintInput.ButtonColor := aPixel^.ToColor;
-          bColorFillInput.ButtonColor := aPixel^.ToColor;
+          cbxInputPaintColor.Selected := aPixel^.ToColor;
+          cbxInputFillColor.Selected := aPixel^.ToColor;
         end
         else
         begin
-          bColorPaintInput.ButtonColor := clBlack;
-          bColorFillInput.ButtonColor := clBlack;
+          cbxInputPaintColor.Selected := clBlack;
+          cbxInputFillColor.Selected := clBlack;
         end;
-        eOpacityPaintInput.Value := aPixel^.alpha;
-        eOpacityFillInput.Value := aPixel^.alpha;
+        eInputPaintOpacity.Value := aPixel^.alpha;
+        eInputFillOpacity.Value := aPixel^.alpha;
       end
       else
       begin
-        bColorPaintInput.ButtonColor := clBlack;
-        eOpacityPaintInput.Value := 0;
+        cbxInputPaintColor.Selected := clBlack;
+        eInputPaintOpacity.Value := 0;
       end;
 
       // TODO: Do this in a better way...
       case Button of
-        mbRight: // Selecting color in Paint
+        mbRight : // Selecting color in Paint
         begin
           MouseActionInput := maiPaintPixel;
         end;
-        mbMiddle: // Selecting color in Fill
+        mbMiddle : // Selecting color in Fill
         begin
           MouseActionInput := maiFillColor;
         end;
       end;
     end;
 
-    maiFillingColor:
+    maiFillingColor :
     begin
       case Button of
-        mbLeft: // Left removing when button up
+        mbLeft : // Left removing when button up
         begin
           if Assigned(aPixel) then
           begin
             RemoveSameColorNeighboursInput(ImgX, ImgY,
-              ColorToBGRA(bColorFillInput.ButtonColor,
-              eOpacityFillInput.Value),
-              eToleranceFillInput.Value);
+              ColorToBGRA(cbxInputFillColor.Selected,
+              eInputFillOpacity.Value),
+              eInputFillTolerance.Value);
             ActualInputImage.InvalidateBitmap;
             DrawImageInput;
           end;
@@ -952,7 +949,7 @@ begin
       end;
     end;
 
-    maiReplacingColor:
+    maiReplacingColor :
     begin
       if Assigned(aPixel) then
       begin
@@ -961,15 +958,15 @@ begin
         //   when ReplaceColor is called.
         aTPixel := aPixel^;
 
-        if chkCopyReplaceToFill.Checked then
+        if chkInputCopyReplaceToFill.Checked then
         begin
-          bColorFillInput.ButtonColor := BGRAToColor(aTPixel);
-          eOpacityFillInput.Value := aTPixel.alpha;
+          cbxInputFillColor.Selected := BGRAToColor(aTPixel);
+          eInputFillOpacity.Value := aTPixel.alpha;
         end;
 
         ActualInputImage.ReplaceColor(aTPixel,
-          ColorToBGRA(bColorReplaceInput.ButtonColor,
-          eOpacityReplaceInput.Value));
+          ColorToBGRA(cbxInputReplaceColor.Selected,
+          eInputReplaceOpacity.Value));
 
         ActualInputImage.InvalidateBitmap;
         DrawImageInput;
@@ -986,9 +983,9 @@ procedure TfrmIconBorder.DoImageMouseDown(Button : TMouseButton;
   Shift : TShiftState; ImgX, ImgY : LongInt);
 begin
   case MouseActionInput of
-    maiSelectRect:
+    maiSelectRect :
       case Button of
-        mbLeft:
+        mbLeft :
         begin
           SelectionInput.Create(Point(ImgX, ImgY), 0, 0);
 
@@ -999,21 +996,21 @@ begin
 
           MouseActionInput := maiSelectingRect;
         end;
-        mbRight: bSelectionTransparentInputClick(nil);
-        mbMiddle: bCutSelectionInputClick(nil);
+        mbRight : bInputSelectionTransparentClick(nil);
+        mbMiddle : bInputCutSelectionClick(nil);
         else
           ;
       end;
 
-    maiPaintPixel:
+    maiPaintPixel :
     begin
       case Button of
-        mbLeft:
+        mbLeft :
         begin
           RemovePixelInput(ImgX, ImgY);
           MouseActionInput := maiPaintingPixel;
         end;
-        mbRight:
+        mbRight :
         begin
           MouseActionInput := maiPickingPaintColor;
         end
@@ -1022,15 +1019,15 @@ begin
       end;
     end;
 
-    maiFillColor:
+    maiFillColor :
     begin
       // Wait to mouse up
       case Button of
-        mbLeft, mbRight:
+        mbLeft, mbRight :
         begin
           MouseActionInput := maiFillingColor;
         end;
-        mbMiddle:
+        mbMiddle :
         begin
           MouseActionInput := maiPickingPaintColor;
         end
@@ -1039,11 +1036,11 @@ begin
       end;
     end;
 
-    maiReplaceColor:
+    maiReplaceColor :
     begin
       // Wait to mouse up
       case Button of
-        mbLeft, mbRight:
+        mbLeft, mbRight :
         begin
           MouseActionInput := maiReplacingColor;
         end;
@@ -1211,7 +1208,7 @@ begin
   ActualOutputImage.SaveToFileUTF8(aFile);
 end;
 
-procedure TfrmIconBorder.bAutoZoomInputClick(Sender : TObject);
+procedure TfrmIconBorder.bInputAutoZoomClick(Sender : TObject);
 begin
   AutoZoomInput;
 end;
@@ -1223,12 +1220,12 @@ end;
 
 procedure TfrmIconBorder.bBlackIconBorderClick(Sender : TObject);
 begin
-  bColorBorderEmutecaIcon.Enabled := True;
-  bColorBorderEmutecaIcon.ButtonColor := clBlack;
+  cbxOutputBorderColor.Enabled := True;
+  cbxOutputBorderColor.Selected := clBlack;
   eOpacityBorderEmutecaIcon.Value := 255;
 end;
 
-procedure TfrmIconBorder.bCutSelectionInputClick(Sender : TObject);
+procedure TfrmIconBorder.bInputCutSelectionClick(Sender : TObject);
 begin
   if SelectionInput.isEmpty then
     Exit;
@@ -1243,28 +1240,87 @@ end;
 
 procedure TfrmIconBorder.bDefaultIconBorderClick(Sender : TObject);
 begin
-  bColorBorderEmutecaIcon.Enabled := True;
-  bColorBorderEmutecaIcon.ButtonColor := clGray;
+  cbxOutputBorderColor.Enabled := True;
+  cbxOutputBorderColor.Selected := clGray;
   eOpacityBorderEmutecaIcon.Value := 128;
 end;
 
-procedure TfrmIconBorder.bFlipHInputClick(Sender : TObject);
+procedure TfrmIconBorder.bInputFillOpaqueClick(Sender : TObject);
+begin
+  cbxInputFillColor.Enabled := Enabled;
+  eInputFillOpacity.Value := 255;
+end;
+
+procedure TfrmIconBorder.bInputFillTransparentClick(Sender : TObject);
+begin
+  cbxInputFillColor.Enabled := False;
+  eInputFillOpacity.Value := 0;
+end;
+
+procedure TfrmIconBorder.bInputFlipHClick(Sender : TObject);
 begin
   ActualInputImage.HorizontalFlip;
   DrawImageInput;
 end;
 
-procedure TfrmIconBorder.bFlipVInputClick(Sender : TObject);
+procedure TfrmIconBorder.bInputFlipVClick(Sender : TObject);
 begin
   ActualInputImage.VerticalFlip;
   DrawImageInput;
+end;
+
+procedure TfrmIconBorder.bInputPaintOpaqueClick(Sender : TObject);
+begin
+  cbxInputPaintColor.Enabled := Enabled;
+  eInputPaintOpacity.Value := 255;
+end;
+
+procedure TfrmIconBorder.bInputReplaceOpaqueClick(Sender : TObject);
+begin
+    cbxInputReplaceColor.Enabled := True;
+  eInputReplaceOpacity.Value := 255;
+end;
+
+procedure TfrmIconBorder.bInputReplaceTransparentClick(Sender : TObject);
+begin
+  cbxInputReplaceColor.Enabled := False;
+  eInputReplaceOpacity.Value := 0;
+end;
+
+procedure TfrmIconBorder.bOpenBetaFormClick(Sender : TObject);
+var
+  aForm : TfrmCHXForm;
+  aFrame : TfmETKIBMain;
+begin
+
+  aFrame := TfmETKIBMain.Create(nil);
+
+  Application.CreateForm(TfrmCHXForm, aForm);
+  try
+    aForm.Name := 'frmETKIconBorder';
+    aForm.Caption := self.Caption;
+
+    aForm.InsertComponent(aFrame);
+
+    aFrame.EIBConfig := EIBConfig;
+
+    aFrame.Align := alClient;
+    aFrame.Parent := aForm;
+
+    aForm.LoadGUIConfig(EIBConfig.DefaultFileName);
+    aForm.LoadGUIIcons(EIBConfig.GUIIconsIni);
+
+    aForm.ShowModal;
+  finally
+    aForm.Free;
+  end;
 end;
 
 procedure TfrmIconBorder.bProcessOutputClick(Sender : TObject);
 
   procedure AutoCropTransparentOutput;
 
-    function AutoCropTransparentFirstRow : boolean;
+    function AutoCropTransparentFirstRow : Boolean;
     var
       aColor : PBGRAPixel;
       i : integer;
@@ -1290,7 +1346,7 @@ procedure TfrmIconBorder.bProcessOutputClick(Sender : TObject);
       end;
     end;
 
-    function AutoCropTransparentLastRow : boolean;
+    function AutoCropTransparentLastRow : Boolean;
     var
       aColor : PBGRAPixel;
       i : integer;
@@ -1313,7 +1369,7 @@ procedure TfrmIconBorder.bProcessOutputClick(Sender : TObject);
           Rect(0, 0, ActualOutputImage.Width, ActualOutputImage.Height - 1)));
     end;
 
-    function AutoCropTransparentFirstCol : boolean;
+    function AutoCropTransparentFirstCol : Boolean;
     var
       i : integer;
       aColor : PBGRAPixel;
@@ -1338,7 +1394,7 @@ procedure TfrmIconBorder.bProcessOutputClick(Sender : TObject);
       end;
     end;
 
-    function AutoCropTransparentLastCol : boolean;
+    function AutoCropTransparentLastCol : Boolean;
     var
       i : integer;
       aColor : PBGRAPixel;
@@ -1361,7 +1417,7 @@ procedure TfrmIconBorder.bProcessOutputClick(Sender : TObject);
     end;
 
   var
-    Cont : boolean;
+    Cont : Boolean;
   begin
     repeat
       Cont := AutoCropTransparentFirstRow;
@@ -1513,7 +1569,7 @@ procedure TfrmIconBorder.bProcessOutputClick(Sender : TObject);
           TempColor := aColor + 1;
           if TempColor^.Alpha = 255 then
           begin
-            aColor^ := ColorToBGRA(bColorBorderEmutecaIcon.ButtonColor,
+            aColor^ := ColorToBGRA(cbxOutputBorderColor.Selected,
               eOpacityBorderEmutecaIcon.Value);
           end;
         end;
@@ -1528,7 +1584,7 @@ procedure TfrmIconBorder.bProcessOutputClick(Sender : TObject);
           TempColor := aColor - ActualOutputImage.Width;
           if TempColor^.Alpha = 255 then
           begin
-            aColor^ := ColorToBGRA(bColorBorderEmutecaIcon.ButtonColor,
+            aColor^ := ColorToBGRA(cbxOutputBorderColor.Selected,
               eOpacityBorderEmutecaIcon.Value);
           end;
         end;
@@ -1542,7 +1598,7 @@ procedure TfrmIconBorder.bProcessOutputClick(Sender : TObject);
           TempColor := aColor - 1;
           if TempColor^.Alpha = 255 then
           begin
-            aColor^ := ColorToBGRA(bColorBorderEmutecaIcon.ButtonColor,
+            aColor^ := ColorToBGRA(cbxOutputBorderColor.Selected,
               eOpacityBorderEmutecaIcon.Value);
           end;
         end;
@@ -1557,7 +1613,7 @@ procedure TfrmIconBorder.bProcessOutputClick(Sender : TObject);
           TempColor := aColor + ActualOutputImage.Width;
           if TempColor^.Alpha = 255 then
           begin
-            aColor^ := ColorToBGRA(bColorBorderEmutecaIcon.ButtonColor,
+            aColor^ := ColorToBGRA(cbxOutputBorderColor.Selected,
               eOpacityBorderEmutecaIcon.Value);
           end;
         end;
@@ -1594,7 +1650,7 @@ begin
   YOffset := 0;
 
   case ProcessOutputFilter of
-    pofEmutecaIconBorder:
+    pofEmutecaIconBorder :
     begin
       if chkRemoveTransEmutecaIcon.Checked then
         RemoveSemitransparentPixels;
@@ -1604,10 +1660,10 @@ begin
       AutoCropTransparentOutput;
     end;
 
-    pofRemoveIconBorder:
+    pofRemoveIconBorder :
     begin
       case rgbRemoveTrans.ItemIndex of
-        1:
+        1 :
         begin
           if chkAutoCropTransparency.Checked then
             AutoCropTransparentOutput;
@@ -1633,19 +1689,19 @@ begin
   AutoZoomOutput;
 end;
 
-procedure TfrmIconBorder.bRotateCCWInputClick(Sender : TObject);
+procedure TfrmIconBorder.bInputRotateCCWClick(Sender : TObject);
 begin
   BGRAReplace(FActualInputImage, ActualInputImage.RotateCCW);
   DrawImageInput;
 end;
 
-procedure TfrmIconBorder.bRotateCWInputClick(Sender : TObject);
+procedure TfrmIconBorder.bInputRotateCWClick(Sender : TObject);
 begin
   BGRAReplace(FActualInputImage, ActualInputImage.RotateCW);
   DrawImageInput;
 end;
 
-procedure TfrmIconBorder.bSelectionTransparentInputClick(Sender : TObject);
+procedure TfrmIconBorder.bInputSelectionTransparentClick(Sender : TObject);
 begin
   if SelectionInput.isEmpty then
     Exit;
@@ -1655,28 +1711,13 @@ begin
   DrawImageInput;
 end;
 
-procedure TfrmIconBorder.bTransparentFillClick(Sender : TObject);
+procedure TfrmIconBorder.bInputPaintTransparentClick(Sender : TObject);
 begin
-  bColorFillInput.Enabled := False;
-  bColorFillInput.ButtonColor := clBlack;
-  eOpacityFillInput.Value := 0;
+  cbxInputPaintColor.Enabled := False;
+  eInputPaintOpacity.Value := 0;
 end;
 
-procedure TfrmIconBorder.bTransparentReplaceClick(Sender : TObject);
-begin
-  bColorReplaceInput.Enabled := False;
-  bColorReplaceInput.ButtonColor := clBlack;
-  eOpacityReplaceInput.Value := 0;
-end;
-
-procedure TfrmIconBorder.bTransparentPaintClick(Sender : TObject);
-begin
-  bColorPaintInput.Enabled := False;
-  bColorPaintInput.ButtonColor := clBlack;
-  eOpacityPaintInput.Value := 0;
-end;
-
-procedure TfrmIconBorder.bZoom1xInputClick(Sender : TObject);
+procedure TfrmIconBorder.bInputZoom1xClick(Sender : TObject);
 begin
   if not Assigned(ActualInputImage) then
     Exit;
@@ -1692,7 +1733,7 @@ begin
   ZoomOutput := 1;
 end;
 
-procedure TfrmIconBorder.bZoomInInputClick(Sender : TObject);
+procedure TfrmIconBorder.bInputZoomInClick(Sender : TObject);
 begin
   if not Assigned(ActualInputImage) then
     Exit;
@@ -1708,7 +1749,7 @@ begin
   ZoomOutput := ZoomOutput * 2;
 end;
 
-procedure TfrmIconBorder.bZoomOutInputClick(Sender : TObject);
+procedure TfrmIconBorder.bInputZoomOutClick(Sender : TObject);
 begin
   if not Assigned(ActualInputImage) then
     Exit;
@@ -1730,19 +1771,19 @@ begin
   DrawImageOutput;
 end;
 
-procedure TfrmIconBorder.eOpacityFillInputChange(Sender : TObject);
+procedure TfrmIconBorder.eInputFillOpacityChange(Sender : TObject);
 begin
-  bColorFillInput.Enabled := eOpacityFillInput.Value > 0;
+  cbxInputFillColor.Enabled := eInputFillOpacity.Value > 0;
 end;
 
-procedure TfrmIconBorder.eOpacityPaintInputChange(Sender : TObject);
+procedure TfrmIconBorder.eInputPaintOpacityChange(Sender : TObject);
 begin
-  bColorPaintInput.Enabled := eOpacityPaintInput.Value > 0;
+  cbxInputPaintColor.Enabled := eInputPaintOpacity.Value > 0;
 end;
 
-procedure TfrmIconBorder.eOpacityReplaceInputChange(Sender : TObject);
+procedure TfrmIconBorder.eInputReplaceOpacityChange(Sender : TObject);
 begin
-  bColorReplaceInput.Enabled := eOpacityReplaceInput.Value > 0;
+  cbxInputReplaceColor.Enabled := eInputReplaceOpacity.Value > 0;
 end;
 
 procedure TfrmIconBorder.eOutputFolderChange(Sender : TObject);
@@ -1751,7 +1792,7 @@ begin
 end;
 
 procedure TfrmIconBorder.FormCloseQuery(Sender : TObject;
-  var CanClose : boolean);
+  var CanClose : Boolean);
 begin
   CanClose := True;
 
@@ -1841,7 +1882,7 @@ begin
   ZoomInput := 1;
   ZoomOutput := 1;
 
-  pgcImageInput.PageIndex := 0;
+  pgcInputImage.PageIndex := 0;
   MouseActionInput := maiSelectRect;
 
   pgcImageOutput.PageIndex := 0;
@@ -1915,8 +1956,8 @@ begin
   ImgX := (X div ZoomOutput) + XOffset;
   ImgY := (Y div ZoomOutput) + YOffset;
 
-  if (ImgX < 0) or (ImgY < 0) or
-    (ImgX >= ActualInputImage.Width) or (ImgY >= ActualInputImage.Height) then
+  if (ImgX < 0) or (ImgY < 0) or (ImgX >= ActualInputImage.Width) or
+    (ImgY >= ActualInputImage.Height) then
     Exit;
 
   DoImageMouseDown(Button, Shift, ImgX, ImgY);
@@ -1927,11 +1968,13 @@ procedure TfrmIconBorder.pbxOutputImageMouseMove(Sender : TObject;
 var
   ImgX, ImgY : LongInt;
 begin
+  if not assigned(ActualInputImage) then Exit;
+
   ImgX := (X div ZoomOutput) + XOffset;
   ImgY := (Y div ZoomOutput) + YOffset;
 
-  if (ImgX < 0) or (ImgY < 0) or
-    (ImgX >= ActualInputImage.Width) or (ImgY >= ActualInputImage.Height) then
+  if (ImgX < 0) or (ImgY < 0) or (ImgX >= ActualInputImage.Width) or
+    (ImgY >= ActualInputImage.Height) then
     Exit;
 
   DoImageMouseMove(Shift, ImgX, ImgY);
@@ -1942,11 +1985,13 @@ procedure TfrmIconBorder.pbxOutputImageMouseUp(Sender : TObject;
 var
   ImgX, ImgY : LongInt;
 begin
+  if not assigned(ActualInputImage) then Exit;
+
   ImgX := (X div ZoomOutput) + XOffset;
   ImgY := (Y div ZoomOutput) + YOffset;
 
-  if (ImgX < 0) or (ImgY < 0) or
-    (ImgX >= ActualInputImage.Width) or (ImgY >= ActualInputImage.Height) then
+  if (ImgX < 0) or (ImgY < 0) or (ImgX >= ActualInputImage.Width) or
+    (ImgY >= ActualInputImage.Height) then
     Exit;
 
   DoImageMouseUp(Button, Shift, ImgX, ImgY);
@@ -1960,14 +2005,14 @@ begin
   VisibleOutputImage.Draw(pbxOutputImage.Canvas, 0, 0, False);
 end;
 
-procedure TfrmIconBorder.pgcImageInputChange(Sender : TObject);
+procedure TfrmIconBorder.pgcInputImageChange(Sender : TObject);
 begin
-  case pgcImageInput.PageIndex of
+  case pgcInputImage.PageIndex of
     // 0: Common
-    1: MouseActionInput := maiSelectRect;
-    2: MouseActionInput := maiPaintPixel;
-    3: MouseActionInput := maiFillColor;
-    4: MouseActionInput := maiReplaceColor;
+    1 : MouseActionInput := maiSelectRect;
+    2 : MouseActionInput := maiPaintPixel;
+    3 : MouseActionInput := maiFillColor;
+    4 : MouseActionInput := maiReplaceColor;
     else
       ;
   end;
@@ -1976,8 +2021,8 @@ end;
 procedure TfrmIconBorder.pgcImageOutputChange(Sender : TObject);
 begin
   case pgcImageOutput.PageIndex of
-    0: ProcessOutputFilter := pofEmutecaIconBorder;
-    1: ProcessOutputFilter := pofRemoveIconBorder;
+    0 : ProcessOutputFilter := pofEmutecaIconBorder;
+    1 : ProcessOutputFilter := pofRemoveIconBorder;
     else
       ;
   end;
@@ -1993,3 +2038,19 @@ begin
 end;
 
 end.
+{
+  This source is free software; you can redistribute it and/or modify it under
+  the terms of the GNU General Public License as published by the Free
+  Software Foundation; either version 3 of the License, or (at your option)
+  any later version.
+
+  This code is distributed in the hope that it will be useful, but WITHOUT ANY
+  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+  FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+  details.
+
+  A copy of the GNU General Public License is available on the World Wide Web
+  at <http://www.gnu.org/copyleft/gpl.html>. You can also obtain it by writing
+  to the Free Software Foundation, Inc., 59 Temple Place - Suite 330, Boston,
+  MA 02111-1307, USA.
+}

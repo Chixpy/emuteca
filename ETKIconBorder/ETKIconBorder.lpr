@@ -8,8 +8,8 @@ uses
   {$ENDIF}{$ENDIF}
   Interfaces, // this includes the LCL widgetset
   Forms, ufrIconBorderMain, uCHXStrUtils, uCHXConst, uCHXRscStr, uCHXImageUtils,
-  ufrCHXForm, uaCHXConfig, uaCHXStorable, ufCHXFrame, uVersionSupport,
-  ucEIBConfig
+  ufrCHXForm, uaCHXConfig, uaCHXStorable, ufCHXFrame, ufCHXBGRAImgViewerEx,
+  ufCHXBGRAImgViewer, uVersionSupport, ucEIBConfig, ufETKIBMain, uCHXMath
   { you can add units after this };
 
 {$R *.res}

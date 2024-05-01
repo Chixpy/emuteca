@@ -1,0 +1,1165 @@
+inherited fmETKIBMain: TfmETKIBMain
+  Height = 795
+  Width = 1308
+  ClientHeight = 795
+  ClientWidth = 1308
+  object pFiles: TPanel[0]
+    Left = 0
+    Height = 762
+    Top = 0
+    Width = 192
+    Align = alLeft
+    BevelOuter = bvNone
+    ClientHeight = 762
+    ClientWidth = 192
+    TabOrder = 0
+    object gbxFiles: TGroupBox
+      Left = 0
+      Height = 646
+      Top = 0
+      Width = 192
+      Align = alClient
+      Caption = 'Files'
+      ChildSizing.LeftRightSpacing = 4
+      ChildSizing.TopBottomSpacing = 4
+      ChildSizing.HorizontalSpacing = 8
+      ChildSizing.VerticalSpacing = 4
+      ClientHeight = 621
+      ClientWidth = 188
+      TabOrder = 0
+      object lOutputFolder: TLabel
+        Left = 4
+        Height = 20
+        Top = 4
+        Width = 180
+        Align = alTop
+        Caption = 'Output Folder'
+        ParentColor = False
+      end
+      object eOutputFolder: TDirectoryEdit
+        Left = 4
+        Height = 28
+        Top = 28
+        Width = 180
+        DialogOptions = [ofNoChangeDir, ofEnableSizing, ofViewDetail]
+        ShowHidden = False
+        ButtonWidth = 36
+        NumGlyphs = 1
+        Align = alTop
+        Alignment = taRightJustify
+        MaxLength = 0
+        TabOrder = 0
+        TextHint = 'Select a folder.'
+      end
+      object FileList: TListBox
+        Left = 4
+        Height = 495
+        Top = 122
+        Width = 180
+        Align = alClient
+        ExtendedSelect = False
+        ItemHeight = 0
+        ScrollWidth = 1024
+        Sorted = True
+        TabOrder = 2
+        OnClick = FileListClick
+      end
+      object tbFiles: TToolBar
+        Left = 4
+        Height = 30
+        Top = 88
+        Width = 180
+        AutoSize = True
+        Images = ilMain
+        TabOrder = 1
+        object tbbAddFile: TToolButton
+          Left = 1
+          Top = 2
+          Action = actAddFile
+        end
+        object tbbAddFolder: TToolButton
+          Left = 30
+          Top = 2
+          Action = actAddFolder
+        end
+        object ToolButton2: TToolButton
+          Left = 59
+          Height = 28
+          Top = 2
+          Caption = 'ToolButton2'
+          Style = tbsDivider
+        end
+        object tbbRemoveItem: TToolButton
+          Left = 64
+          Top = 2
+          Action = actRemoveItem
+        end
+        object tbbClearList: TToolButton
+          Left = 93
+          Top = 2
+          Action = actClearList
+        end
+      end
+      object chkOverwriteOutput: TCheckBox
+        Left = 4
+        Height = 24
+        Top = 60
+        Width = 180
+        Align = alTop
+        Caption = 'Overwrite Output'
+        Checked = True
+        State = cbChecked
+        TabOrder = 3
+      end
+    end
+    object cbxColorBackground: TColorBox
+      Left = 0
+      Height = 31
+      Top = 731
+      Width = 192
+      Style = [cbStandardColors, cbExtendedColors, cbPrettyNames]
+      Align = alBottom
+      Enabled = False
+      ItemHeight = 25
+      TabOrder = 2
+    end
+    object rgbBackGround: TRadioGroup
+      Left = 0
+      Height = 85
+      Top = 646
+      Width = 192
+      Align = alBottom
+      AutoFill = True
+      AutoSize = True
+      Caption = 'Background'
+      ChildSizing.LeftRightSpacing = 4
+      ChildSizing.TopBottomSpacing = 4
+      ChildSizing.HorizontalSpacing = 8
+      ChildSizing.VerticalSpacing = 4
+      ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
+      ChildSizing.EnlargeVertical = crsHomogenousChildResize
+      ChildSizing.ShrinkHorizontal = crsScaleChilds
+      ChildSizing.ShrinkVertical = crsScaleChilds
+      ChildSizing.Layout = cclLeftToRightThenTopToBottom
+      ChildSizing.ControlsPerLine = 2
+      ClientHeight = 60
+      ClientWidth = 188
+      Columns = 2
+      ItemIndex = 0
+      Items.Strings = (
+        'Checker'
+        'Magenta'
+        'Color'
+      )
+      OnSelectionChanged = rgbBackGroundSelectionChanged
+      TabOrder = 1
+    end
+  end
+  object Splitter1: TSplitter[1]
+    Left = 196
+    Height = 762
+    Top = 0
+    Width = 8
+  end
+  object gbxOutput: TGroupBox[2]
+    Left = 840
+    Height = 762
+    Top = 0
+    Width = 468
+    Align = alRight
+    Caption = 'Output'
+    ClientHeight = 737
+    ClientWidth = 464
+    TabOrder = 4
+    object pOutputTools: TPanel
+      Left = 0
+      Height = 152
+      Top = 0
+      Width = 464
+      Align = alTop
+      BevelOuter = bvNone
+      ClientHeight = 152
+      ClientWidth = 464
+      TabOrder = 0
+      object tbOutput: TToolBar
+        Left = 0
+        Height = 152
+        Top = 0
+        Width = 30
+        Align = alLeft
+        AutoSize = True
+        Images = ilMain
+        TabOrder = 0
+        object tbbReplaceFile: TToolButton
+          Left = 1
+          Top = 38
+          Action = actReplaceFile
+        end
+        object tbbOpenOutDir: TToolButton
+          Left = 1
+          Top = 66
+          Action = actOpenOutDir
+        end
+        object tbbSaveOutput: TToolButton
+          Left = 1
+          Top = 94
+          Action = actSaveOutput
+        end
+        object tbbProcessOutput: TToolButton
+          Left = 1
+          Top = 2
+          Action = actProcessOutput
+        end
+        object ToolButton3: TToolButton
+          Left = 1
+          Top = 30
+          Width = 29
+          Caption = 'ToolButton3'
+          Style = tbsSeparator
+        end
+      end
+      object tbOutputZoom: TToolBar
+        Left = 434
+        Height = 152
+        Top = 0
+        Width = 30
+        Align = alRight
+        AutoSize = True
+        Images = ilMain
+        TabOrder = 2
+        object tbbOutputZoomOut: TToolButton
+          Left = 1
+          Top = 2
+          Action = actOutputZoomOut
+        end
+        object tbbOutputZoom1: TToolButton
+          Left = 1
+          Top = 86
+          Action = actOutputZoomAuto
+        end
+        object tbbOutputZoomIn: TToolButton
+          Left = 1
+          Top = 58
+          Action = actOutputZoomIn
+        end
+        object tbbOutputZoomAuto: TToolButton
+          Left = 1
+          Top = 30
+          Action = actOutputZoomAuto
+        end
+      end
+      object pgcImageOutput: TPageControl
+        Left = 30
+        Height = 152
+        Top = 0
+        Width = 404
+        ActivePage = pagEmutecaIconBorder
+        Align = alClient
+        HotTrack = True
+        Style = tsFlatButtons
+        TabIndex = 0
+        TabOrder = 1
+        OnChange = pgcImageOutputChange
+        object pagEmutecaIconBorder: TTabSheet
+          Caption = 'Emuteca Icon'
+          ClientHeight = 116
+          ClientWidth = 396
+          object chkRemoveTransEmutecaIcon: TCheckBox
+            Left = 8
+            Height = 24
+            Top = 8
+            Width = 242
+            Caption = 'Remove (Semi)Transparent pixels'
+            Checked = True
+            State = cbChecked
+            TabOrder = 0
+          end
+          object bColorBorderEmutecaIcon: TColorButton
+            Left = 8
+            Height = 31
+            Top = 43
+            Width = 72
+            BorderWidth = 2
+            ButtonColorSize = 16
+            ButtonColor = clGray
+          end
+          object eOpacityBorderEmutecaIcon: TSpinEdit
+            Left = 96
+            Height = 28
+            Top = 43
+            Width = 63
+            MaxValue = 255
+            TabOrder = 1
+            Value = 128
+          end
+          object bDefaultIconBorder: TButton
+            Left = 8
+            Height = 31
+            Top = 80
+            Width = 94
+            Action = actOutputDefaultBorder
+            TabOrder = 2
+          end
+          object bBlackIconBorder: TButton
+            Left = 112
+            Height = 31
+            Top = 80
+            Width = 94
+            Action = actOutputBlackBorder
+            TabOrder = 3
+          end
+        end
+        object pagRemoveEmutecaBorder: TTabSheet
+          Caption = 'Remove Semitransparent'
+          ChildSizing.LeftRightSpacing = 4
+          ChildSizing.TopBottomSpacing = 4
+          ChildSizing.HorizontalSpacing = 4
+          ChildSizing.VerticalSpacing = 4
+          ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
+          ChildSizing.ShrinkHorizontal = crsHomogenousChildResize
+          ChildSizing.Layout = cclLeftToRightThenTopToBottom
+          ChildSizing.ControlsPerLine = 1
+          ClientHeight = 116
+          ClientWidth = 396
+          object rgbRemoveTrans: TRadioGroup
+            Left = 4
+            Height = 73
+            Top = 4
+            Width = 388
+            AutoFill = True
+            Caption = 'Mode'
+            ChildSizing.LeftRightSpacing = 6
+            ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
+            ChildSizing.EnlargeVertical = crsHomogenousChildResize
+            ChildSizing.ShrinkHorizontal = crsScaleChilds
+            ChildSizing.ShrinkVertical = crsScaleChilds
+            ChildSizing.Layout = cclLeftToRightThenTopToBottom
+            ChildSizing.ControlsPerLine = 1
+            ClientHeight = 48
+            ClientWidth = 384
+            ItemIndex = 0
+            Items.Strings = (
+              'Make transparent'
+              'Make opaque'
+            )
+            TabOrder = 1
+          end
+          object chkAutoCropTransparency: TCheckBox
+            Left = 4
+            Height = 24
+            Top = 81
+            Width = 388
+            Caption = 'Autocrop Transparency'
+            Checked = True
+            State = cbChecked
+            TabOrder = 0
+          end
+        end
+      end
+    end
+  end
+  object Splitter2: TSplitter[3]
+    Left = 828
+    Height = 762
+    Top = 0
+    Width = 8
+    Align = alRight
+    ResizeAnchor = akRight
+  end
+  object gbxInput: TGroupBox[4]
+    Left = 208
+    Height = 762
+    Top = 0
+    Width = 616
+    Align = alClient
+    Caption = 'Input'
+    ClientHeight = 737
+    ClientWidth = 612
+    TabOrder = 2
+    object pInputTools: TPanel
+      Left = 0
+      Height = 152
+      Top = 0
+      Width = 612
+      Align = alTop
+      BevelOuter = bvNone
+      ClientHeight = 152
+      ClientWidth = 612
+      TabOrder = 0
+      object tbInput: TToolBar
+        Left = 0
+        Height = 152
+        Top = 0
+        Width = 30
+        Align = alLeft
+        AutoSize = True
+        Images = ilMain
+        TabOrder = 0
+        object tbbDeleteFile: TToolButton
+          Left = 1
+          Top = 66
+          Action = actDeleteFile
+        end
+        object tbbOpenInpDir: TToolButton
+          Left = 1
+          Top = 2
+          Action = actOpenInpDir
+        end
+        object tbbReplaceInpFile: TToolButton
+          Left = 1
+          Top = 38
+          Action = actReplaceInpFile
+        end
+        object ToolButton1: TToolButton
+          Left = 1
+          Top = 30
+          Width = 29
+          Caption = 'ToolButton1'
+          Style = tbsSeparator
+        end
+      end
+      object tbInputZoom: TToolBar
+        Left = 582
+        Height = 152
+        Top = 0
+        Width = 30
+        Align = alRight
+        AutoSize = True
+        Images = ilMain
+        TabOrder = 2
+        object tbbInputZoomOut: TToolButton
+          Left = 1
+          Top = 2
+          Action = actInputZoomOut
+        end
+        object tbbInputZoom1: TToolButton
+          Left = 1
+          Top = 30
+          Action = actInputZoomOrig
+        end
+        object tbbInputZoomIn: TToolButton
+          Left = 1
+          Top = 58
+          Action = actInputZoomIn
+        end
+        object tbbInputZoomAuto: TToolButton
+          Left = 1
+          Top = 86
+          Action = actInputZoomAuto
+        end
+      end
+      object pgcImageInput: TPageControl
+        Left = 30
+        Height = 152
+        Top = 0
+        Width = 552
+        ActivePage = pagPaintInput
+        Align = alClient
+        HotTrack = True
+        Images = ilMain
+        Style = tsFlatButtons
+        TabIndex = 2
+        TabOrder = 1
+        OnChange = pgcImageInputChange
+        object pagCommonInput: TTabSheet
+          Caption = 'Common'
+          ChildSizing.LeftRightSpacing = 4
+          ChildSizing.TopBottomSpacing = 4
+          ChildSizing.HorizontalSpacing = 4
+          ChildSizing.VerticalSpacing = 4
+          ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
+          ChildSizing.ShrinkHorizontal = crsHomogenousChildResize
+          ChildSizing.Layout = cclLeftToRightThenTopToBottom
+          ChildSizing.ControlsPerLine = 4
+          ClientHeight = 116
+          ClientWidth = 544
+          ImageIndex = 11
+          object gbxTransformInput: TGroupBox
+            Left = 4
+            Height = 105
+            Top = 4
+            Width = 536
+            Caption = 'Transform'
+            ChildSizing.LeftRightSpacing = 4
+            ChildSizing.TopBottomSpacing = 8
+            ChildSizing.HorizontalSpacing = 8
+            ChildSizing.VerticalSpacing = 4
+            ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
+            ChildSizing.ShrinkHorizontal = crsHomogenousChildResize
+            ChildSizing.Layout = cclLeftToRightThenTopToBottom
+            ChildSizing.ControlsPerLine = 2
+            ClientHeight = 80
+            ClientWidth = 532
+            TabOrder = 0
+            object bFlipHInput: TBitBtn
+              Left = 4
+              Height = 30
+              Top = 8
+              Width = 254
+              Action = actInputFlipH
+              Images = ilMain
+              ImageIndex = 13
+              TabOrder = 0
+            end
+            object bFlipVInput: TBitBtn
+              Left = 266
+              Height = 30
+              Top = 8
+              Width = 262
+              Action = actInputFlipV
+              Images = ilMain
+              ImageIndex = 14
+              TabOrder = 1
+            end
+            object bRotateCWInput: TBitBtn
+              Left = 4
+              Height = 30
+              Top = 42
+              Width = 254
+              Action = actInputRotateCW
+              Images = ilMain
+              ImageIndex = 15
+              TabOrder = 2
+            end
+            object bRotateCCWInput: TBitBtn
+              Left = 266
+              Height = 30
+              Top = 42
+              Width = 262
+              Action = actInputRotateCCW
+              Images = ilMain
+              ImageIndex = 16
+              TabOrder = 3
+            end
+          end
+        end
+        object pagSelectInput: TTabSheet
+          Caption = 'Select'
+          ClientHeight = 116
+          ClientWidth = 544
+          ImageIndex = 8
+          object bCutSelectionInput: TButton
+            Left = 8
+            Height = 30
+            Top = 48
+            Width = 180
+            Action = actInputCutSelection
+            TabOrder = 0
+          end
+          object bSelectionTransparentInput: TButton
+            Left = 8
+            Height = 30
+            Top = 8
+            Width = 187
+            Action = actInputSelectionTransparent
+            TabOrder = 1
+          end
+        end
+        object pagPaintInput: TTabSheet
+          Caption = 'Paint'
+          ImageIndex = 9
+        end
+        object pagFillInput: TTabSheet
+          Caption = 'Fill'
+          ClientHeight = 116
+          ClientWidth = 544
+          ImageIndex = 10
+          object chkDiagonalNeightbours: TCheckBox
+            Left = 8
+            Height = 24
+            Top = 63
+            Width = 168
+            Caption = 'Diagonal Neightbours'
+            Checked = True
+            State = cbChecked
+            TabOrder = 0
+          end
+          object bColorFillInput: TColorButton
+            Left = 8
+            Height = 31
+            Top = 24
+            Width = 76
+            BorderWidth = 2
+            ButtonColorSize = 16
+            ButtonColor = clBlack
+            Enabled = False
+          end
+          object eOpacityFillInput: TSpinEdit
+            Left = 101
+            Height = 28
+            Top = 24
+            Width = 63
+            MaxValue = 255
+            TabOrder = 1
+          end
+          object lColorFillInput: TLabel
+            Left = 8
+            Height = 20
+            Top = 4
+            Width = 59
+            Caption = 'Fill Color'
+            ParentColor = False
+          end
+          object lOpacityFillInput: TLabel
+            Left = 101
+            Height = 20
+            Top = 4
+            Width = 74
+            Caption = 'Fill Opacity'
+            ParentColor = False
+          end
+          object lToleranceFillInput: TLabel
+            Left = 208
+            Height = 20
+            Top = 4
+            Width = 64
+            Caption = 'Tolerance'
+            ParentColor = False
+          end
+          object eToleranceFillInput: TSpinEdit
+            Left = 208
+            Height = 28
+            Top = 24
+            Width = 63
+            MaxValue = 255
+            TabOrder = 2
+          end
+          object bTransparentFill: TButton
+            Left = 208
+            Height = 31
+            Top = 56
+            Width = 94
+            Action = actInputTransparentFill
+            TabOrder = 3
+          end
+        end
+        object pagReplaceInput: TTabSheet
+          Caption = 'Replace'
+          ClientHeight = 116
+          ClientWidth = 544
+          ImageIndex = 12
+          object bColorReplaceInput: TColorButton
+            Left = 8
+            Height = 31
+            Top = 24
+            Width = 72
+            BorderWidth = 2
+            ButtonColorSize = 16
+            ButtonColor = clBlack
+            Enabled = False
+          end
+          object eOpacityReplaceInput: TSpinEdit
+            Left = 112
+            Height = 28
+            Top = 24
+            Width = 63
+            MaxValue = 255
+            TabOrder = 0
+          end
+          object lColorReplaceInput: TLabel
+            Left = 8
+            Height = 20
+            Top = 4
+            Width = 93
+            Caption = 'Replace Color'
+            ParentColor = False
+          end
+          object lOpacityReplaceInput: TLabel
+            Left = 112
+            Height = 20
+            Top = 4
+            Width = 108
+            Caption = 'Replace Opacity'
+            ParentColor = False
+          end
+          object bTransparentReplace: TButton
+            Left = 224
+            Height = 31
+            Top = 24
+            Width = 94
+            Action = actInputTransparentReplace
+            TabOrder = 1
+          end
+          object chkCopyReplaceToFill: TCheckBox
+            Left = 8
+            Height = 24
+            Hint = 'Copies last replaced color to fill color (usefull to correct mistakes)'
+            Top = 64
+            Width = 234
+            Caption = 'Copy replaced color to Fill color'
+            Checked = True
+            State = cbChecked
+            TabOrder = 2
+          end
+        end
+      end
+    end
+  end
+  object StatusBar: TStatusBar[5]
+    Left = 0
+    Height = 29
+    Top = 766
+    Width = 1308
+    Panels = <>
+  end
+  object alMain: TActionList[6]
+    Images = ilMain
+    Left = 392
+    Top = 216
+    object actAddFile: TAction
+      Category = 'FileList'
+      Caption = 'Add File'
+      Hint = 'Add file(s) to the list'
+      ImageIndex = 0
+      OnExecute = actAddFileExecute
+    end
+    object actAddFolder: TAction
+      Category = 'FileList'
+      Caption = 'Add Folder'
+      Hint = 'Add all *.png from a folder'
+      ImageIndex = 1
+      OnExecute = actAddFolderExecute
+    end
+    object actRemoveItem: TAction
+      Category = 'FileList'
+      Caption = 'Remove Item'
+      Hint = 'Remove selected file from the list.'#13#10'(It doesn''t delete actual file)'
+      ImageIndex = 2
+      OnExecute = actRemoveItemExecute
+    end
+    object actClearList: TAction
+      Category = 'FileList'
+      Caption = 'Clear List'
+      Hint = 'Remove al files from the list.'
+      ImageIndex = 3
+      OnExecute = actClearListExecute
+    end
+    object actDeleteFile: TAction
+      Category = 'InputImage'
+      Caption = 'Delete File'
+      Hint = 'Delete input file from disc'
+      ImageIndex = 4
+      OnExecute = actDeleteFileExecute
+    end
+    object actOpenInpDir: TAction
+      Category = 'InputImage'
+      Caption = 'Open Folder'
+      Hint = 'Open input folder'
+      ImageIndex = 5
+      OnExecute = actOpenInpDirExecute
+    end
+    object actReplaceFile: TAction
+      Category = 'InputImage'
+      Caption = 'Replace File'
+      Hint = 'Replace file with current image'
+      ImageIndex = 6
+      OnExecute = actReplaceFileExecute
+    end
+    object actReplaceInpFile: TAction
+      Category = 'OutputImage'
+      Caption = 'Replace Input File'
+      Hint = 'Replace input file with processed image'
+      ImageIndex = 6
+      OnExecute = actReplaceInpFileExecute
+    end
+    object actOpenOutDir: TAction
+      Category = 'OutputImage'
+      Caption = 'Open Output Dir'
+      Hint = 'Open output folder'
+      ImageIndex = 5
+      OnExecute = actOpenOutDirExecute
+    end
+    object actSaveOutput: TAction
+      Category = 'OutputImage'
+      Caption = 'Save Output'
+      Hint = 'Save processed image in output folder'
+      ImageIndex = 7
+      OnExecute = actSaveOutputExecute
+    end
+    object actInputFlipH: TAction
+      Category = 'InputImage'
+      Caption = 'Flip H'
+      Hint = 'Horizontal flip'
+      ImageIndex = 13
+      OnExecute = actInputFlipHExecute
+    end
+    object actInputFlipV: TAction
+      Category = 'InputImage'
+      Caption = 'Flip V'
+      Hint = 'Vertical Flip'
+      ImageIndex = 14
+      OnExecute = actInputFlipVExecute
+    end
+    object actInputRotateCW: TAction
+      Category = 'InputImage'
+      Caption = 'Rotate CW'
+      Hint = 'Rotate image clockwise'
+      ImageIndex = 15
+      OnExecute = actInputRotateCWExecute
+    end
+    object actInputRotateCCW: TAction
+      Category = 'InputImage'
+      Caption = 'Rotate CCW'
+      Hint = 'Rotate image counter-clockwise'
+      ImageIndex = 16
+      OnExecute = actInputRotateCCWExecute
+    end
+    object actInputZoomIn: TAction
+      Category = 'InputImage'
+      Caption = 'actInputZoomIn'
+      ImageIndex = 19
+      OnExecute = actInputZoomInExecute
+    end
+    object actOutputZoomIn: TAction
+      Category = 'OutputImage'
+      Caption = 'actOutputZoomIn'
+      ImageIndex = 19
+      OnExecute = actOutputZoomInExecute
+    end
+    object actOutputZoomOut: TAction
+      Category = 'OutputImage'
+      Caption = 'actOutputZoomOut'
+      ImageIndex = 20
+      OnExecute = actOutputZoomOutExecute
+    end
+    object actInputZoomOut: TAction
+      Category = 'InputImage'
+      Caption = 'actInputZoomOut'
+      ImageIndex = 20
+      OnExecute = actInputZoomOutExecute
+    end
+    object actInputZoomAuto: TAction
+      Category = 'InputImage'
+      Caption = 'actInputZoomAuto'
+      ImageIndex = 18
+      OnExecute = actInputZoomAutoExecute
+    end
+    object actOutputZoomAuto: TAction
+      Category = 'OutputImage'
+      Caption = 'actOutputZoomAuto'
+      ImageIndex = 18
+      OnExecute = actOutputZoomAutoExecute
+    end
+    object actOutputZoomOrig: TAction
+      Category = 'OutputImage'
+      Caption = 'actOutputZoomOrig'
+      ImageIndex = 17
+      OnExecute = actOutputZoomOrigExecute
+    end
+    object actInputZoomOrig: TAction
+      Category = 'InputImage'
+      Caption = 'actInputZoomOrig'
+      ImageIndex = 17
+      OnExecute = actInputZoomOrigExecute
+    end
+    object actOutputBlackBorder: TAction
+      Category = 'OutputImage'
+      Caption = 'Black'
+      OnExecute = actOutputBlackBorderExecute
+    end
+    object actInputCutSelection: TAction
+      Category = 'InputImage'
+      Caption = 'Cut to Selection'
+      OnExecute = actInputCutSelectionExecute
+    end
+    object actOutputDefaultBorder: TAction
+      Category = 'OutputImage'
+      Caption = 'Default'
+      OnExecute = actOutputDefaultBorderExecute
+    end
+    object actProcessOutput: TAction
+      Category = 'OutputImage'
+      Caption = 'Process Output'
+      ImageIndex = 21
+      OnExecute = actProcessOutputExecute
+    end
+    object actInputTransparentPaint: TAction
+      Category = 'InputImage'
+      Caption = 'Transparent'
+    end
+    object actInputTransparentReplace: TAction
+      Category = 'InputImage'
+      Caption = 'Transparent'
+      OnExecute = actInputTransparentReplaceExecute
+    end
+    object actInputTransparentFill: TAction
+      Category = 'InputImage'
+      Caption = 'Transparent'
+    end
+    object actInputSelectionTransparent: TAction
+      Category = 'InputImage'
+      Caption = 'Selection to Transparent'
+      OnExecute = actInputSelectionTransparentExecute
+    end
+  end
+  object ilMain: TImageList[7]
+    Left = 336
+    Top = 216
+    Bitmap = {
+      4C7A160000001000000010000000161F00000000000078DAED9C0B5C4DD9DBC7
+      D7216618C665DC67983142185DA441A20B31422EB9260951514C4454926B8C41
+      EED7C83D92A22424A14938DD28A452BADF6FBA8BE77D9EDDDE39D5911AEFE77D
+      DFF9BF733E9FEF67EFBDD6F35B679DBDF7EF596BED73CADE7E1AB347D6AF9F3E
+      1159FC1964D7ADD363363653D8DAB593D98811728C8E794C2A2B8BA1BC3C0F4A
+      4A32A1A82805DEBE4D84C2C2371CF7EF5F058A417A0B7A82F6794C2B2ADEA22E
+      1B0A0AD2203B3B1ED2D3A32135350A525222C1C7E71CD08BE290DE82DEDA5A57
+      C0ACA2A2088A8B73A5B671F6ECBE6AC68DEB6D8730C2CA6A82C0D277EF4AB0EF
+      F99F6C83FA419F8562059DA5E56F02E69595A5505A5A586F1BA4A758416761A1
+      2D6051595906656545F5B641E79462059D999996C0F2F7EF2BA0A2A2A4DE36E8
+      BA50ACA05BB468A480E5FBF7EFE0DDBBB27ADB282DCD048A1574F3E7AB0AACF8
+      F0A1122A2BCB3FD9C6B2878630EAA622C8EFEDF0507D634FA6EAD08319180C11
+      B0FAF0E13D501F3ED586A6B722ACCA3586EF9D9B27753CD984B577666CD62C65
+      81D5001F505F59A78D65F71780868722A8238BB3A643D783CD92512B6E7F9C1D
+      51579765D3A62910D6747F7DF850B70DF54B4A30354DB30E6D0F3031C3D7D0A1
+      DDF15EEA630BFCAB761B163717C288D34A5524FE021DB6C8A47CFB27137FBB93
+      1D41790BA4D3D0A19D37428DD707A0F341E794DAA16BAB766C100C88EF06ED6C
+      9AA69286D7B6477EE9D9B3C58AFEFDBF71AC8F76D365C25BCC6F92F6F5F826B7
+      48C369B73D615588E7231B1AC8FC6A9DE363818D578B01AE14D60FC5506CB56E
+      EB2381CD970B002E647FA8178AA1D86ADDE62081AD1773DFC3D98CCA7AA1188A
+      ADD66D0A14D87E3EAB124EA5BEAB178AA1D86ADD867B023BCEA4BF03E7A4F27A
+      A1188AADD6ADF717D87522A51C0EC797D4CBA9F40AA058668F1AFB3B8CADBB2D
+      B0E7D89B52D81F53F4494E2497835DC06BA0584499D9E16D60EB2BB0FFD0EB12
+      707A592815AA5B7B2716D620745F523CE95AEC98C35AEC5ACCBE3DA21E25EFA5
+      04DAB78D6047647E1DF6BE2A0233F7306E5B56F616D8DAEB8710CEC3ED4F3667
+      ED4E74C9226F0F705700C7F09C3AEC7A5E088B2F89B96D7E7E2AB0D5578F228C
+      3C4C5E6E7BB84B36795BEE820287BAA7216C0CC9AAE68F67F9B0E07C30B7CDC8
+      88016675C51961E46169DEEEE3A200EB1F6754E3189E07F3CEFCC56D3F3CD204
+      B6C2CD0561E461F2722BC7CEB9E46DD9C3F21CAA67E782DDC3F46A3687E6C2CC
+      6377B86D918F3C30F333AE6CAA2DA58F96E4E596F69DF2C9DBBDF628C2862739
+      75D81A960FE3775FE5B66CE1016FA6613485D772FE9799D4EE4133934E6F6516
+      2BA731831D77EB658CD971C1FFF65F32FECFD5FD77FCFF77FC6FF0F84F6DD0FD
+      41B1A45152B26CD4F84F6D54541402C576E9B20B6FDF0B0D1AFF8D8DFF022525
+      1F8E41836E408B16C792518B63F7F9068DFF8306B981A161691D183BDCA0F17F
+      D1A26BD8C6219EC3F0F5D7AB53187340EDE6468DFF747F7CF8500E14FB77C67F
+      018A15FC8F6FC4BE14C64E23E71057E4920122FE04065531E7388D143DD58BAD
+      F14A585814D760D52A1C73B0AE2A46AA9ECA39ED9C394952B1B42C078AA98AAD
+      A1A763B19555254C9AF4823BFBB49544283335C5FC8BB1A4F9A83F21FEFDF732
+      D0D27A5CE30AD2B1B432EA0B693EEA8F8A274F7E094386DC855EBDDCB8B8D2D2
+      52F47B3ABC7EFD1A626262202E2E0EDAB53B069D3AB9C08001D781341FF507C5
+      3A3A4F4159F936C8CBFBC277DF9D84D0D05088888880E7CF9F436C6C2C6A4F20
+      A738BA77BF0CA4F9A8DF2B1E332614FAF4B90E1D3AB861CCA51ADAC4C444AE4C
+      A04B174F20CD47FD4EF1E0C10FA17D7B6FACF7AEA34D4D4D85CCCC4CAE8EE8D0
+      C10748F351BF5DACA4F414EBFC6BF5D99D83B4B9B9B91C14D3BEBD3F90E6A37E
+      0B5EBFCDE25EBDA88D6BBCF61A12CC738DD75695512C693EEA3723EBB18D75E2
+      2E5D2231C60789A8455519C554C56E96B87FE8F523A287E516E276EDA2411A54
+      5715F323A790D0CB209D91018C8DB0626CAE583A54C706225D4823A16F82B4E2
+      7342B7CFD0998F6DF2DFE1FD2F859F7798FC4D26DAD94D3585BFF922ED9A3593
+      CC28CFC29FAA003BD5009C3401F66903EC5607D83512E0D0048093FA00A70C01
+      AE3B0084A23FC517B8DC4C5A2BABF14B293783AB19C0E5E518630F10B017E09A
+      0DC08D4D55FB017B007C360084BB0364C502A43CE5F23969972F1F6B41F38640
+      AF4D9022BE08F0E216C0F39BB84592C371DF17751E00CFBC0062EE01A44501E4
+      BE01D29076C99251CB69DE347F833A2CDD3E0EFC6EE17BA54454C565C50064BE
+      AA3ACE4B02C87E0D909F0CC08DA36F81B43496D3983C7C6E57186FDE0F0CEC54
+      E194FB46B87BFF24C446FA424E622814A763FECB4FAAD296E402BC2BE5C671D2
+      CE9B376C65696936CCD06D0FFA533AC102FD1E6065AE08EBAC86C136FBD1B07F
+      FB6470396000EEA7CCE0F6953510F5E000E4BFF401D290565F7FF0AA92927438
+      6A32185C2C54E18295265CB51F0F7776CC82C7474DE0A5DB1A48F1DB0EF94F0E
+      4359F479789F7C153F972F9086B4386EAF292A4AADA1F75CA703B71CA741E01E
+      43083B6E063347ED0579591750EC730A94FA9E0165B9B33817F0861F7E58FF48
+      4BEB47FBF2F20C9C57257D1225A50B52C7FFAFBFFE235556F61B5379F9D65BEB
+      A34D1BFDB0E6CD57A4D5A659B3599EE8C3E60DF46D6D48D3FC8BC76EC7275534
+      76FD2FE83EAEFF376D8B2D02A3800C987737131C9E15C1F1A4F7703A156A703E
+      935BFF6FAAD66D0916D8E28E6B7BB7BC0F7020B10C963DCA81DF2E46C3E1D80F
+      353895827A8CADD66DFE4BC05172FD7F29EF3D689D8A00A7880238F8EA1D1C8A
+      79CF7132E903506CB56EE37D813F24D7FFB4AFE61C068E81891C075F55729C48
+      C47908C656EBD6DF15D829B9FEA77D95FD7FC196FB6F38F6BFACE038165F0914
+      CBADF96BAEDF9D24D7FFB43FC829003605C473EC7D5EC67124AE82D6EF4ED2D6
+      EF92EB7FDA57DCE9071BFCE3389C224B380EC594D758BFB335DE028724D7FFB4
+      3F70FB0D70C0F53EB1FB5931C781E8326E1E4EF19C6EB5A7C0315ADB4BAEF707
+      6CF182F57EAF387646BCE5D8F7A204B2B2E280E239DD4C9CCAAEBC4C9CA0B5BD
+      E47A5F6EA307ACBBF59263475801C79EA8E2AAF537C6733A7A4DB3676CF985B3
+      B4B6975CEFF7B17703BB9B2F39FE08CDE7D88DF725B7FEC6784E27CCA1171FB9
+      B60DD7F692EBFD3EEB2E62DF633884FE3B451603C532AD8513796D3B44968D59
+      7258C5E94EA1996F5CC5C627D9B005D7F9B8D6CE6393D70672CCFDD3BF1A8CE5
+      3455DAAA97BC36638B8E4C66C6878EFC60733160EAB990043667FB3DCEEB726A
+      5FE13EAB86626BBFA8CCF810630BF63166B84B9119FC69C7663BEEC59AAF50CF
+      3EA5BFB35E5D173191426F3F7B75766B9D3A4BDF68C432372FD0C8715C04B8E5
+      8E531D0C59B2BD01C39825EF0AE2A03433128A53C3E16D6208C4DEBF00548EF4
+      213DC522802420954848CAFAB97D498FF5CBCBB25F405E4210E4C4DE878C6737
+      E1A9CF511C675280EA90BE81F66359A29DBE46ACF574C02D8B5F3B5305F73D10
+      E66BA76E5596F312F21383ABDBB87F764B35E7576A9C4198A399058BB69ACAB6
+      982C65BE4BC7B2C8E5137510E663AB6E539E1B0D05294F6AB441FD789B140254
+      AF3B6F391B307D7D35D3A70F60DE66DAD406F3B2517728CF7B0585692175DAB8
+      71D307C748632FD49848827AD969D3FAB3A953E598E75A75C78AFC18789B1156
+      A78D3397AF4278420E3C7A9502412F9220302A115CAEDE07D49A20B2A4BF62AD
+      BEABA220068AB222EAB471CACD03C2E33321303216EE3D7D05FE612F60FF391F
+      6EEE835A53A4B7DB6AF5031585B1509CFDB44E1B272EBAC3B3C41C78F832A1BA
+      8D8DFBCE56D37EF08C2D6757689C7F5FF406A80DEA077D163A1F744E8FBB7AC0
+      8B947C78129B5CA30DEA077D965E3A96BF5B4D553C70D442E3AE34F467CF8A8D
+      C92884D0F8B43A6D04BD48869FC658ACE49F81491D23BB8D98B7F97576313C4D
+      CAAAD3069DD3EEA3CCAC43A70D6288CE09CDBECC62E00FECD94C15B64CBE3BEB
+      A0309E755337B649CC2B83E7697975DA10C7A603D53F9F3D84211ED1FA435562
+      0D54691F70ABD17EE06FACF3F079F6C90515109D5958A78DF0F82CA0FAF8B9C3
+      5982A15ADF37F34684209548024293FAB66D95F4B66616BD076A2331AF14E8B3
+      D0F9A073FA22A510A89EF418CF928C46B294051A2CD3580BDC75943450FF53B3
+      EF956D9AF7D2DAF729B07ED53F74FE3F51786E696BDBF8F93F6910D2D273C325
+      341E966C1906258E6A50B2430B4AFED0C0FD1150E234018A0FCD8262E70550EC
+      77101EDE70819B375D61C50A1D737A76B670E108B672A50ECEFFCBA1F4FC7228
+      71B781129FED50E2BD05D986FB3BA0F8DA1628F67284E2C83BE0E979927B7F7D
+      7D9555B3670F56D1D5EDCF962DD3B678F70EC7D6FDF3C0FFAA239488AF40A9D8
+      134A9E0740F6230F88F13F0741BE67C1EB8A33B8BA1E828C8C14AE0DD4AE9D38
+      B1DF105353CDDF2B2A0A60E292FE60B86618DCBAF62714460741D1F37B501227
+      86F2D468A82CC8840FEFCAEB9C8751A37EB25FB060F88AB2B21C50D76D0BBFCD
+      E80AB316C9C1129CBB6FDF3E035C8E5A82EB990D70E1CC367039B1030E1F76C4
+      B57C22A71D36ACF34655D52EC3E7CCF9D5AAA4240376EBF78343460A707AC930
+      B8623D06FCB7CD80D0A3A6F0FAF25AC8BCBD0D0A1F1D803D7B1C38AD82429BAD
+      8A8A6DD5B00DCCA58AD6C5C5A97078BE229C341D02172DD5C1CB761CDC759C0E
+      21FB8C20DAC50252700D90E7B311CE1F5A073B76D8808E4E1F5B4DCD1FD99831
+      BD88759F9BBF4B42B1A4E1B54C56B69509F5A731A0C6B45BB7968CE0C6D7AAF5
+      7843E7ED5D784D8D6700FF54B2B62C64D95B8D03686E90BB6DF162DA36649F34
+      A44D5E3F97E0CA1B0369488BFBACB15A0998D8449B68F4FB9386B4FE7386118D
+      D69386B45FDAFFCBBFF5211AFDFEA421ADDBE89F8946EB4943DA2FEDBFEFB8BE
+      44A3DF9F34A4FD6BD240A2D17AD290F64BFB3FA4731B166FA8D6E8F7270D69F1
+      D5C34347E971C6424DAE0DDA36649F34A445DAF0CFF41AFBFCA033AF65225D13
+      26ED25D29BC7A64C99C22112A5109D44A208ACF1E2D167D2F4A4139DF7E790D0
+      AB89446FAE8844618E1FF55E35F523F5AA7592FAC99327F7D1D4D45CBE6AD507
+      183B363183B12BA3115605EA176D65CCEE1C476DBDA07DFFFE3D5CBE7C398AB1
+      4B8155DF1FF0D8D5A486FEDC1D75D1D16BDE53835E80F225BFFC162D5A6C1389
+      EC50E7F2914FE979AD6D7A394CBE1799C9966F7D20D34396356932F5F37A295A
+      B6C48135F955F3F3FA4F6899A93DA71789FA555FA735DA38CDB43A5AC5AAE358
+      E0D2A3B58DF3BAC571B930F8B44FBAA4960D56AF737F707AF3DD552CDB2B1299
+      EFDE28CE0510CD58E1229A6C662332B695AAABA1FFF5370EBC867F9E8F4A05D1
+      54F30BA2E1BAE3447D07B3CFBD387DD58BEE67104D32BD24EAD04D07F77BD3FC
+      17F99E7F4ED68E7FE6FD15FFAC5DF4637B0D4E7F6431B009CA0EADC70F72E8AA
+      A3E4D0799CA243C7DF141CBE1B3BD0A1ADF62F0EDF8E1EE0F0CDA87E0E2D34E5
+      1C9A6BF4759051EFE3D064646F0791CD5810F4018717011C5C08B07F3EC0DE79
+      004E730176EA03FC311360DB74802D5301364E02709808603F1EC06E1C00EA01
+      F501A8872FD0C397BE3F9DBC4E9D3AE13C6CBA2483274C98B0B44F9F3E23E4E4
+      E458B366CDB8938CF73FB31EADCC568F1A547D0DA468D9B469D34CC68F1FCF3A
+      76ECB8A9478F1E8B9B366DAA20E82967E2D8CF92D6CD612BD4E5EB68093D3DBD
+      8563C68C596C6D6DCD7D6F83525344A5B69E90A257206D76763690FEE1C38790
+      998AF79548B4B565CB96233FA3E7B4191919F0E0C1034EEFE6E6063ED7AE417C
+      6828E067DD1A6B3F2F0FE72DDBA5E8392D7DD7151D1D0D478E1C01B1580C3BB7
+      6F87CBCECE70CDC505726262C06ECA28B7F8B53321CE7ABA7ECC2A3DA6ABABCB
+      41DAA4A4244E4B7D3E7DFA34609B7010F5A40DF2F686E2E464D0D6D65E1E6636
+      16906884D1F521E83CC7C7C7735A3F3F3FAECFC2FB92B6302181D3623E54BC3D
+      5D1978B86B42E03556C07364F23028A88E36372E0E3434342C545454D4D6E90C
+      63AE5A3F010F776F10788D3137355146AC7D5D5DABB5992F5F82ACACACB98282
+      82D2800103D821A536041C53F9CE01A9396E88444C464646F5ABAFBEB20FF3F7
+      879467CFA055AB56B6C810EA23BD645B3661633B3475A02DBD262A3B08F236BC
+      DFFB615F66603B7F10B83F13CB94ABBE5B631DF85CD0931F3B39FFAF9810C0D0
+      FF5FA3FFBFE5FDDF15FDDF0DFDDF0DFDDF0DFDDF0DFDDF09FDDF12FDDF02FDDF
+      6E84AC431BB55E0EFF78FFCB2C0860320BEE2201A6C80E615E5E555E1F77055D
+      15F3FD779E8F7E4FCFF860C412D7C6E8B9F795997F47ECF2AC02E8191F775C3F
+      A6D57AFE7DB57745C289883288B0180FA7222BEA85340869D9C3859A017FCD57
+      87454676E9C7424B81F6EB83FA2863E4B71B610496B17D86FAACA981F7A1438F
+      8BE0F64C95EADF6FD486EAA88F32F36EED4118616CB88635D5BF4A1CDDFFB010
+      AEEAFEC23D9F870378918EE3C53BAA07E0620070D19CABA33E3635BCB11F611C
+      B3AF08383B3DC887CB637B73BF39117B6D84CA084F80486F80E83B00616E5C1D
+      F591FA8A308E996E022E3B0372694E0F1515C5A067A504FB4E2D83ACD7C1509A
+      1605EF3363B83AEA23F595EF336B32FD82C0D9ED7ED97045BB17F77B1DA3993F
+      80C5A27EB0D94E138EED9D0D9E172CB93AEA23F595FA3C5FCF8235D13B23E0BA
+      F566265CC73ED2F70BC7CD7E05D7555AE08B37EF63BCC15F5FB1E5EAA88FD4D7
+      5DBA3AECEEC401ACC9E49302EE9B6FA40396D50BF571FE14D302DABFA7FB4B80
+      48672FE3B9B5F17A1A6CF0FE344FF49480FA286F750BB759401A2E6FFD3C9A89
+      463BEE178DDA1A541FF46C90FAD864E2E11CAE0C3524E7E72494E0BEE57FCF43
+      73F3AEB5E7ECF45C50E27D5BF31AD27FCDE7B5EFF9EF15E8370283F8BC578DC7
+      F84162EE7D95171DE7DB6CBF7EFDFA89C8E2CF30D1DEDE9E656C9ACF8DBF941F
+      D236CCE3D6EE363636269F7BDE463107EDAC48CF7D8740ED087A2B2B2B539A9B
+      BBBBBB4B85EA28E6F25A53C6AFF913904A2424C9DEA0AFB9B9B959797939DCBE
+      7DBBCEFB5219D551CCF6DF4D58BCCD2C8D68ABA9F0DA6616C33CA382FB1EC6C6
+      C64B4A4A4A202020A08E9ECAA88E6210E6B9CE9C45594E6257EC96B2BB2BF559
+      D892DF740C0C0CCC0B0A0A203030B05AF70CC72D3A26A88E62D6AC59C31C1C1C
+      6AB0DF66059B3A75AA05CD71828383ABF5B44FBA9C9C1C6EFEB360C1820B9FBA
+      2EE3C68D5B46BF8F79F2E4490DA86CF1E2C5DCD6D3D3F393D765E8D0A1963457
+      A2DF1A4983EA54555561F8F0E13510AE4BD7AE5D67E13C6F556D949494AE3839
+      3901CE4D404D4D0D70DE510DBE67F57559AEFC336BDDBA750D7AF5EAC584EBA2
+      ACAC0C3A3A3A35A032E1BA044F51D009C379CC69ED01F41C9F9D1B3B90E1F966
+      C275919797072D2D2D8EC1830773C784705D9ECE18EC1135EB579568FDA10CF7
+      01B71AABA64FACBE2EFDFBF7E7FA4FD0BEE475A198D77387F7C5B57C08528924
+      D0BA7EFFB4514CB82E3887AE81E475A1188C67C3BAB4E57200ADEB55BBB69D44
+      F394865C178AE1E73E4DF81C40B9A33BD2B77DFBF60BA55D174930C6F07FFBF9
+      E1ADD583A4D1E2B6B5F270DAE7B72DA4C591FEE62AA53A609D0A62C0C7D15645
+      5A1CE96FAC54A881AF95624BFFF51A73716B88D0B1217FDCB2762CE9AF5B0EAC
+      81CF0AF921B1B78EECC6AD1142C746FCF190DAB1A4F75A3E40926F6EDAAA2D28
+      CD4B0DF2FEFD978508A32D1D5339D54BC693DED35CAE9AAB16FD545F7AEFD955
+      9C191F8CFB8B102A5B44C7544EF592F1A4BFB2A48F402BEF55BF9AE4273EF329
+      4C79F1C063695F5384D136E3E9ED8B69613ECEDE2B9517539CA021BD9B492F8E
+      CBA6B2239F796CDF9D1915E099FDE281371E2F45A87C697AB8EFE5370FCE1D0B
+      7775D846718286F4EB743AB3F30B7AB476B718B82CF3F9FD2B8981E74F653CF3
+      F3BAB0F0474B84D136E3A99FD79B07674FA687DF747537FF6519C5938EF4FDBA
+      7CC55C0CBA8C119FB33F90FD32D02F33EAAE6F42909B3B96AD45A86E2D1D63BF
+      7CA95E7C6EDD018A271DFFDBB9EF7E57FF76DED119EDD74B82650B698CA4AD94
+      3A235A3FF0FA967FE3F91B7D07D0E69FFEEC5F12BA9E744FD07D756D597FBA6F
+      E9DEE77CC27BB2257A79B0E0EB46E85BA2F77EBD63AF6E10EDB5731BEE93171B
+      A2FF063D36F4B69D9A51B4B7D31F59CFEFBBD3F5C7B2F982F73EA1FF067D32FC
+      C69A61C62FAFEFDD959F18799DEE69BA2FE91E127C2545FF8DBB59EF11E821D3
+      973E07F695E6A63C24DF9197B2D00F744F273DF270C31833A48EFEE2A29EE3F8
+      7BBE5E28EED2E29FA5F69FCA3F07EFD53A7AF4F968DEF39F63B4E07D49B08CFB
+      FC5E562A662F7CF6EF173E3FE50EF23F7998FFFC4BA57D7E6A93FA85FD6B85FD
+      1CE96939C83CD273E7BED4D0EBCE943BC8FF74FEB16E99B4CF3F53E53B366370
+      7B0E57E39FD8B9F9DD5B9D35FA41EBA2999CE5933336BBD2C27D5DE9FA639915
+      22E537EC755F53145AB3C9F2AD5A9FD0EF34E6CCC25ED68FCFD81EC27D5BB9CE
+      CD3FA517F1BFE7A3B979477E2CA66791BF746F2B33C454B5D55C4BF5D67369DE
+      5E8FBE29FF9CF21BFE99C677FC334C613D40C7CDFE53F2C629DDC1EC88AE0A13
+      9B8EE18830D76151BFEBB238EBE9DCEF8BE8373BF49B235C739CC73543572A93
+      44D0D5D693EE8DED6CC0AD46FCDA99DC3EB297DA95A4B61EE7F47DB18D10A412
+      494080DAA4ED53CBC9B958FF7D08C6090418A8D6C623D068A44AB0B116ED036E
+      35EEE31C8FF6A34F3886E376EF9DD94398C0F5290AB5D1A1723F5315E66BACC4
+      E5C16BBA1C50F0E679E0F569CAB957270EF8DE73427F46E0FDC82ECEEDC93C0D
+      70AC9F8B796FD6402E07E2FC4084DA7E8886C71C39E63646164AF3D32343F6D8
+      44E1FE5E84CA383DF9813C45FEE373E07798E3263D3A62BA96F29DE7EC3ECC1D
+      D7FE6FD36383F3E2C2833CC6C9E57A68F7FADEB3AE5E06F5C37C6DD597243C70
+      3D5A98FC22088FCDBCF4ABBEE3CB4F88B897FFE6E9BDA7BB563DC3E3BD7EE3FB
+      49EA7F72339135129F5EE3981D1D743535E4FAA5CC48FFEB586E71133F1BCEF3
+      2129E8D2F9189F3DFB33C2FDBC83A729E53E9EAAF83DEA5B9D36EC36C9DB7694
+      6D72888F7B6EDC93FBA8F3C5F98AD7EB7B675DB16EB53FEA715E0F6977CEDE4D
+      0BBD7E2DEBC5FDDBC9471D22B16CAF95669B19C7667E67FF292CD5BF5D40BEBB
+      ACA3E89D86F37349DC7514DD85BFDFF9BBDFBFFD27CD01FE0EB5FD4C1E27AF93
+      E7C9C354463E254F930F6BFBB5B69FC9E3E475F23C799FCF019FD44B7A99BC4D
+      1E97F43C9F03281784506EA8AD97F432799BF73890E7C9FB7C0E6094132837D4
+      CE17828FC9D3E46DF238799D3C4FDEA71C40B980CF153AB5F385E063F234799B
+      3C4E5E27CF93F72907502EA09C40B9817204E50ACA19E43DF23079993C4DDE26
+      8F93D7C9F3E47D3E074CA29C208CD1E475F22CE9C9C3E465F234799B3C4E5E27
+      CF93F72907502EA09C40B9817284A49E3C4C5E264F93B7C9E3E475F23C799F72
+      00E502CA09941B284750AE10F4E461F232799ABC4D1E27AF93E7C9FB94032817
+      504EA0DC4039827205E50CCA1DE8E14BB57D4D5E278F92F7EBCB0D2B35DBCCFE
+      A7FB5F78FDFA4307E6326D38E713027D43E3AE5CF6566367241EA9E0B7CE544E
+      F514B77468DF1A3A81789B5953DEAC9B139FE2B23138E7D1F55B4569B1C18591
+      7F05645CD8F998CAA99EE2426A7990F7A15CC4B209F16FAE1EF4CD7A1978BF24
+      3B31A42427399403F7936F9CBC15B16C623CC549197F09E7889DCB83735F8BC3
+      CBF2D393DE9514A64952941E17F5D4C9EA31C5F1636B6DE2E37C9C6F1465C425
+      F05EAC0195C7FB9DF3A33809FF49529116763380E2A43D777B5752909AF5FC41
+      10C5A1D79814E25FDF70B94D7AF2626D48FFC6FFD27D8AE37F3F531BE7B0AD4B
+      43F212C29F5614E5A6D4FEFC784E5E45EC58F994E2B4B4B4988686061B397224
+      1B31620453535363665A43541FE80D4A4FF03A11F23635FA49F5B9474AF35223
+      32EF7A3E7E344D393E68B2BC5C6DFDF0E1C37FC43656FAEDDB06E1B35533D30E
+      6F785A14F9E849596EDA8BA2A8C7E20CE76DCF5F19AAC5BF983D648A584F8949
+      EA51D77FEC9831767EBEBED0A963C74D9B55FB8C443F3A23F14805BF754E9EAF
+      2E47CFEB24F5F8DE43F5A64CD92A0E0C849F7BF6FC534646A6B795F2CFF47BD8
+      3AA09E9D1D3D8029776C2DBCF778632323A7B888085094973F885A65FA3E93BE
+      8F5C35A8671D245F3D7AF46043860CB1CA7CF50A46A9AB9F40ED68D235E2F575
+      C78E1D4777E8D061336A97E2B102FFB7B972FCB3FC1FA5FC8E819EF535E39FFB
+      C948E49FAEFCB3854EFC779DF43CB02DFFBDC2377CAE6ACE6B9AF2EB8DFFB3FE
+      4FF3BB105C9C999050519C9F2ADCBBB49FEE7F29B821FE27FFD0F84B94E76583
+      B05F9A939CD818FFA387F2699FB68DF57F694E0650BFC93BB4AD3A6E9CFFDFBF
+      2B7F4B5ADA36C6FFC5596F12F9DFC941594E2608FB15C579690DF17F8A9F7B4C
+      F9DBECD41AF9A3AC2833FBC1F5C87FFDFF9FE1FFDABE6DACFF3FC57FE7F85F56
+      90F18AEEBDF2C2AC98C68CFFE94F6F071424450593967C2FF8B030F9797043FC
+      4FF30749DF0B7980CA1BEA7F9A8BD7A6A1FEA7F7A158C1F7421E282FC87AD510
+      FF6746DD7D509C11FF8434E47BE1F3E3390C6DCCF84FE75D38FFFF8EFFFF8EFF
+      FF94F9BFE07FC9F9EBDFF17F6DFEA7FD5F7BFEDE58FFD7FEFC8DF5FFBFF3FFFF
+      5CFFFFFBFF3FFEFFFDFF8F4701E93079720A686BAFDCD7D8FFFF9116FF128E1D
+      F103073C15AD5B9F896BCCFFFFD87A710B1C755ACDFD6F231B9B83A0A636EF48
+      43FFFF87CFFD5330CECD1DD6A696C2BEEDCB212CEC4183FFFFC7B9739B61D4C9
+      539C5663F73EB8736D0F9086B49FFBFF1F3E71CFE1B76B7739ADFA7157F0890C
+      ADFE3B42D2D6F7FF3F7A6B281C6EB1655F2C69BF5EE1F0A6BBF6D00B92F5A4AD
+      EFFF7F88166EDA195D04205AEBF417D35B3855DAFFFFF84C6EA1BF897013CDB3
+      1EC1F48CA506FC17C4CACF82
+    }
+  end
+  object OpenFilesDialog: TOpenDialog[8]
+    Title = 'Select files'
+    Filter = 'PNG files|*.png'
+    Options = [ofNoChangeDir, ofAllowMultiSelect, ofPathMustExist, ofFileMustExist, ofEnableSizing, ofViewDetail]
+    Left = 392
+    Top = 296
+  end
+  object SelectDirectoryDialog: TSelectDirectoryDialog[9]
+    Title = 'Select a folder'
+    Filter = 'PNG files|*.png'
+    Options = [ofNoChangeDir, ofAllowMultiSelect, ofPathMustExist, ofFileMustExist, ofEnableSizing, ofViewDetail]
+    Left = 392
+    Top = 376
+  end
+end
