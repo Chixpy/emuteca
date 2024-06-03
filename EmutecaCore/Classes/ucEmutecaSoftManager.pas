@@ -1,5 +1,4 @@
 unit ucEmutecaSoftManager;
-
 {< cEmutecaSoftManager class unit.
 
   This file is part of Emuteca Core.
@@ -29,18 +28,18 @@ type
     FFilterGroup: caEmutecaCustomGroup;
     FVisibleList: cEmutecaSoftList;
     FFullList: cEmutecaSoftList;
-    procedure SetSystem(AValue: caEmutecaCustomSystem);
-    procedure SetFilterGroup(AValue: caEmutecaCustomGroup);
+    procedure SetSystem(const AValue: caEmutecaCustomSystem);
+    procedure SetFilterGroup(const AValue: caEmutecaCustomGroup);
 
   protected
     procedure ActLoadStrLst(aSoftLst: cEmutecaSoftList; aTxtFile: TStrings);
 
   public
-
     property System: caEmutecaCustomSystem read FSystem write SetSystem;
-    property FilterGroup: caEmutecaCustomGroup
-      read FFilterGroup write SetFilterGroup;
+    property FilterGroup: caEmutecaCustomGroup read FFilterGroup write SetFilterGroup;
 
+    property FullList: cEmutecaSoftList read FFullList;
+    {< Actual list where the software is stored. }
     property VisibleList: cEmutecaSoftList read FVisibleList;
     {< Filtered soft list }
 
@@ -58,12 +57,8 @@ type
     {< Saves soft common data for importing.
     }
 
-    constructor Create(aOwner: TComponent); override;
+    constructor Create;
     destructor Destroy; override;
-
-  published
-    property FullList: cEmutecaSoftList read FFullList;
-    {< Actual list where the software is stored. }
   end;
 
 implementation
@@ -72,9 +67,9 @@ uses uaEmutecaCustomSoft, ucEmutecaSoftware;
 
 { cEmutecaSoftManager }
 
-constructor cEmutecaSoftManager.Create(aOwner: TComponent);
+constructor cEmutecaSoftManager.Create;
 begin
-  inherited Create(aOwner);
+  inherited Create;
 
   FFullList := cEmutecaSoftList.Create(True);
   FVisibleList := cEmutecaSoftList.Create(False);
@@ -94,7 +89,7 @@ begin
   FullList.Clear;
 end;
 
-procedure cEmutecaSoftManager.SetFilterGroup(AValue: caEmutecaCustomGroup);
+procedure cEmutecaSoftManager.SetFilterGroup(const AValue: caEmutecaCustomGroup);
 var
   i: integer;
   aSoft: cEmutecaSoftware;
@@ -139,7 +134,7 @@ begin
   i := 1; // Skipping Header
   while i < aTxtFile.Count do
   begin
-    aSoft := cEmutecaSoftware.Create(nil);
+    aSoft := cEmutecaSoftware.Create;
     aSoft.CommaText := aTxtFile[i];
     aSoft.CachedSystem := System;
     aSoftLst.Add(aSoft);
@@ -156,7 +151,7 @@ begin
     ProgressCallBack('', '', 0, 0, False);
 end;
 
-procedure cEmutecaSoftManager.SetSystem(AValue: caEmutecaCustomSystem);
+procedure cEmutecaSoftManager.SetSystem(const AValue: caEmutecaCustomSystem);
 var
   aSoft: cEmutecaSoftware;
   i: integer;
@@ -295,7 +290,7 @@ begin
         end
         else
         begin // Creating new soft
-          aExpSoft := cEmutecaSoftware.Create(nil);
+          aExpSoft := cEmutecaSoftware.Create;
           aExpSoft.ID := aSoft.ID;
           aExpSoft.ImportFrom(aSoft);
           // aExpSoft.CachedSystem := aSoft.CachedSystem;

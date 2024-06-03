@@ -249,7 +249,7 @@ begin
     if assigned(aFileList) and (aFileList.Count > 0) then
     begin
       // Open first file
-      aTagFile := cEmutecaTagsFile.Create(nil);
+      aTagFile := cEmutecaTagsFile.Create;
       aTagFile.LoadFromFile(aFileList[0]);
 
       i := 1;
@@ -554,10 +554,10 @@ begin
   inherited Create(aOwner);
 
   // Creating components
-  FConfig := cEmutecaConfig.Create(Self);
+  FConfig := cEmutecaConfig.Create;
 
-  FSystemManager := cEmutecaSystemManager.Create(Self);
-  FEmulatorManager := cEmutecaEmulatorManager.Create(Self);
+  FSystemManager := cEmutecaSystemManager.Create;
+  FEmulatorManager := cEmutecaEmulatorManager.Create;
   FCurrentGroupList := cEmutecaGroupList.Create(False);
 end;
 

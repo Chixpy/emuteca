@@ -1,13 +1,6 @@
 inherited fmETKGUIFullEmuEditor: TfmETKGUIFullEmuEditor
   inherited pButtons: TPanel
     TabOrder = 2
-    inherited chkCloseOnSave: TCheckBox
-      Left = 47
-      Width = 57
-    end
-    inherited bSave: TBitBtn
-      Left = 151
-    end
   end
   object pcProperties: TPageControl[1]
     Left = 0

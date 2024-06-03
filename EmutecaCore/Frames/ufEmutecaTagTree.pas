@@ -162,7 +162,7 @@ begin
   if not FileExistsUTF8(pData^.Folder + pData^.FileName) then
     Exit;
 
-  aTagFile := cEmutecaTagsFile.Create(nil);
+  aTagFile := cEmutecaTagsFile.Create;
   aTagFile.DefaultFileName := pData^.Folder + pData^.FileName;
   aTagFile.LoadFromFile('');
 
@@ -226,7 +226,7 @@ begin
   if not FileExistsUTF8(pData^.Folder + pData^.FileName) then
     Exit;
 
-  aTagFile := cEmutecaTagsFile.Create(nil);
+  aTagFile := cEmutecaTagsFile.Create;
   aTagFile.DefaultFileName := pData^.Folder + pData^.FileName;
   aTagFile.LoadFromFile('');
 

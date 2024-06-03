@@ -127,7 +127,7 @@ begin
   if EmulatorID = '' then
     Exit;
 
-  aEmulator := cEmutecaEmulator.Create(nil);
+  aEmulator := cEmutecaEmulator.Create;
   aEmulator.ID := EmulatorID;
   aEmulator.Title := EmulatorID;
   aEmulator.Enabled := True;

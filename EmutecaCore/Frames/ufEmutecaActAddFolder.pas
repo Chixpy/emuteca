@@ -85,13 +85,9 @@ begin
   FEmuteca := AValue;
 
   if assigned(Emuteca) then
-  begin
-    fmSystemCBX.SystemList := Emuteca.SystemManager.EnabledList;
-  end
+    fmSystemCBX.SystemList := Emuteca.SystemManager.EnabledList
   else
-  begin
     fmSystemCBX.SystemList := nil;
-  end;
 
   fmSystemCBX.SelectedSystem := nil;
 
@@ -172,7 +168,7 @@ procedure TfmEmutecaActAddFolder.SaveFrameData;
 
     if not Found then // Create soft
     begin
-      aSoft := cEmutecaSoftware.Create(nil);
+      aSoft := cEmutecaSoftware.Create;
       aSoft.Folder := aFolder;
       aSoft.FileName := aFile;
     end;

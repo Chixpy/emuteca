@@ -4,8 +4,8 @@ inherited frmETKGUIMain: TfrmETKGUIMain
   Top = -9
   Width = 1042
   Caption = 'Main'
-  ClientHeight = 849
-  ClientWidth = 1350
+  ClientHeight = 747
+  ClientWidth = 1042
   Menu = MainMenu
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate

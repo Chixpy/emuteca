@@ -4,7 +4,7 @@ unit uaEmutecaCustomSoft;
 
   This file is part of Emuteca Core.
 
-  Copyright (C) 2006-2020 Chixpy
+  Copyright (C) 2006-2024 Chixpy
 }
 
 {$mode objfpc}{$H+}
@@ -30,17 +30,14 @@ type
   private
     FCracked: string;
     FDumpInfo: string;
-    FDumpStatus: TEmutecaDumpStatus;
     FExtraParameters: TStringList;
     FFileName: string;
     FFixed: string;
     FFolder: string;
-    FGroupKey: string;
     FHack: string;
     FModified: string;
     FPirate: string;
     FPublisher: string;
-    FSHA1: TSHA1Digest;
     FStats: cEmutecaPlayingStats;
     FTrainer: string;
     FTranslation: string;
@@ -48,16 +45,13 @@ type
     FZone: string;
     procedure SetCracked(AValue: string);
     procedure SetDumpInfo(AValue: string);
-    procedure SetDumpStatus(AValue: TEmutecaDumpStatus);
     procedure SetFileName(AValue: string);
     procedure SetFixed(AValue: string);
     procedure SetFolder(AValue: string);
-    procedure SetGroupKey(AValue: string);
     procedure SetHack(AValue: string);
     procedure SetModified(AValue: string);
     procedure SetPirate(AValue: string);
     procedure SetPublisher(AValue: string);
-    procedure SetSHA1(AValue: TSHA1Digest);
     procedure SetTrainer(AValue: string);
     procedure SetTranslation(AValue: string);
     procedure SetVersion(AValue: string);
@@ -72,29 +66,15 @@ type
     procedure DoSaveToStrLst(aTxtFile: TStrings; ExportMode: boolean); virtual;
 
   public
-    property SHA1: TSHA1Digest read FSHA1 write SetSHA1;
+    {property} SHA1: TSHA1Digest;
     {< SHA1 of the file. For searching in SHA1 DB. }
 
-    function SHA1IsEmpty: boolean;
-    function MatchSHA1(aSHA1: TSHA1Digest): boolean;
-    function CompareFile(const aFolder, aFile: string): integer;
-    function MatchFile(const aFolder, aFile: string): boolean;
-    function MatchGroupKey(const aGroupID: string): boolean;
-    function CompareGroupKey(const aGroupID: string): integer;
-    function MatchGroupFile: boolean; virtual;
+    {property} GroupKey: string;
+    {< ID of the CachedGroup. }
 
-    procedure LoadFromStrLst(aTxtFile: TStrings); override;
-    procedure SaveToStrLst(aTxtFile: TStrings); override;
-    procedure ExportToStrLst(aTxtFile: TStrings); virtual;
-    function ExportCommaText: string;
+    {property} DumpStatus: TEmutecaDumpStatus;
+    {< Merged Verified, good, bad dump, etc.}
 
-    procedure ImportFrom(aSoft: caEmutecaCustomSoft);
-
-    constructor Create(aOwner: TComponent); override;
-    destructor Destroy; override;
-
-
-  published
     // Basic data
     // ----------
 
@@ -102,10 +82,6 @@ type
     {< Folder or archive where the file is in. }
     property FileName: string read FFileName write SetFileName;
     {< Filename (or file inside and archive). }
-
-    property GroupKey: string read FGroupKey write SetGroupKey;
-    {< ID of the CachedGroup. }
-
 
     // Release data
     // ------------
@@ -124,9 +100,6 @@ type
 
     // Version flags. (Based on Cowering + TOSEC)
     // ------------------------------------------
-    property DumpStatus: TEmutecaDumpStatus
-      read FDumpStatus write SetDumpStatus default edsUnknown;
-    {< Merged Verified, good, bad dump, etc.}
 
     property DumpInfo: string read FDumpInfo write SetDumpInfo;
     {< Number of alternate, bad dump, etc. }
@@ -167,6 +140,23 @@ type
 
     property Stats: cEmutecaPlayingStats read FStats;
 
+    function SHA1IsEmpty: boolean; inline;
+    function MatchSHA1(aSHA1: TSHA1Digest): boolean; inline;
+    function CompareFile(const aFolder, aFile: string): integer; inline;
+    function MatchFile(const aFolder, aFile: string): boolean; inline;
+    function MatchGroupKey(const aGroupID: string): boolean; inline;
+    function CompareGroupKey(const aGroupID: string): integer; inline;
+    function MatchGroupFile: boolean; virtual;
+
+    procedure LoadFromStrLst(aTxtFile: TStrings); override;
+    procedure SaveToStrLst(aTxtFile: TStrings); override;
+    procedure ExportToStrLst(aTxtFile: TStrings); virtual;
+    function ExportCommaText: string;
+
+    procedure ImportFrom(aSoft: caEmutecaCustomSoft);
+
+    constructor Create;
+    destructor Destroy; override;
   end;
 
 implementation
@@ -193,25 +183,12 @@ end;
 
 procedure caEmutecaCustomSoft.SetCracked(AValue: string);
 begin
-  AValue := CleanInfo(AValue);
-  if FCracked = AValue then
-    Exit;
-  FCracked := AValue;
+  FCracked := CleanInfo(AValue);
 end;
 
 procedure caEmutecaCustomSoft.SetDumpInfo(AValue: string);
 begin
-  AValue := CleanInfo(AValue);
-  if FDumpInfo = AValue then
-    Exit;
-  FDumpInfo := AValue;
-end;
-
-procedure caEmutecaCustomSoft.SetDumpStatus(AValue: TEmutecaDumpStatus);
-begin
-  if FDumpStatus = AValue then
-    Exit;
-  FDumpStatus := AValue;
+  FDumpInfo := CleanInfo(AValue);
 end;
 
 procedure caEmutecaCustomSoft.SetFileName(AValue: string);
@@ -221,10 +198,7 @@ end;
 
 procedure caEmutecaCustomSoft.SetFixed(AValue: string);
 begin
-  AValue := CleanInfo(AValue);
-  if FFixed = AValue then
-    Exit;
-  FFixed := AValue;
+  FFixed := CleanInfo(AValue);
 end;
 
 procedure caEmutecaCustomSoft.SetFolder(AValue: string);
@@ -232,22 +206,9 @@ begin
   FFolder := SetAsFolder(UTF8Trim(AValue));
 end;
 
-procedure caEmutecaCustomSoft.SetGroupKey(AValue: string);
-begin
-  AValue := UTF8Trim(AValue);
-
-  if FGroupKey = AValue then
-    Exit;
-  FGroupKey := AValue;
-end;
-
 procedure caEmutecaCustomSoft.SetHack(AValue: string);
 begin
-  AValue := CleanInfo(AValue);
-
-  if FHack = AValue then
-    Exit;
-  FHack := AValue;
+  FHack := CleanInfo(AValue);
 end;
 
 procedure caEmutecaCustomSoft.SetID(AValue: string);
@@ -274,35 +235,18 @@ end;
 
 procedure caEmutecaCustomSoft.SetModified(AValue: string);
 begin
-  AValue := CleanInfo(AValue);
-  if FModified = AValue then
-    Exit;
-  FModified := AValue;
+  FModified := CleanInfo(AValue);
 end;
 
 procedure caEmutecaCustomSoft.SetPirate(AValue: string);
 begin
-  AValue := CleanInfo(AValue);
-  if FPirate = AValue then
-    Exit;
-  FPirate := AValue;
+  FPirate := CleanInfo(AValue);
 end;
 
 procedure caEmutecaCustomSoft.SetPublisher(AValue: string);
 begin
-  AValue := CleanInfo(AValue);
-  if FPublisher = AValue then
-    Exit;
-  FPublisher := AValue;
+  FPublisher := CleanInfo(AValue);
 end;
-
-procedure caEmutecaCustomSoft.SetSHA1(AValue: TSHA1Digest);
-begin
-  if SHA1Match(FSHA1, AValue) then
-    Exit;
-  FSHA1 := AValue;
-end;
-
 
 procedure caEmutecaCustomSoft.SetTitle(AValue: string);
 begin
@@ -363,27 +307,17 @@ end;
 
 procedure caEmutecaCustomSoft.SetTrainer(AValue: string);
 begin
-  AValue := CleanInfo(AValue);
-  if FTrainer = AValue then
-    Exit;
-  FTrainer := AValue;
+  FTrainer :=CleanInfo(AValue);
 end;
 
 procedure caEmutecaCustomSoft.SetTranslation(AValue: string);
 begin
-  AValue := CleanInfo(AValue);
-  if FTranslation = AValue then
-    Exit;
-  FTranslation := AValue;
+  FTranslation := CleanInfo(AValue);
 end;
 
 procedure caEmutecaCustomSoft.SetVersion(AValue: string);
 begin
-  AValue := CleanInfo(AValue);
-
-  if FVersion = AValue then
-    Exit;
-  FVersion := AValue;
+  FVersion := CleanInfo(AValue);
 end;
 
 procedure caEmutecaCustomSoft.SetZone(AValue: string);
@@ -563,11 +497,11 @@ begin
   end;
 end;
 
-constructor caEmutecaCustomSoft.Create(aOwner: TComponent);
+constructor caEmutecaCustomSoft.Create;
 begin
-  inherited Create(aOwner);
+  inherited Create;
 
-  FStats := cEmutecaPlayingStats.Create(Self);
+  FStats := cEmutecaPlayingStats.Create;
   FExtraParameters := TStringList.Create;
 
   DumpStatus := edsUnknown;

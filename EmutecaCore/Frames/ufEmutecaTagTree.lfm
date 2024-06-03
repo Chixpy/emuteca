@@ -4,9 +4,9 @@ inherited fmEmutecaTagTree: TfmEmutecaTagTree
   inherited VST: TVirtualStringTree
     OnGetPopupMenu = VSTGetPopupMenu
   end
-  object alEmutecaTagTree: TActionList[4]
-    left = 304
-    top = 152
+  object alEmutecaTagTree: TActionList[6]
+    Left = 304
+    Top = 152
     object actAddRootFolder: TAction
       Category = 'Root'
       Caption = 'Add Root Folder'
@@ -55,9 +55,9 @@ inherited fmEmutecaTagTree: TfmEmutecaTagTree
       OnExecute = actRenameFileExecute
     end
   end
-  object pumFile: TPopupMenu[5]
-    left = 112
-    top = 152
+  object pumFile: TPopupMenu[7]
+    Left = 112
+    Top = 152
     object mipmAddGroup: TMenuItem
       Action = actAddGroup2TagFile
     end
@@ -92,9 +92,9 @@ inherited fmEmutecaTagTree: TfmEmutecaTagTree
       Caption = 'Tree'
     end
   end
-  object pumFolder: TPopupMenu[6]
-    left = 32
-    top = 152
+  object pumFolder: TPopupMenu[8]
+    Left = 32
+    Top = 152
     object mipmFAddTagFile: TMenuItem
       Action = actAddTagFile
     end
@@ -123,9 +123,9 @@ inherited fmEmutecaTagTree: TfmEmutecaTagTree
       Caption = 'Tree'
     end
   end
-  object pumRoot: TPopupMenu[7]
-    left = 200
-    top = 152
+  object pumRoot: TPopupMenu[9]
+    Left = 200
+    Top = 152
     object mipmRAddRootFolder: TMenuItem
       Action = actAddRootFolder
     end

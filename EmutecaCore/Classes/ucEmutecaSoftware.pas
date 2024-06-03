@@ -1,5 +1,4 @@
 unit ucEmutecaSoftware;
-
 {< cEmutecaSoftware class unit.
 
   This file is part of Emuteca Core.
@@ -22,34 +21,31 @@ type
 
   cEmutecaSoftware = class(caEmutecaCustomSoft, IFPObserver)
   private
-    FCachedGroup: caEmutecaCustomGroup;
-    FCachedSystem: caEmutecaCustomSystem;
-    procedure SetCachedGroup(AValue: caEmutecaCustomGroup);
-    procedure SetCachedSystem(AValue: caEmutecaCustomSystem);
+    FCachedGroup : caEmutecaCustomGroup;
+    FCachedSystem : caEmutecaCustomSystem;
+    procedure SetCachedGroup(aValue : caEmutecaCustomGroup);
+    procedure SetCachedSystem(aValue : caEmutecaCustomSystem);
 
   protected
-    function GetTitle: string; override;
-    procedure SetTitle(AValue: string); override;
+    function GetTitle : string; override;
+    procedure SetTitle(aValue : string); override;
 
-    function GetSortTitle: string; override;
-    procedure SetSortTitle(AValue: string); override;
+    function GetSortTitle : string; override;
+    procedure SetSortTitle(aValue : string); override;
 
   public
-
     // Cached data
-    property CachedSystem: caEmutecaCustomSystem
+    property CachedSystem : caEmutecaCustomSystem
       read FCachedSystem write SetCachedSystem;
-    property CachedGroup: caEmutecaCustomGroup
+    property CachedGroup : caEmutecaCustomGroup
       read FCachedGroup write SetCachedGroup;
 
-    function MatchGroupFile: boolean; override;
+    function MatchGroupFile : Boolean; override;
 
-    procedure FPOObservedChanged(ASender: TObject;
-      Operation: TFPObservedOperation; Data: Pointer);
+    procedure FPOObservedChanged(ASender : TObject;
+      Operation : TFPObservedOperation; Data : Pointer);
 
-    constructor Create(aOwner: TComponent); override;
     destructor Destroy; override;
-
   end;
 
   {< This class defines a parented sofware with links to its System and Group.
@@ -62,21 +58,21 @@ type
      It can check if the filenames for media match with groups one.
   }
 
-  TEmutecaSoftCB = procedure(aSoft: cEmutecaSoftware) of object;
+  TEmutecaSoftCB = procedure(aSoft : cEmutecaSoftware) of object;
 
 implementation
 
 { cEmutecaSoftware }
 
-procedure cEmutecaSoftware.SetCachedSystem(AValue: caEmutecaCustomSystem);
+procedure cEmutecaSoftware.SetCachedSystem(aValue : caEmutecaCustomSystem);
 begin
-  if FCachedSystem = AValue then
+  if FCachedSystem = aValue then
     Exit;
 
   if Assigned(FCachedSystem) then
     FCachedSystem.FPODetachObserver(Self);
 
-  FCachedSystem := AValue;
+  FCachedSystem := aValue;
 
   if Assigned(CachedSystem) then
   begin
@@ -84,7 +80,7 @@ begin
   end;
 end;
 
-function cEmutecaSoftware.GetTitle: string;
+function cEmutecaSoftware.GetTitle : string;
 begin
   Result := FTitle;
   if Result <> '' then
@@ -96,11 +92,11 @@ begin
     Result := GroupKey; // Faster than inherited;?
 end;
 
-procedure cEmutecaSoftware.SetCachedGroup(AValue: caEmutecaCustomGroup);
+procedure cEmutecaSoftware.SetCachedGroup(aValue : caEmutecaCustomGroup);
 var
-  aTitle, aSort: string;
+  aTitle, aSort : string;
 begin
-  if FCachedGroup = AValue then
+  if FCachedGroup = aValue then
     Exit;
 
   // Keeping Title and Sort
@@ -119,7 +115,7 @@ begin
     FCachedGroup.FPODetachObserver(Self);
   end;
 
-  FCachedGroup := AValue;
+  FCachedGroup := aValue;
 
   if Assigned(FCachedGroup) then
   begin
@@ -133,9 +129,9 @@ begin
   SortTitle := aSort;
 end;
 
-procedure cEmutecaSoftware.SetTitle(AValue: string);
+procedure cEmutecaSoftware.SetTitle(aValue : string);
 begin
-  AValue := UTF8Trim(AValue);
+  aValue := UTF8Trim(aValue);
 
   // Uhm... we want to check Group Title first if CachedGroup is assigned.
   // if FTitle = AValue then
@@ -143,21 +139,21 @@ begin
 
   if Assigned(CachedGroup) then
   begin
-    if AValue = CachedGroup.Title then
+    if aValue = CachedGroup.Title then
     begin
       FTitle := '';
       FSortTitle := ''; // FSortTitle must empty if FTitle is empty too
     end
     else
     begin
-      FTitle := AValue;
+      FTitle := aValue;
     end;
   end
   else
-    inherited SetTitle(AValue);
+    inherited SetTitle(aValue);
 end;
 
-function cEmutecaSoftware.GetSortTitle: string;
+function cEmutecaSoftware.GetSortTitle : string;
 begin
   Result := FSortTitle;
   if Result <> '' then
@@ -173,7 +169,7 @@ begin
     Result := inherited GetSortTitle;
 end;
 
-procedure cEmutecaSoftware.SetSortTitle(AValue: string);
+procedure cEmutecaSoftware.SetSortTitle(aValue : string);
 begin
   if (FTitle = '') then
   begin
@@ -182,10 +178,10 @@ begin
     Exit;
   end;
 
-  inherited SetSortTitle(AValue);
+  inherited SetSortTitle(aValue);
 end;
 
-function cEmutecaSoftware.MatchGroupFile: boolean;
+function cEmutecaSoftware.MatchGroupFile : Boolean;
 begin
   if Assigned(CachedGroup) then
   begin
@@ -199,8 +195,8 @@ begin
     Result := inherited MatchGroupFile;
 end;
 
-procedure cEmutecaSoftware.FPOObservedChanged(ASender: TObject;
-  Operation: TFPObservedOperation; Data: Pointer);
+procedure cEmutecaSoftware.FPOObservedChanged(ASender : TObject;
+  Operation : TFPObservedOperation; Data : Pointer);
 begin
   if not assigned(ASender) then
     Exit;
@@ -208,7 +204,7 @@ begin
   if ASender = CachedSystem then
   begin
     case Operation of
-      ooFree: CachedSystem := nil;
+      ooFree : CachedSystem := nil;
       else
         // Actually... There isn't SystemKey as software lists are stored by
         //   their system.
@@ -220,16 +216,11 @@ begin
   if ASender = CachedGroup then
   begin
     case Operation of
-      ooFree: CachedGroup := nil;
+      ooFree : CachedGroup := nil;
       else
         GroupKey := caEmutecaCustomGroup(ASender).ID;
     end;
   end;
-end;
-
-constructor cEmutecaSoftware.Create(aOwner: TComponent);
-begin
-  inherited Create(aOwner);
 end;
 
 destructor cEmutecaSoftware.Destroy;

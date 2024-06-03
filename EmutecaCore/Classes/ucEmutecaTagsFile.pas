@@ -4,7 +4,7 @@ unit ucEmutecaTagsFile;
 
   This file is part of Emuteca Core.
 
-  Copyright (C) 2006-2018 Chixpy
+  Copyright (C) 2006-2024 Chixpy
 }
 {$mode objfpc}{$H+}
 
@@ -23,21 +23,19 @@ type
 
   { cEmutecaTagsFileSection }
 
-  cEmutecaTagsFileSection = class(TComponent)
+  cEmutecaTagsFileSection = class(TPersistent)
 
   private
     FLines: TStringList;
     FSectionName: string;
-    procedure SetSectionName(const AValue: string);
-  public
-    constructor Create(aOwner: TComponent); override;
-    destructor Destroy; override;
 
-  published
-    property SectionName: string read FSectionName write SetSectionName;
+  public
+    {property} SectionName: string;
 
     property Lines: TStringList read FLines;
 
+    constructor Create;
+    destructor Destroy; override;
   end;
 
   cEmutecaGenTagsFileSectionList = specialize
@@ -62,7 +60,7 @@ type
     procedure SaveToStrLst(aTxtFile: TStrings); override;
 
     procedure SectionNameList(aStrList: TStrings);
-    function SectionByName(aSectionName: string): cEmutecaTagsFileSection;
+    function SectionByName(const aSectionName: string): cEmutecaTagsFileSection;
     {< Returns the section with aSectionName name, @nil if not found.
 
     The text encountered before any section is in the first "virtual" section,
@@ -72,14 +70,14 @@ type
     procedure AddGroup(const aSectionName: string; const aGroupID: string);
     procedure RemoveGroup(const aSectionName: string; const aGroupID: string);
 
-    procedure ANDTagsFile(aFilename: string);
+    procedure ANDTagsFile(const aFilename: string);
     procedure ANDTagsFile(aStrList: TStrings);
     {< Performs an AND operation with another cEmutecaTagsFile.
 
       In other words, only keep sections and IDs that are in both files.
     }
 
-    constructor Create(aOwner: TComponent); override;
+    constructor Create;
     destructor Destroy; override;
 
   published
@@ -96,9 +94,9 @@ implementation
 
 { cEmutecaTagsFile }
 
-constructor cEmutecaTagsFile.Create(aOwner: TComponent);
+constructor cEmutecaTagsFile.Create;
 begin
-  inherited Create(aOwner);
+  inherited Create;
 
   FSections := cEmutecaTagsFileSectionList.Create(True);
 
@@ -138,7 +136,7 @@ begin
 
   if not assigned(CurrSection) then
   begin
-    CurrSection := cEmutecaTagsFileSection.Create(self);
+    CurrSection := cEmutecaTagsFileSection.Create;
     CurrSection.SectionName := '';
     Sections.Add(CurrSection);
   end;
@@ -166,7 +164,7 @@ begin
 
         if not assigned(CurrSection) then
         begin
-          CurrSection := cEmutecaTagsFileSection.Create(self);
+          CurrSection := cEmutecaTagsFileSection.Create;
           CurrSection.SectionName := CurrLine;
           Sections.Add(CurrSection);
         end;
@@ -236,8 +234,8 @@ begin
   end;
 end;
 
-function cEmutecaTagsFile.SectionByName(aSectionName: string):
-cEmutecaTagsFileSection;
+function cEmutecaTagsFile.SectionByName(
+  const aSectionName : string) : cEmutecaTagsFileSection;
 var
   i: integer;
   aSection: cEmutecaTagsFileSection;
@@ -268,7 +266,7 @@ begin
 
   if not assigned(aSection) then
   begin
-    aSection := cEmutecaTagsFileSection.Create(self);
+    aSection := cEmutecaTagsFileSection.Create;
     aSection.SectionName := aSectionName;
     Sections.Add(aSection);
   end;
@@ -294,7 +292,7 @@ begin
   if aSection.Lines.Count = 0 then Sections.Remove(aSection);
 end;
 
-procedure cEmutecaTagsFile.ANDTagsFile(aFilename: string);
+procedure cEmutecaTagsFile.ANDTagsFile(const aFilename: string);
 var
   TagsFile: TStringList;
 begin
@@ -319,7 +317,7 @@ var
   CurrSection, ANDSection: cEmutecaTagsFileSection;
   i, j: integer;
 begin
-  ANDTags := cEmutecaTagsFile.Create(nil);
+  ANDTags := cEmutecaTagsFile.Create;
   try
     ANDTags.LoadFromStrLst(aStrList);
 
@@ -384,16 +382,9 @@ end;
 
 { cEmutecaTagsFileSection }
 
-procedure cEmutecaTagsFileSection.SetSectionName(const AValue: string);
+constructor cEmutecaTagsFileSection.Create;
 begin
-  if FSectionName = AValue then
-    Exit;
-  FSectionName := AValue;
-end;
-
-constructor cEmutecaTagsFileSection.Create(aOwner: TComponent);
-begin
-  inherited Create(aOwner);
+  inherited Create;
 
   FLines := TStringList.Create;
   Lines.CaseSensitive := False;

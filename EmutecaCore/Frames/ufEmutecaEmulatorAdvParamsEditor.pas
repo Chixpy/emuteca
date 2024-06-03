@@ -41,8 +41,6 @@ type
     FEmulator: cEmutecaEmulator;
     procedure SetEmulator(const AValue: cEmutecaEmulator);
 
-  protected
-
   public
     property Emulator: cEmutecaEmulator read FEmulator write SetEmulator;
 

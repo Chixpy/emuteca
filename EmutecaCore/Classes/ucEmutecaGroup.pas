@@ -4,7 +4,7 @@ unit ucEmutecaGroup;
 
   This file is part of Emuteca Core.
 
-  Copyright (C) 2006-2018 Chixpy
+  Copyright (C) 2006-2024 Chixpy
 }
 {$mode objfpc}{$H+}
 
@@ -24,15 +24,12 @@ type
 
   cEmutecaGroup = class(caEmutecaCustomGroup)
   private
-    FCachedSystem: caEmutecaCustomSystem;
     FSoftList: cEmutecaSoftList;
-    procedure SetCachedSystem(AValue: caEmutecaCustomSystem);
 
   public
-    property SoftList: cEmutecaSoftList read FSoftList;
+    {property} CachedSystem: caEmutecaCustomSystem;
 
-    property CachedSystem: caEmutecaCustomSystem
-      read FCachedSystem write SetCachedSystem;
+    property SoftList: cEmutecaSoftList read FSoftList;
 
     function IsSoftSHA1Cached: integer;
     {< Checks if all software have SHA1 cache.
@@ -42,10 +39,8 @@ type
         -1 = No System is assigned.
         -2 = System don't use SHA1.
     }
-    constructor Create(aOwner: TComponent); override;
+    constructor Create;
     destructor Destroy; override;
-
-  published
   end;
 
   TEmutecaReturnGroupCB = procedure(aGroup: cEmutecaGroup) of object;
@@ -53,14 +48,6 @@ type
 implementation
 
 { cEmutecaGroup }
-
-procedure cEmutecaGroup.SetCachedSystem(AValue: caEmutecaCustomSystem);
-begin
-  if FCachedSystem = AValue then
-    Exit;
-  FCachedSystem := AValue;
-end;
-
 function cEmutecaGroup.IsSoftSHA1Cached: integer;
 var
   i: Integer;
@@ -88,9 +75,9 @@ begin
   end;
 end;
 
-constructor cEmutecaGroup.Create(aOwner: TComponent);
+constructor cEmutecaGroup.Create;
 begin
-  inherited Create(aOwner);
+  inherited Create;
   FSoftList := cEmutecaSoftList.Create(False);
 end;
 

@@ -1,5 +1,4 @@
 unit uaEmutecaCustomGroup;
-
 {< caEmutecaCustomGroup abstact class unit.
 
   This file is part of Emuteca Core.
@@ -25,34 +24,29 @@ type
 
   caEmutecaCustomGroup = class(caEmutecaCustomSGItem)
   private
-    FDeveloper: string;
-    procedure SetDeveloper(AValue: string);
+    FDeveloper : string;
+    procedure SetDeveloper(const aValue : string);
 
   protected
-    procedure DoSaveToStrLst(aTxtFile: TStrings;
-      ExportMode: boolean); virtual;
+    procedure DoSaveToStrLst(aTxtFile : TStrings;
+      const ExportMode : Boolean); virtual;
 
   public
-    procedure LoadFromStrLst(aTxtFile: TStrings); override;
+    property Developer : string read FDeveloper write SetDeveloper;
+    {< Developer. }
+
+    procedure LoadFromStrLst(aTxtFile : TStrings); override;
     {< Loads Group properties from StringList. }
-    procedure ExportToStrLst(aTxtFile: TStrings); virtual;
+    procedure ExportToStrLst(aTxtFile : TStrings); virtual;
     {< Saves Group properties to StringList (without custom user data). }
-    procedure SaveToStrLst(aTxtFile: TStrings); override;
+    procedure SaveToStrLst(aTxtFile : TStrings); override;
     {< Saves all Group properties to StringList (to be overrided). }
 
-    function ExportCommaText: string;
+    function ExportCommaText : string;
     {< Saves Group properties to a comma separated string. }
 
-    procedure ImportFrom(aGroup: caEmutecaCustomGroup);
+    procedure ImportFrom(aGroup : caEmutecaCustomGroup);
     {< Copies properties from another Group. }
-
-    constructor Create(aOwner: TComponent); override;
-    destructor Destroy; override;
-
-  published
-
-    property Developer: string read FDeveloper write SetDeveloper;
-    {< Developer. }
   end;
 
   {< This class defines an abstract basic group.
@@ -63,16 +57,13 @@ type
 
 implementation
 
-procedure caEmutecaCustomGroup.SetDeveloper(AValue: string);
+procedure caEmutecaCustomGroup.SetDeveloper(const aValue : string);
 begin
-  AValue := CleanInfo(AValue);
-  if FDeveloper = AValue then
-    Exit;
-  FDeveloper := AValue;
+  FDeveloper := CleanInfo(aValue);
 end;
 
-procedure caEmutecaCustomGroup.DoSaveToStrLst(aTxtFile: TStrings;
-  ExportMode: boolean);
+procedure caEmutecaCustomGroup.DoSaveToStrLst(aTxtFile : TStrings;
+  const ExportMode : Boolean);
 begin
   if not assigned(aTxtFile) then
     Exit;
@@ -87,7 +78,7 @@ begin
   Stats.WriteToStrLst(aTxtFile, ExportMode);
 end;
 
-procedure caEmutecaCustomGroup.ImportFrom(aGroup: caEmutecaCustomGroup);
+procedure caEmutecaCustomGroup.ImportFrom(aGroup : caEmutecaCustomGroup);
 begin
   if not assigned(aGroup) then
     Exit;
@@ -106,7 +97,7 @@ begin
   //   MediaFileName := aGroup.MediaFileName;
 end;
 
-procedure caEmutecaCustomGroup.LoadFromStrLst(aTxtFile: TStrings);
+procedure caEmutecaCustomGroup.LoadFromStrLst(aTxtFile : TStrings);
 begin
   if not assigned(aTxtFile) then
     Exit;
@@ -125,37 +116,27 @@ begin
   // Next := aTxtFile[9]
 end;
 
-procedure caEmutecaCustomGroup.ExportToStrLst(aTxtFile: TStrings);
+procedure caEmutecaCustomGroup.ExportToStrLst(aTxtFile : TStrings);
 begin
   DoSaveToStrLst(aTxtFile, True);
 end;
 
-procedure caEmutecaCustomGroup.SaveToStrLst(aTxtFile: TStrings);
+procedure caEmutecaCustomGroup.SaveToStrLst(aTxtFile : TStrings);
 begin
   DoSaveToStrLst(aTxtFile, False);
 end;
 
-function caEmutecaCustomGroup.ExportCommaText: string;
+function caEmutecaCustomGroup.ExportCommaText : string;
 var
-  aStringList: TStringList;
+  aStringList : TStringList;
 begin
   aStringList := TStringList.Create;
   try
     ExportToStrLst(aStringList);
   finally
     Result := aStringList.CommaText;
-    FreeAndNil(aStringList);
+    aStringList.Free;
   end;
-end;
-
-constructor caEmutecaCustomGroup.Create(aOwner: TComponent);
-begin
-  inherited Create(aOwner);
-end;
-
-destructor caEmutecaCustomGroup.Destroy;
-begin
-  inherited Destroy;
 end;
 
 initialization

@@ -1,8 +1,5 @@
 inherited fmETKGUIScriptManager: TfmETKGUIScriptManager
-  inherited PageControl: TPageControl
-    inherited pagSourceCode: TTabSheet
-      ClientHeight = 408
-      ClientWidth = 1096
-    end
+  inherited SynCompletion: TSynCompletion
+    Position = -1
   end
 end

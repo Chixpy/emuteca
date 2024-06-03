@@ -10,7 +10,7 @@ unit ucEmutecaSystemManager;
 interface
 
 uses
-  Classes, SysUtils, fgl, LazFileUtils, LazUTF8, IniFiles,
+  Classes, SysUtils, FGL, LazFileUtils, LazUTF8, IniFiles,
   // CHX units
   uCHXStrUtils,
   // CHX abstracts
@@ -27,55 +27,56 @@ type
 
   cEmutecaSystemManager = class(caEmutecaCustomManagerIni)
   private
-    FFullList: cEmutecaSystemList;
-    FEnabledList: cEmutecaSystemList;
-    FSysDataFolder: string;
-    FTempFolder: string;
-    procedure SetSysDataFolder(AValue: string);
-    procedure SetTempFolder(AValue: string);
+    FFullList : cEmutecaSystemList;
+    FEnabledList : cEmutecaSystemList;
+    FSysDataFolder : string;
+    FTempFolder : string;
+    procedure SetSysDataFolder(const aValue : string);
+    procedure SetTempFolder(const aValue : string);
 
   protected
-    procedure SetProgressCallBack(AValue: TEmutecaProgressCallBack); override;
+    procedure SetProgressCallBack(const aValue : TEmutecaProgressCallBack);
+      override;
 
   public
-    property EnabledList: cEmutecaSystemList read FEnabledList;
+    property EnabledList : cEmutecaSystemList read FEnabledList;
 
-    property TempFolder: string read FTempFolder write SetTempFolder;
-    property SysDataFolder: string read FSysDataFolder write SetSysDataFolder;
+    property TempFolder : string read FTempFolder write SetTempFolder;
+    property SysDataFolder : string read FSysDataFolder write SetSysDataFolder;
 
     procedure ClearData;
     //< Clears all data WITHOUT saving.
-    function AddSystem(aID: string): cEmutecaSystem;
+    function AddSystem(const aID : string) : cEmutecaSystem;
     //< Adds a system to the list.
     procedure UpdateEnabledList;
-    procedure UpdateSystemsEmulators(aEmuList: cEmutecaEmulatorList);
+    procedure UpdateSystemsEmulators(aEmuList : cEmutecaEmulatorList);
 
     // Inherited abstracts
     // -------------------
-    procedure LoadFromIni(aIniFile: TMemIniFile); override;
-    procedure SaveToIni(aIniFile: TMemIniFile); override;
-    procedure ImportFromIni(aIniFile: TMemIniFile); override;
+    procedure LoadFromIni(aIniFile : TMemIniFile); override;
+    procedure SaveToIni(aIniFile : TMemIniFile); override;
+    procedure ImportFromIni(aIniFile : TMemIniFile); override;
     {< Updates systems' data from Ini. It don't add any system to the list.
     }
-    procedure ExportToIni(aIniFile: TMemIniFile); override;
+    procedure ExportToIni(aIniFile : TMemIniFile); override;
     {< Saves systems' common data for importing.
     }
 
     // Soft and group data
-    procedure LoadSystemData(aSystem: cEmutecaSystem);
+    procedure LoadSystemData(aSystem : cEmutecaSystem);
     {< Loads soft and groups data of a system. }
-    procedure SaveSystemData(aSystem: cEmutecaSystem; ClearFile: Boolean);
+    procedure SaveSystemData(aSystem : cEmutecaSystem; ClearFile : Boolean);
     {< Save soft and groups data of a system. }
     procedure LoadAllEnabledSystemsData;
     {< Loads soft and groups data of all systems. }
     procedure SaveAllEnabledSystemsData;
     {< Saves soft and groups data of all systems. }
 
-    constructor Create(aOwner: TComponent); override;
+    constructor Create;
     destructor Destroy; override;
 
   published
-    property FullList: cEmutecaSystemList read FFullList;
+    property FullList : cEmutecaSystemList read FFullList;
 
   end;
 
@@ -83,18 +84,18 @@ implementation
 
 { cEmutecaSystemManager }
 
-procedure cEmutecaSystemManager.SetSysDataFolder(AValue: string);
+procedure cEmutecaSystemManager.SetSysDataFolder(const aValue : string);
 begin
-  FSysDataFolder := SetAsFolder(AValue);
+  FSysDataFolder := SetAsFolder(aValue);
 end;
 
-procedure cEmutecaSystemManager.SetTempFolder(AValue: string);
+procedure cEmutecaSystemManager.SetTempFolder(const aValue : string);
 var
-  i: integer;
+  i : Integer;
 begin
-  FTempFolder := SetAsFolder(AValue);
+  FTempFolder := SetAsFolder(aValue);
 
-  // Propaganting Temp folder, (for decompresing media, etc.)
+  // Propaganting Temp folder (for decompresing media, etc.).
   i := 0;
   while i < FullList.Count do
   begin
@@ -103,11 +104,12 @@ begin
   end;
 end;
 
-procedure cEmutecaSystemManager.SetProgressCallBack(AValue: TEmutecaProgressCallBack);
+procedure cEmutecaSystemManager.SetProgressCallBack(
+  const aValue : TEmutecaProgressCallBack);
 var
-  i: integer;
+  i : Integer;
 begin
-  inherited SetProgressCallBack(AValue);
+  inherited SetProgressCallBack(aValue);
 
   // Propagating to systems
   i := 0;
@@ -124,11 +126,11 @@ begin
   FullList.Clear;
 end;
 
-function cEmutecaSystemManager.AddSystem(aID: string): cEmutecaSystem;
+function cEmutecaSystemManager.AddSystem(const aID : string) : cEmutecaSystem;
 var
-  TempSystem: cEmutecaSystem;
+  TempSystem : cEmutecaSystem;
 begin
-  TempSystem := cEmutecaSystem.Create(nil);
+  TempSystem := cEmutecaSystem.Create;
   TempSystem.ID := aID;
   TempSystem.Title := aID;
   TempSystem.ListFileName := aID;
@@ -142,8 +144,8 @@ end;
 
 procedure cEmutecaSystemManager.UpdateEnabledList;
 var
-  i: integer;
-  aSys: cEmutecaSystem;
+  i : Integer;
+  aSys : cEmutecaSystem;
 begin
   EnabledList.Clear;
   i := 0;
@@ -156,9 +158,10 @@ begin
   end;
 end;
 
-procedure cEmutecaSystemManager.UpdateSystemsEmulators(aEmuList: cEmutecaEmulatorList);
+procedure cEmutecaSystemManager.UpdateSystemsEmulators(
+  aEmuList : cEmutecaEmulatorList);
 var
-  i: integer;
+  i : Integer;
 begin
   i := 0;
   while i < FullList.Count do
@@ -168,11 +171,11 @@ begin
   end;
 end;
 
-procedure cEmutecaSystemManager.LoadFromIni(aIniFile: TMemIniFile);
+procedure cEmutecaSystemManager.LoadFromIni(aIniFile : TMemIniFile);
 var
-  TempList: TStringList;
-  TempSys: cEmutecaSystem;
-  i: longint;
+  TempList : TStringList;
+  TempSys : cEmutecaSystem;
+  i : LongInt;
 begin
   if not Assigned(aIniFile) then
     Exit;
@@ -208,10 +211,10 @@ begin
     ProgressCallBack('', '', 0, 0, False);
 end;
 
-procedure cEmutecaSystemManager.SaveToIni(aIniFile: TMemIniFile);
+procedure cEmutecaSystemManager.SaveToIni(aIniFile : TMemIniFile);
 var
-  i: longint;
-  aSystem: cEmutecaSystem;
+  i : LongInt;
+  aSystem : cEmutecaSystem;
 begin
   if not Assigned(aIniFile) then
     Exit;
@@ -222,9 +225,10 @@ begin
     aSystem := FullList[i];
 
     if assigned(ProgressCallBack) then
-      ProgressCallBack(rsSavingSystemList, aSystem.Title, i, FullList.Count, False);
+      ProgressCallBack(rsSavingSystemList, aSystem.Title, i,
+        FullList.Count, False);
 
-      aSystem.SaveToIni(aIniFile);
+    aSystem.SaveToIni(aIniFile);
 
     Inc(i);
   end;
@@ -233,10 +237,10 @@ begin
     ProgressCallBack('', '', 0, 0, False);
 end;
 
-procedure cEmutecaSystemManager.ImportFromIni(aIniFile: TMemIniFile);
+procedure cEmutecaSystemManager.ImportFromIni(aIniFile : TMemIniFile);
 var
-  i: longint;
-  aSystem: cEmutecaSystem;
+  i : LongInt;
+  aSystem : cEmutecaSystem;
 begin
   if not Assigned(aIniFile) then
     Exit;
@@ -259,10 +263,10 @@ begin
     ProgressCallBack('', '', 0, 0, False);
 end;
 
-procedure cEmutecaSystemManager.ExportToIni(aIniFile: TMemIniFile);
+procedure cEmutecaSystemManager.ExportToIni(aIniFile : TMemIniFile);
 var
-  i: longint;
-  aSystem: cEmutecaSystem;
+  i : LongInt;
+  aSystem : cEmutecaSystem;
 begin
   if not Assigned(aIniFile) then
     Exit;
@@ -276,7 +280,7 @@ begin
       ProgressCallBack(rsExportingSystemList, aSystem.Title, i,
         FullList.Count, False);
 
-      aSystem.ExportToIni(aIniFile);
+    aSystem.ExportToIni(aIniFile);
 
     Inc(i);
   end;
@@ -285,7 +289,7 @@ begin
     ProgressCallBack('', '', 0, 0, False);
 end;
 
-procedure cEmutecaSystemManager.LoadSystemData(aSystem: cEmutecaSystem);
+procedure cEmutecaSystemManager.LoadSystemData(aSystem : cEmutecaSystem);
 begin
   if not Assigned(aSystem) then
     Exit;
@@ -293,8 +297,8 @@ begin
   aSystem.LoadSoftGroupLists(SysDataFolder + aSystem.ListFileName);
 end;
 
-procedure cEmutecaSystemManager.SaveSystemData(aSystem: cEmutecaSystem;
-  ClearFile: Boolean);
+procedure cEmutecaSystemManager.SaveSystemData(aSystem : cEmutecaSystem;
+  ClearFile : Boolean);
 begin
   if not Assigned(aSystem) then
     Exit;
@@ -304,9 +308,9 @@ end;
 
 procedure cEmutecaSystemManager.LoadAllEnabledSystemsData;
 var
-  i: longint;
-  aSystem: cEmutecaSystem;
-  aPBCB: TEmutecaProgressCallBack;
+  i : LongInt;
+  aSystem : cEmutecaSystem;
+  aPBCB : TEmutecaProgressCallBack;
 begin
   i := 0;
   while i < EnabledList.Count do
@@ -320,7 +324,8 @@ begin
       aSystem.ProgressCallBack := nil;
 
       if assigned(ProgressCallBack) then
-        ProgressCallBack(rsLoadingGroupList, aSystem.Title, i, EnabledList.Count, False);
+        ProgressCallBack(rsLoadingGroupList, aSystem.Title, i,
+          EnabledList.Count, False);
 
       LoadSystemData(aSystem);
 
@@ -337,9 +342,9 @@ end;
 
 procedure cEmutecaSystemManager.SaveAllEnabledSystemsData;
 var
-  i: longint;
-  aSystem: cEmutecaSystem;
-  aPBCB: TEmutecaProgressCallBack;
+  i : LongInt;
+  aSystem : cEmutecaSystem;
+  aPBCB : TEmutecaProgressCallBack;
 begin
   i := 0;
   while i < EnabledList.Count do
@@ -353,7 +358,8 @@ begin
       aSystem.ProgressCallBack := nil;
 
       if assigned(ProgressCallBack) then
-        ProgressCallBack(rsSavingGroupList, aSystem.Title, i, EnabledList.Count, False);
+        ProgressCallBack(rsSavingGroupList, aSystem.Title, i,
+          EnabledList.Count, False);
 
       SaveSystemData(aSystem, True);
 
@@ -368,9 +374,9 @@ begin
     ProgressCallBack('', '', 0, 0, False);
 end;
 
-constructor cEmutecaSystemManager.Create(aOwner: TComponent);
+constructor cEmutecaSystemManager.Create;
 begin
-  inherited Create(aOwner);
+  inherited Create;
   FFullList := cEmutecaSystemList.Create(True);
   FEnabledList := cEmutecaSystemList.Create(False);
 end;

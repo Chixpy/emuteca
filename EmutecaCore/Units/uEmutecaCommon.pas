@@ -3,7 +3,7 @@ unit uEmutecaCommon;
 
   This file is part of Emuteca Core.
 
-  Copyright (C) 2011-2018 Chixpy
+  Copyright (C) 2011-2024 Chixpy
 }
 
 {$mode objfpc}{$H+}
@@ -382,6 +382,7 @@ var
   i: integer;
 begin
   Result := '';
+  TempStr := '';
 
   aFolder := SetAsFolder(aFolder);
 

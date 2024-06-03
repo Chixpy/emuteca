@@ -3,7 +3,7 @@ unit ucEmutecaGameTag;
 
   This file is part of Emuteca Core.
 
-  Copyright (C) 2006-2018 Chixpy
+  Copyright (C) 2006-2024 Chixpy
 }
 {$mode objfpc}{$H+}
 
@@ -17,14 +17,6 @@ type
   { cEmutecaTag }
 
   cEmutecaTag = class(TComponent)
-  private
-    FDescription: string;
-    FTitle: string;
-    procedure SetDescription(AValue: string);
-    procedure SetTitle(AValue: string);
-
-  protected
-
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;

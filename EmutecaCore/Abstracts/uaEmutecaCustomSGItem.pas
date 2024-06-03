@@ -52,22 +52,6 @@ type
     function CleanInfo(const aString: string): string;
 
   public
-    function CompareID(aID: string): integer;
-    {< Compares aID with current Group ID (case insensitive). }
-    function MatchID(aID: string): boolean;
-    {< True if ID is matched (case insensitive). }
-
-    function GetActualID: string;
-    //< Gets actual ID string, not automade.
-    function GetActualTitle: string;
-    //< Gets actual SortTitle string, not inherited from group or automade.
-    function GetActualSortTitle: string;
-    //< Gets actual SortTitle string, not inherited from group or automade.
-
-    constructor Create(aOwner: TComponent); override;
-    destructor Destroy; override;
-
-  published
     property ID: string read GetID write SetID;
     {< ID of the item. }
     property Title: string read GetTitle write SetTitle;
@@ -93,6 +77,21 @@ type
 
     property Stats: cEmutecaPlayingStats read FStats;
     {< Statitisc info. }
+
+    function CompareID(aID: string): integer;
+    {< Compares aID with current Group ID (case insensitive). }
+    function MatchID(aID: string): boolean;
+    {< True if ID is matched (case insensitive). }
+
+    function GetActualID: string;
+    //< Gets actual ID string, not automade.
+    function GetActualTitle: string;
+    //< Gets actual SortTitle string, not inherited from group or automade.
+    function GetActualSortTitle: string;
+    //< Gets actual SortTitle string, not inherited from group or automade.
+
+    constructor Create;
+    destructor Destroy; override;
   end;
 
 {< caEmutecaCustomSGItem defines common properties, methods and rules for
@@ -250,7 +249,6 @@ begin
   Result := FSortTitle;
 end;
 
-
 function caEmutecaCustomSGItem.CompareID(aID: string): integer;
 begin
   Result := UTF8CompareText(Self.ID, UTF8Trim(aID));
@@ -261,11 +259,11 @@ begin
   Result := CompareID(aID) = 0;
 end;
 
-constructor caEmutecaCustomSGItem.Create(aOwner: TComponent);
+constructor caEmutecaCustomSGItem.Create;
 begin
-  inherited Create(aOwner);
+  inherited Create;
 
-  FStats := cEmutecaPlayingStats.Create(Self);
+  FStats := cEmutecaPlayingStats.Create;
 end;
 
 destructor caEmutecaCustomSGItem.Destroy;

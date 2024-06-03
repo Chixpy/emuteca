@@ -68,8 +68,8 @@ type
     FEmuteca : cEmuteca;
     FfmGroupCBX : TfmEmutecaGroupCBX;
     FSoftware : cEmutecaSoftware;
-    procedure SetEmuteca(AValue : cEmuteca);
-    procedure SetSoftware(AValue : cEmutecaSoftware);
+    procedure SetEmuteca(aValue : cEmuteca);
+    procedure SetSoftware(aValue : cEmutecaSoftware);
 
   protected
     property fmSoftEditor : TfmEmutecaSoftEditor read FfmSoftEditor;
@@ -97,7 +97,7 @@ type
 
     class function SimpleForm(aEmuteca : cEmuteca;
       SelectedSystem : cEmutecaSystem;
-      const aGUIConfigIni, aGUIIconsIni : string) : integer;
+      const aGUIConfigIni, aGUIIconsIni : string) : Integer;
     //< Creates a form with TfmEmutecaActAddSoft frame.
 
     constructor Create(TheOwner : TComponent); override;
@@ -186,12 +186,12 @@ begin
       Exit;
 
     case rgbSoftKey.ItemIndex of
-      0: // TEFKSHA1
+      0 : // TEFKSHA1
         Software.ID := '';
-      1: // TEFKCRC32
+      1 : // TEFKCRC32
         Software.ID := CRC32FileStr(aFile);
 
-      2, 3: // TEFKCustom and TEFKFileName
+      2, 3 : // TEFKCustom and TEFKFileName
         Software.ID := ExtractFileNameOnly(Software.FileName);
       else // By default TEFKSHA1
       begin
@@ -206,14 +206,14 @@ begin
       Exit;
 
     case rgbSoftKey.ItemIndex of
-      0: //TEFKSHA1
+      0 : //TEFKSHA1
         Software.ID := '';
-      1: // TEFKCRC32
+      1 : // TEFKCRC32
       begin
         Software.ID := w7zCRC32InnerFileStr(aFile, Software.FileName, '');
       end;
 
-      2, 3: // TEFKCustom and TEFKFileName
+      2, 3 : // TEFKCustom and TEFKFileName
         Software.ID := ExtractFileNameOnly(Software.FileName);
 
       else // By default TEFKSHA1
@@ -230,8 +230,8 @@ end;
 procedure TfmEmutecaActAddSoft.UpdateDupInfo;
 var
   aSoftList : cEmutecaSoftList;
-  i : integer;
-  FoundFile : boolean;
+  i : Integer;
+  FoundFile : Boolean;
 begin
   lDupFile.Caption := '';
 
@@ -281,10 +281,10 @@ begin
 
   // Autoselecting Key Type
   case Software.CachedSystem.SoftExportKey of
-    TEFKSHA1: rgbSoftKey.ItemIndex := 0;
-    TEFKCRC32: rgbSoftKey.ItemIndex := 1;
-    TEFKCustom: rgbSoftKey.ItemIndex := 2;
-    TEFKFileName: rgbSoftKey.ItemIndex := 3;
+    TEFKSHA1 : rgbSoftKey.ItemIndex := 0;
+    TEFKCRC32 : rgbSoftKey.ItemIndex := 1;
+    TEFKCustom : rgbSoftKey.ItemIndex := 2;
+    TEFKFileName : rgbSoftKey.ItemIndex := 3;
     else  // SHA1 by default
       rgbSoftKey.ItemIndex := 0;
   end;
@@ -331,7 +331,7 @@ begin
   if InputQuery('New group', 'Name of the new group.', GroupTitle) = False then
     Exit;
 
-  aGroup := cEmutecaGroup.Create(nil);
+  aGroup := cEmutecaGroup.Create;
   aGroup.ID := GroupTitle;
   aGroup.Title := GroupTitle;
 
@@ -354,7 +354,6 @@ procedure TfmEmutecaActAddSoft.chkOpenAsArchiveChange(Sender : TObject);
     cbxInnerFile.ItemIndex := -1;
     cbxInnerFile.Enabled := False;
   end;
-
 begin
   cbxInnerFile.Clear;
 
@@ -419,11 +418,11 @@ begin
   UpdateSoftKey;
 end;
 
-procedure TfmEmutecaActAddSoft.SetEmuteca(AValue : cEmuteca);
+procedure TfmEmutecaActAddSoft.SetEmuteca(aValue : cEmuteca);
 begin
-  if FEmuteca = AValue then
+  if FEmuteca = aValue then
     Exit;
-  FEmuteca := AValue;
+  FEmuteca := aValue;
 
   if assigned(Emuteca) then
     fmSystemCBX.SystemList := Emuteca.SystemManager.EnabledList
@@ -436,11 +435,11 @@ begin
   LoadFrameData;
 end;
 
-procedure TfmEmutecaActAddSoft.SetSoftware(AValue : cEmutecaSoftware);
+procedure TfmEmutecaActAddSoft.SetSoftware(aValue : cEmutecaSoftware);
 begin
-  if FSoftware = AValue then
+  if FSoftware = aValue then
     Exit;
-  FSoftware := AValue;
+  FSoftware := aValue;
 
   LoadFrameData;
 end;
@@ -499,7 +498,7 @@ begin
 
   // If we don't close then prepare to add a new software
   //   if we close, it will be freed on destroy
-  FSoftware := cEmutecaSoftware.Create(nil);
+  FSoftware := cEmutecaSoftware.Create;
   ClearFrameData;
 
   Emuteca.CacheData;
@@ -509,7 +508,7 @@ end;
 
 class function TfmEmutecaActAddSoft.SimpleForm(aEmuteca : cEmuteca;
   SelectedSystem : cEmutecaSystem;
-  const aGUIConfigIni, aGUIIconsIni : string) : integer;
+  const aGUIConfigIni, aGUIIconsIni : string) : Integer;
 var
   aFrame : TfmEmutecaActAddSoft;
 begin
@@ -549,7 +548,6 @@ constructor TfmEmutecaActAddSoft.Create(TheOwner : TComponent);
     fmSoftEditor.ButtonClose := False;
     fmSoftEditor.Parent := gbxSoftInfo;
   end;
-
 begin
   inherited Create(TheOwner);
 
@@ -557,7 +555,7 @@ begin
 
   CreateFrames;
 
-  FSoftware := cEmutecaSoftware.Create(nil);
+  FSoftware := cEmutecaSoftware.Create;
 end;
 
 destructor TfmEmutecaActAddSoft.Destroy;

@@ -4,14 +4,14 @@ unit ucEmutecaPlayingStats;
 
   This file is part of Emuteca Core.
 
-  Copyright (C) 2006-2023 Chixpy
+  Copyright (C) 2006-2024 Chixpy
 }
 {$mode objfpc}{$H+}
 
 interface
 
 uses
-  Classes, SysUtils, dateutils, IniFiles, Graphics,
+  Classes, SysUtils, DateUtils, IniFiles, Graphics,
   // CHX units
   uCHXStrUtils,
   // Emuteca Core units.
@@ -21,110 +21,62 @@ type
 
   { cEmutecaPlayingStats class. }
 
-  cEmutecaPlayingStats = class(TComponent)
-  private
-    FIcon: TPicture;
-    FLastTime: TDateTime;
-    FPlayingTime: int64;
-    FSysSoftIcon: TPicture;
-    FTimesPlayed: int64;
-    procedure SetIcon(AValue: TPicture);
-    procedure SetLastTime(AValue: TDateTime);
-    procedure SetPlayingTime(AValue: int64);
-    procedure SetSysSoftIcon(AValue: TPicture);
-    procedure SetTimesPlayed(AValue: int64);
-
+  cEmutecaPlayingStats = class(TPersistent)
   public
-    procedure AddPlayingTime(const Start: TDateTime; NumberOfSeconds: int64);
+    {property} LastTime : TDateTime;
+    {< Last time played.
+
+       In cGroup maybe used to store the last time that a game
+         has played from the group.
+    }
+    {property} TimesPlayed : Int64;
+    {< Total times played. }
+    {property} PlayingTime : Int64;
+    {< Total seconds played. }
+
+    // TODO: This must be stored in another place...
+    {property} Icon : TPicture;
+    {< Cached icon for GUI. }
+    {property} SysSoftIcon : TPicture;
+    {< Cached system icon for GUI. }
+
+    procedure AddPlayingTime(const Start : TDateTime;
+      const NumberOfSeconds : Int64);
     {< Adds the seconds between two TDateTime to PlayingTime.
 
        Additionally adds 1 to TimesPlayed counter and updates LastTime
     }
 
-    procedure WriteToIni(aIniFile: TCustomIniFile; const Section: string;
-      ExportMode: boolean);
-    procedure LoadFromIni(aIniFile: TCustomIniFile; const Section: string);
-    procedure WriteToStrLst(aTxtFile: TStrings; ExportMode: boolean);
-    procedure LoadFromStrLst(aTxtFile: TStrings; const NLine: integer);
+    procedure WriteToIni(aIniFile : TCustomIniFile; const Section : string;
+      const ExportMode : Boolean);
+    procedure LoadFromIni(aIniFile : TCustomIniFile; const Section : string);
+    procedure WriteToStrLst(aTxtFile : TStrings; const ExportMode : Boolean);
+    procedure LoadFromStrLst(aTxtFile : TStrings; const NLine : Integer);
 
-    constructor Create(aOwner: TComponent); override;
-    destructor Destroy; override;
-
-  published
-    property LastTime: TDateTime read FLastTime write SetLastTime;
-    {< Last time played.
-
-        In cGroup maybe used to store the last time that a game
-        has played from the group. }
-    property TimesPlayed: int64 read FTimesPlayed write SetTimesPlayed;
-    {< Total times played. }
-    property PlayingTime: int64 read FPlayingTime write SetPlayingTime;
-    {< Total seconds played. }
-
-    function LastTimeStr: string;
+    function LastTimeStr : string;
     {< Returns LastTime as string. }
-    function TimesPlayedStr: string;
+    function TimesPlayedStr : string; inline;
     {< Returns TimesPlayed as string. }
-    function PlayingTimeStr: string;
+    function PlayingTimeStr : string; inline;
     {< Returns PlayingTime as string. }
-
-    // TODO: This must be stored in another place...
-    property Icon: TPicture read FIcon write SetIcon;
-    property SysSoftIcon: TPicture read FSysSoftIcon write SetSysSoftIcon;
   end;
 
-  {< This class is for storing stats (System, Emulator, Parent and Soft).
-  }
+  {< This class is for storing stats (System, Emulator, Parent and Soft). }
 
 implementation
 
 { cEmutecaPlayingStats }
 
-procedure cEmutecaPlayingStats.SetLastTime(AValue: TDateTime);
-begin
-  if FLastTime = AValue then
-    Exit;
-  FLastTime := AValue;
-end;
-
-procedure cEmutecaPlayingStats.SetIcon(AValue: TPicture);
-begin
-  if FIcon = AValue then
-    Exit;
-  FIcon := AValue;
-end;
-
-procedure cEmutecaPlayingStats.SetPlayingTime(AValue: int64);
-begin
-  if FPlayingTime = AValue then
-    Exit;
-  FPlayingTime := AValue;
-end;
-
-procedure cEmutecaPlayingStats.SetSysSoftIcon(AValue: TPicture);
-begin
-  if FSysSoftIcon = AValue then
-    Exit;
-  FSysSoftIcon := AValue;
-end;
-
-procedure cEmutecaPlayingStats.SetTimesPlayed(AValue: int64);
-begin
-  if FTimesPlayed = AValue then
-    Exit;
-  FTimesPlayed := AValue;
-end;
-
-procedure cEmutecaPlayingStats.AddPlayingTime(const Start: TDateTime;
-  NumberOfSeconds: int64);
+procedure cEmutecaPlayingStats.AddPlayingTime(const Start : TDateTime;
+  const NumberOfSeconds : Int64);
 begin
   PlayingTime := PlayingTime + NumberOfSeconds;
   LastTime := Start;
   TimesPlayed := TimesPlayed + 1;
 end;
 
-procedure cEmutecaPlayingStats.WriteToIni(aIniFile: TCustomIniFile;
-  const Section: string; ExportMode: boolean);
+procedure cEmutecaPlayingStats.WriteToIni(aIniFile : TCustomIniFile;
+  const Section : string; const ExportMode : Boolean);
 begin
   // TODO: Exception...
   if not assigned(aIniFile) then
@@ -144,10 +96,8 @@ begin
   end;
 end;
 
-procedure cEmutecaPlayingStats.LoadFromIni(aIniFile: TCustomIniFile;
-  const Section: string);
-var
-  TmpString: string;
+procedure cEmutecaPlayingStats.LoadFromIni(aIniFile : TCustomIniFile;
+  const Section : string);
 begin
   // TODO: Exception...
   if not assigned(aIniFile) then
@@ -160,8 +110,8 @@ begin
     TimesPlayed);
 end;
 
-procedure cEmutecaPlayingStats.WriteToStrLst(aTxtFile: TStrings;
-  ExportMode: boolean);
+procedure cEmutecaPlayingStats.WriteToStrLst(aTxtFile : TStrings;
+  const ExportMode : Boolean);
 begin
   // TODO: Exception...
   if not assigned(aTxtFile) then
@@ -181,10 +131,10 @@ begin
   end;
 end;
 
-procedure cEmutecaPlayingStats.LoadFromStrLst(aTxtFile: TStrings;
-  const NLine: integer);
+procedure cEmutecaPlayingStats.LoadFromStrLst(aTxtFile : TStrings;
+  const NLine : Integer);
 var
-  aStr: string;
+  aStr : string;
 begin
   // TODO: Exception...
   if not Assigned(aTxtFile) then
@@ -204,17 +154,7 @@ begin
     PlayingTime := StrToInt64Def(aStr, PlayingTime);
 end;
 
-constructor cEmutecaPlayingStats.Create(aOwner: TComponent);
-begin
-  inherited Create(aOwner);
-end;
-
-destructor cEmutecaPlayingStats.Destroy;
-begin
-  inherited Destroy;
-end;
-
-function cEmutecaPlayingStats.LastTimeStr: string;
+function cEmutecaPlayingStats.LastTimeStr : string;
 begin
   if LastTime = 0 then
     Result := rsNever
@@ -222,12 +162,12 @@ begin
     Result := DateTimeToStr(LastTime);
 end;
 
-function cEmutecaPlayingStats.TimesPlayedStr: string;
+function cEmutecaPlayingStats.TimesPlayedStr : string;
 begin
   Result := IntToStr(TimesPlayed);
 end;
 
-function cEmutecaPlayingStats.PlayingTimeStr: string;
+function cEmutecaPlayingStats.PlayingTimeStr : string;
 begin
   Result := SecondsToFmtStr(PlayingTime);
 end;

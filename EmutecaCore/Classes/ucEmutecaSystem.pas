@@ -1,17 +1,16 @@
 unit ucEmutecaSystem;
-
 {< cEmutecaSystem class unit.
 
   This file is part of Emuteca Core.
 
-  Copyright (C) 2006-2023 Chixpy
+  Copyright (C) 2006-2024 Chixpy
 }
 {$mode objfpc}{$H+}
 
 interface
 
 uses
-  Classes, SysUtils, fgl, LazFileUtils, LazUTF8, inifiles,
+  Classes, SysUtils, FGL, LazFileUtils, LazUTF8, IniFiles,
   // CHX units
   uCHX7zWrapper,
   // Emuteca Core units
@@ -19,9 +18,9 @@ uses
   // Emuteca Core abstracts
   uaEmutecaCustomSystem,
   // Emuteca Core classes
-  ucEmutecaEmulatorList, ucEmutecaEmulator,
-  ucEmutecaGroupManager, ucEmutecaGroupList, ucEmutecaGroup,
-  ucEmutecaSoftManager, ucEmutecaSoftList, ucEmutecaSoftware;
+  ucEmutecaEmulatorList, ucEmutecaEmulator, ucEmutecaGroupManager,
+  ucEmutecaGroupList, ucEmutecaGroup, ucEmutecaSoftManager,
+  ucEmutecaSoftList, ucEmutecaSoftware;
 
 type
 
@@ -29,41 +28,41 @@ type
 
   cEmutecaSystem = class(caEmutecaCustomSystem)
   private
-    FCurrentEmulator: cEmutecaEmulator;
-    FEmulatorList: cEmutecaEmulatorList;
-    FGroupManager: cEmutecaGroupManager;
-    FSoftGroupLoaded: boolean;
-    FProgressCallBack: TEmutecaProgressCallBack;
-    FSoftManager: cEmutecaSoftManager;
-    procedure SetCurrentEmulator(const AValue: cEmutecaEmulator);
-    procedure SetSoftGroupLoaded(AValue: boolean);
-    procedure SetProgressCallBack(AValue: TEmutecaProgressCallBack);
+    FCurrentEmulator : cEmutecaEmulator;
+    FEmulatorList : cEmutecaEmulatorList;
+    FGroupManager : cEmutecaGroupManager;
+    FProgressCallBack : TEmutecaProgressCallBack;
+    FSoftManager : cEmutecaSoftManager;
+    procedure SetCurrentEmulator(const aValue : cEmutecaEmulator);
+    procedure SetProgressCallBack(const aValue : TEmutecaProgressCallBack);
 
   protected
-    property SoftGroupLoaded: boolean read FSoftGroupLoaded
-      write SetSoftGroupLoaded;
+    {property} SoftGroupLoaded : Boolean;
     {< Are system soft and groups allready loaded? }
 
-    procedure DoSaveToIni(aIniFile: TIniFile; ExportMode: boolean); override;
+    procedure DoSaveToIni(aIniFile : TIniFile; const ExportMode : Boolean);
+      override;
 
   public
-
-    property ProgressCallBack: TEmutecaProgressCallBack
+    property ProgressCallBack : TEmutecaProgressCallBack
       read FProgressCallBack write SetProgressCallBack;
     {< Progress callback for loading soft and groups. }
 
-    property EmulatorList: cEmutecaEmulatorList read FEmulatorList;
+    property GroupManager : cEmutecaGroupManager read FGroupManager;
+    property SoftManager : cEmutecaSoftManager read FSoftManager;
+
+    property EmulatorList : cEmutecaEmulatorList read FEmulatorList;
     {< List of current assigned and enabled emulators. }
-    property CurrentEmulator: cEmutecaEmulator
+    property CurrentEmulator : cEmutecaEmulator
       read FCurrentEmulator write SetCurrentEmulator;
     {< Current assigned emulator. }
 
     procedure ClearData;
-    procedure AddSoft(aSoft: cEmutecaSoftware);
+    procedure AddSoft(aSoft : cEmutecaSoftware);
     {< Safe way to add software (adds group if needed, and link them). }
-    procedure AddGroup(aGroup: cEmutecaGroup);
+    procedure AddGroup(aGroup : cEmutecaGroup);
     {< Safe way to add groups (adds group in full list and visile list). }
-    procedure RemoveSoft(aSoft: cEmutecaSoftware);
+    procedure RemoveSoft(aSoft : cEmutecaSoftware);
     {< Safe way to remove software (removes it from its group,
       visible and full lists). }
 
@@ -79,7 +78,7 @@ type
       Used by CleanSoftGroupLists, ExportSoftGroupLists and RemoveSoft.
     }
 
-    function IsSoftSHA1Cached: integer;
+    function IsSoftSHA1Cached : Integer;
     {< Checks if all software have SHA1 cache.
 
       Returns how many files don't have SHA1.
@@ -88,32 +87,29 @@ type
         -2 = System don't use SHA1.
     }
 
-    procedure LoadEmulatorsFrom(aEmuList: cEmutecaEmulatorList);
+    procedure LoadEmulatorsFrom(aEmuList : cEmutecaEmulatorList);
     {< Updates EmulatorList from aEmuList. }
 
-    procedure LoadSoftGroupLists(const aFile: string);
-    procedure SaveSoftGroupLists(const aFile: string; ClearFile: boolean);
+    procedure LoadSoftGroupLists(const aFile : string);
+    procedure SaveSoftGroupLists(const aFile : string;
+      const ClearFile : Boolean);
     procedure UnloadSoftGroupLists;
-    procedure ImportSoftGroupLists(const aFile: string);
-    procedure ExportSoftGroupLists(const aFile: string; ClearFile: boolean);
+    procedure ImportSoftGroupLists(const aFile : string);
+    procedure ExportSoftGroupLists(const aFile : string;
+      const ClearFile : Boolean);
 
-    constructor Create(AOwner: TComponent); override;
+    constructor Create;
     destructor Destroy; override;
-
-  published
-    property GroupManager: cEmutecaGroupManager read FGroupManager;
-    property SoftManager: cEmutecaSoftManager read FSoftManager;
-
   end;
 
-  TEmutecaReturnSystemCB = procedure(aSystem: cEmutecaSystem) of object;
-{< For CallBack functions }
+  TEmutecaReturnSystemCB = procedure(aSystem : cEmutecaSystem) of object;
+  {< For CallBack functions }
 
 implementation
 
 { cEmutecaSystem }
 
-procedure cEmutecaSystem.LoadSoftGroupLists(const aFile: string);
+procedure cEmutecaSystem.LoadSoftGroupLists(const aFile : string);
 begin
   if SoftGroupLoaded then
     Exit;
@@ -143,7 +139,7 @@ begin
   CacheGroups;
 end;
 
-procedure cEmutecaSystem.ImportSoftGroupLists(const aFile: string);
+procedure cEmutecaSystem.ImportSoftGroupLists(const aFile : string);
 begin
   if not SoftGroupLoaded then
     Exit;
@@ -160,10 +156,10 @@ begin
     GroupManager.ImportFromFile(aFile + krsFileExtGroup);
 end;
 
-procedure cEmutecaSystem.ExportSoftGroupLists(const aFile: string;
-  ClearFile: boolean);
+procedure cEmutecaSystem.ExportSoftGroupLists(const aFile : string;
+  const ClearFile : Boolean);
 var
-  aFolder: string;
+  aFolder : string;
 begin
   if not SoftGroupLoaded then
     Exit;
@@ -182,10 +178,10 @@ begin
   SoftManager.ExportToFile(aFile + krsFileExtSoft, ClearFile);
 end;
 
-procedure cEmutecaSystem.SaveSoftGroupLists(const aFile: string;
-  ClearFile: boolean);
+procedure cEmutecaSystem.SaveSoftGroupLists(const aFile : string;
+  const ClearFile : Boolean);
 var
-  aFolder: String;
+  aFolder : string;
 begin
   // If not loaded, don't overwrite with empty file.
   if not SoftGroupLoaded then
@@ -209,15 +205,15 @@ begin
   SoftGroupLoaded := False;
 end;
 
-constructor cEmutecaSystem.Create(AOwner: TComponent);
+constructor cEmutecaSystem.Create;
 begin
-  inherited Create(AOwner);
+  inherited Create;
 
   SoftGroupLoaded := False;
 
-  FGroupManager := cEmutecaGroupManager.Create(Self);
+  FGroupManager := cEmutecaGroupManager.Create;
   GroupManager.System := Self;
-  FSoftManager := cEmutecaSoftManager.Create(Self);
+  FSoftManager := cEmutecaSoftManager.Create;
   SoftManager.System := Self;
 
   FEmulatorList := cEmutecaEmulatorList.Create(False);
@@ -233,11 +229,12 @@ begin
   inherited Destroy;
 end;
 
-procedure cEmutecaSystem.SetProgressCallBack(AValue: TEmutecaProgressCallBack);
+procedure cEmutecaSystem.SetProgressCallBack(
+  const aValue : TEmutecaProgressCallBack);
 begin
-  if FProgressCallBack = AValue then
+  if FProgressCallBack = aValue then
     Exit;
-  FProgressCallBack := AValue;
+  FProgressCallBack := aValue;
 
   GroupManager.ProgressCallBack := ProgressCallBack;
   SoftManager.ProgressCallBack := ProgressCallBack;
@@ -249,18 +246,11 @@ begin
   GroupManager.ClearData;
 end;
 
-procedure cEmutecaSystem.SetSoftGroupLoaded(AValue: boolean);
+procedure cEmutecaSystem.SetCurrentEmulator(const aValue : cEmutecaEmulator);
 begin
-  if FSoftGroupLoaded = AValue then
+  if FCurrentEmulator = aValue then
     Exit;
-  FSoftGroupLoaded := AValue;
-end;
-
-procedure cEmutecaSystem.SetCurrentEmulator(const AValue: cEmutecaEmulator);
-begin
-  if FCurrentEmulator = AValue then
-    Exit;
-  FCurrentEmulator := AValue;
+  FCurrentEmulator := aValue;
 
   // if not already added then add to list
   if Assigned(CurrentEmulator) then
@@ -275,9 +265,9 @@ end;
 
 procedure cEmutecaSystem.CacheGroups;
 var
-  i, j, aComp: integer;
-  aGroup: cEmutecaGroup;
-  aSoft: cEmutecaSoftware;
+  i, j, aComp : Integer;
+  aGroup : cEmutecaGroup;
+  aSoft : cEmutecaSoftware;
 begin
   if not SoftGroupLoaded then
     Exit;
@@ -398,7 +388,7 @@ end;
 
 procedure cEmutecaSystem.UnCacheGroups;
 var
-  i: integer;
+  i : Integer;
 begin
   i := 0;
   while i < SoftManager.FullList.Count do
@@ -409,9 +399,9 @@ begin
   end;
 end;
 
-procedure cEmutecaSystem.AddSoft(aSoft: cEmutecaSoftware);
+procedure cEmutecaSystem.AddSoft(aSoft : cEmutecaSoftware);
 var
-  aGroup: cEmutecaGroup;
+  aGroup : cEmutecaGroup;
 begin
   if not SoftGroupLoaded then
     Exit;
@@ -443,10 +433,10 @@ begin
   // Faster than CacheGroups;
   if (aGroup.SoftList.Count > 0) and
     (GroupManager.VisibleList.IndexOf(aGroup) = -1) then
-      GroupManager.VisibleList.Add(aGroup);
+    GroupManager.VisibleList.Add(aGroup);
 end;
 
-procedure cEmutecaSystem.AddGroup(aGroup: cEmutecaGroup);
+procedure cEmutecaSystem.AddGroup(aGroup : cEmutecaGroup);
 begin
   if not SoftGroupLoaded then
     Exit;
@@ -464,9 +454,9 @@ begin
       GroupManager.VisibleList.Add(aGroup);
 end;
 
-procedure cEmutecaSystem.RemoveSoft(aSoft: cEmutecaSoftware);
+procedure cEmutecaSystem.RemoveSoft(aSoft : cEmutecaSoftware);
 var
-  aGroup: cEmutecaGroup;
+  aGroup : cEmutecaGroup;
 begin
   if not Assigned(aSoft) then Exit;
 
@@ -489,8 +479,8 @@ end;
 
 procedure cEmutecaSystem.CleanGroupList;
 var
-  i: integer;
-  aGroup: cEmutecaGroup;
+  i : Integer;
+  aGroup : cEmutecaGroup;
 begin
   // This is fast... < 20.000 group
   // if assigned(ProgressCallBack) then
@@ -515,9 +505,9 @@ begin
   //   ProgressCallBack('', '', 0, 0, False);
 end;
 
-function cEmutecaSystem.IsSoftSHA1Cached: integer;
+function cEmutecaSystem.IsSoftSHA1Cached : Integer;
 var
-  i: integer;
+  i : Integer;
 begin
   Result := 0;
 
@@ -542,9 +532,10 @@ begin
   end;
 end;
 
-procedure cEmutecaSystem.DoSaveToIni(aIniFile: TIniFile; ExportMode: boolean);
+procedure cEmutecaSystem.DoSaveToIni(aIniFile : TIniFile;
+  const ExportMode : Boolean);
 var
-  i: integer;
+  i : Integer;
 begin
   inherited DoSaveToIni(aIniFile, ExportMode);
 
@@ -570,11 +561,11 @@ procedure cEmutecaSystem.CleanSoftGroupLists;
 
   procedure CleanSoftList;
   var
-    Last7z: string;
-    CompFileList: TStringList;
-    aSoft: cEmutecaSoftware;
-    Found, Continue: boolean;
-    i, j: integer;
+    Last7z : string;
+    CompFileList : TStringList;
+    aSoft : cEmutecaSoftware;
+    Found, Continue : Boolean;
+    i, j : Integer;
   begin
     // Sorting by filename
     if assigned(ProgressCallBack) then
@@ -641,7 +632,6 @@ procedure cEmutecaSystem.CleanSoftGroupLists;
     if assigned(ProgressCallBack) then
       ProgressCallBack('', '', 0, 0, False);
   end;
-
 begin
   if not SoftGroupLoaded then
     Exit;
@@ -655,9 +645,9 @@ begin
   CleanGroupList;
 end;
 
-procedure cEmutecaSystem.LoadEmulatorsFrom(aEmuList: cEmutecaEmulatorList);
+procedure cEmutecaSystem.LoadEmulatorsFrom(aEmuList : cEmutecaEmulatorList);
 var
-  i: integer;
+  i : Integer;
 begin
   EmulatorList.Clear;
 

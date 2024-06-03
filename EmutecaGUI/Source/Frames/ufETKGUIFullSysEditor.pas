@@ -12,7 +12,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, ExtCtrls,
-  Buttons, ComCtrls, ActnList, LazFileUtils, LCLIntf, StdCtrls,
+  Buttons, ComCtrls, ActnList, LazFileUtils, LCLIntf,
   // CHX units
   uCHXStrUtils,
   // CHX forms

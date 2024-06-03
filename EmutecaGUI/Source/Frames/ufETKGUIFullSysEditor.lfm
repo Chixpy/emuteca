@@ -47,7 +47,7 @@ inherited fmETKGUIFullSystemEditor: TfmETKGUIFullSystemEditor
     end
     object ToolButton2: TToolButton
       Left = 30
-      Height = 28
+      Height = 8
       Top = 2
       Style = tbsSeparator
     end
@@ -58,7 +58,7 @@ inherited fmETKGUIFullSystemEditor: TfmETKGUIFullSystemEditor
     end
     object ToolButton1: TToolButton
       Left = 67
-      Height = 28
+      Height = 8
       Top = 2
       Style = tbsSeparator
     end

@@ -82,13 +82,10 @@ begin
 end;
 
 procedure TfmETKGUIScriptManager.CreateCustomEngine;
-var
-  aScriptEngine: cEmutecaScriptEngine;
 begin
-  // Setting before inherited call
-  aScriptEngine := cEmutecaScriptEngine.Create;
-  aScriptEngine.Emuteca := Emuteca;
-  ScriptEngine := aScriptEngine;
+  // Creating and setting before inherited call
+  ScriptEngine := cEmutecaScriptEngine.Create;
+  cEmutecaScriptEngine(ScriptEngine).Emuteca := Emuteca;
 
   inherited CreateCustomEngine;
 end;

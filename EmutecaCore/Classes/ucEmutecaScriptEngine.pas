@@ -4,7 +4,7 @@ unit ucEmutecaScriptEngine;
 
   This file is part of Emuteca Core.
 
-  Copyright (C) 2018-2019 Chixpy
+  Copyright (C) 2018-2024 Chixpy
 }
 {$mode objfpc}{$H+}
 
@@ -21,43 +21,37 @@ uses
   uPSI_uaEmutecaCustomSGItem, uPSI_uaEmutecaCustomEmu,
   uPSI_uaEmutecaCustomSystem, uPSI_uaEmutecaCustomGroup,
   uPSI_uaEmutecaCustomSoft, uPSI_uaEmutecaCustomManager,
-  uPSI_ucEmutecaPlayingStats,
-  uPSI_ucEmutecaEmulator, uPSI_ucEmutecaSystem,
-  uPSI_ucEmutecaGroup, uPSI_ucEmutecaSoftware,
+  uPSI_ucEmutecaPlayingStats, uPSI_ucEmutecaEmulator,
+  uPSI_ucEmutecaSystem, uPSI_ucEmutecaGroup, uPSI_ucEmutecaSoftware,
   uPSI_ucEmutecaEmuList, uPSI_ucEmutecaSystemList,
   uPSI_ucEmutecaGroupList, uPSI_ucEmutecaSoftList,
   uPSI_ucEmutecaEmulatorManager, uPSI_ucEmutecaSystemManager,
   uPSI_ucEmutecaGroupManager, uPSI_ucEmutecaSoftManager,
-  uPSI_ucEmutecaConfig, uPSI_ucEmuteca,
-  uPSI_uEmutecaGUIDialogs;
+  uPSI_ucEmutecaConfig, uPSI_ucEmuteca, uPSI_uEmutecaGUIDialogs;
 
 type
 
   { cEmutecaScriptEngine }
 
   cEmutecaScriptEngine = class(cCHXScriptEngine)
-  private
-    FEmuteca: cEmuteca;
-    procedure SetEmuteca(AValue: cEmuteca);
-
   protected
-    procedure PasScriptOnCompImport(Sender: TObject;
-      x: TPSPascalCompiler); override;
-    procedure PasScriptOnCompile(Sender: TPSScript); override;
-    procedure PasScriptOnExecImport(Sender: TObject; se: TPSExec;
-      x: TPSRuntimeClassImporter); override;
-    procedure PasScriptOnExecute(Sender: TPSScript); override;
-    function PasScriptOnFindUnknownFile(Sender: TObject;
-      const OriginFileName: tbtstring;
-      var FileName, Output: tbtstring): boolean;
+    procedure PasScriptOnCompImport(Sender : TObject;
+      X : TPSPascalCompiler); override;
+    procedure PasScriptOnCompile(Sender : TPSScript); override;
+    procedure PasScriptOnExecImport(Sender : TObject; se : TPSExec;
+      X : TPSRuntimeClassImporter); override;
+    procedure PasScriptOnExecute(Sender : TPSScript); override;
+    function PasScriptOnFindUnknownFile(Sender : TObject;
+      const OriginFileName : tbtstring;
+      var FileName, Output : tbtstring) : Boolean;
       override;
-    function PasScriptOnNeedFile(Sender: TObject;
-      const OriginFileName: tbtstring;
-      var FileName, Output: tbtstring): boolean; override;
-
+    function PasScriptOnNeedFile(Sender : TObject;
+      const OriginFileName : tbtstring;
+      var FileName, Output : tbtstring) : Boolean;
+      override;
 
   public
-    property Emuteca: cEmuteca read FEmuteca write SetEmuteca;
+    {property} Emuteca : cEmuteca;
 
     constructor Create;
     destructor Destroy; override;
@@ -67,94 +61,87 @@ implementation
 
 { cEmutecaScriptEngine }
 
-procedure cEmutecaScriptEngine.SetEmuteca(AValue: cEmuteca);
+procedure cEmutecaScriptEngine.PasScriptOnCompImport(Sender : TObject;
+  X : TPSPascalCompiler);
 begin
-  if FEmuteca = AValue then
-    Exit;
-  FEmuteca := AValue;
+  inherited PasScriptOnCompImport(Sender, X);
+
+  SIRegister_uEmutecaConst(X);
+  SIRegister_uEmutecaRscStr(X);
+  SIRegister_uEmutecaCommon(X);
+
+  SIRegister_ucEmutecaPlayingStats(X);
+
+  SIRegister_uaEmutecaCustomEmu(X);
+  SIRegister_uaEmutecaCustomSGItem(X);
+  SIRegister_uaEmutecaCustomGroup(X);
+  SIRegister_uaEmutecaCustomSoft(X);
+  SIRegister_uaEmutecaCustomSystem(X);
+  SIRegister_uaEmutecaCustomManager(X);
+
+  SIRegister_ucEmutecaEmulator(X);
+  SIRegister_ucEmutecaEmulatorList(X);
+  SIRegister_ucEmutecaEmulatorManager(X);
+
+  SIRegister_ucEmutecaSoftware(X);
+  SIRegister_ucEmutecaSoftList(X);
+  SIRegister_ucEmutecaSoftManager(X);
+
+  SIRegister_ucEmutecaGroup(X);
+  SIRegister_ucEmutecaGroupList(X);
+  SIRegister_ucEmutecaGroupManager(X);
+
+  SIRegister_ucEmutecaSystem(X);
+  SIRegister_ucEmutecaSystemList(X);
+  SIRegister_ucEmutecaSystemManager(X);
+
+  SIRegister_ucEmutecaConfig(X);
+  SIRegister_ucEmuteca(X);
+
+  SIRegister_uEmutecaGUIDialogs(X);
 end;
 
-procedure cEmutecaScriptEngine.PasScriptOnCompImport(Sender: TObject;
-  x: TPSPascalCompiler);
+procedure cEmutecaScriptEngine.PasScriptOnExecImport(Sender : TObject;
+  se : TPSExec; X : TPSRuntimeClassImporter);
 begin
-  inherited PasScriptOnCompImport(Sender, x);
-
-  SIRegister_uEmutecaConst(x);
-  SIRegister_uEmutecaRscStr(x);
-  SIRegister_uEmutecaCommon(x);
-
-  SIRegister_ucEmutecaPlayingStats(x);
-
-  SIRegister_uaEmutecaCustomEmu(x);
-  SIRegister_uaEmutecaCustomSGItem(x);
-  SIRegister_uaEmutecaCustomGroup(x);
-  SIRegister_uaEmutecaCustomSoft(x);
-  SIRegister_uaEmutecaCustomSystem(x);
-  SIRegister_uaEmutecaCustomManager(x);
-
-  SIRegister_ucEmutecaEmulator(x);
-  SIRegister_ucEmutecaEmulatorList(x);
-  SIRegister_ucEmutecaEmulatorManager(x);
-
-  SIRegister_ucEmutecaSoftware(x);
-  SIRegister_ucEmutecaSoftList(x);
-  SIRegister_ucEmutecaSoftManager(x);
-
-  SIRegister_ucEmutecaGroup(x);
-  SIRegister_ucEmutecaGroupList(x);
-  SIRegister_ucEmutecaGroupManager(x);
-
-  SIRegister_ucEmutecaSystem(x);
-  SIRegister_ucEmutecaSystemList(x);
-  SIRegister_ucEmutecaSystemManager(x);
-
-  SIRegister_ucEmutecaConfig(x);
-  SIRegister_ucEmuteca(x);
-
-  SIRegister_uEmutecaGUIDialogs(x);
-end;
-
-procedure cEmutecaScriptEngine.PasScriptOnExecImport(Sender: TObject;
-  se: TPSExec; x: TPSRuntimeClassImporter);
-begin
-  inherited PasScriptOnExecImport(Sender, se, x);
+  inherited PasScriptOnExecImport(Sender, se, X);
 
   RIRegister_uEmutecaConst_Routines(se);
   RIRegister_uEmutecaRscStr_Routines(se);
   RIRegister_uEmutecaCommon_Routines(se);
 
-  RIRegister_ucEmutecaPlayingStats(x);
+  RIRegister_ucEmutecaPlayingStats(X);
 
-  RIRegister_uaEmutecaCustomEmu(x);
-  RIRegister_uaEmutecaCustomSGItem(x);
-  RIRegister_uaEmutecaCustomGroup(x);
-  RIRegister_uaEmutecaCustomSoft(x);
-  RIRegister_uaEmutecaCustomSystem(x);
-  RIRegister_uaEmutecaCustomManager(x);
+  RIRegister_uaEmutecaCustomEmu(X);
+  RIRegister_uaEmutecaCustomSGItem(X);
+  RIRegister_uaEmutecaCustomGroup(X);
+  RIRegister_uaEmutecaCustomSoft(X);
+  RIRegister_uaEmutecaCustomSystem(X);
+  RIRegister_uaEmutecaCustomManager(X);
 
-  RIRegister_ucEmutecaEmulator(x);
-  RIRegister_ucEmutecaEmulatorList(x);
-  RIRegister_ucEmutecaEmulatorManager(x);
+  RIRegister_ucEmutecaEmulator(X);
+  RIRegister_ucEmutecaEmulatorList(X);
+  RIRegister_ucEmutecaEmulatorManager(X);
 
-  RIRegister_ucEmutecaSoftware(x);
-  RIRegister_ucEmutecaSoftList(x);
-  RIRegister_ucEmutecaSoftManager(x);
+  RIRegister_ucEmutecaSoftware(X);
+  RIRegister_ucEmutecaSoftList(X);
+  RIRegister_ucEmutecaSoftManager(X);
 
-  RIRegister_ucEmutecaGroup(x);
-  RIRegister_ucEmutecaGroupList(x);
-  RIRegister_ucEmutecaGroupManager(x);
+  RIRegister_ucEmutecaGroup(X);
+  RIRegister_ucEmutecaGroupList(X);
+  RIRegister_ucEmutecaGroupManager(X);
 
-  RIRegister_ucEmutecaSystem(x);
-  RIRegister_ucEmutecaSystemList(x);
-  RIRegister_ucEmutecaSystemManager(x);
+  RIRegister_ucEmutecaSystem(X);
+  RIRegister_ucEmutecaSystemList(X);
+  RIRegister_ucEmutecaSystemManager(X);
 
-  RIRegister_ucEmutecaConfig(x);
-  RIRegister_ucEmuteca(x);
+  RIRegister_ucEmutecaConfig(X);
+  RIRegister_ucEmuteca(X);
 
   RIRegister_uEmutecaGUIDialogs_Routines(se);
 end;
 
-procedure cEmutecaScriptEngine.PasScriptOnCompile(Sender: TPSScript);
+procedure cEmutecaScriptEngine.PasScriptOnCompile(Sender : TPSScript);
 begin
   inherited PasScriptOnCompile(Sender);
 
@@ -162,22 +149,25 @@ begin
   Sender.AddRegisteredPTRVariable('Emuteca', 'cEmuteca');
 end;
 
-procedure cEmutecaScriptEngine.PasScriptOnExecute(Sender: TPSScript);
+procedure cEmutecaScriptEngine.PasScriptOnExecute(Sender : TPSScript);
 begin
   inherited PasScriptOnExecute(Sender);
 
-  Sender.SetPointerToData('Emuteca', @FEmuteca, Sender.FindNamedType('cEmuteca'));
+  Sender.SetPointerToData('Emuteca', @Emuteca,
+    Sender.FindNamedType('cEmuteca'));
 end;
 
-function cEmutecaScriptEngine.PasScriptOnFindUnknownFile(Sender: TObject;
-  const OriginFileName: tbtstring; var FileName, Output: tbtstring): boolean;
+function cEmutecaScriptEngine.PasScriptOnFindUnknownFile(Sender : TObject;
+  const OriginFileName : tbtstring;
+  var FileName, Output : tbtstring) : Boolean;
 begin
   Result := inherited PasScriptOnFindUnknownFile(Sender,
     OriginFileName, FileName, Output);
 end;
 
-function cEmutecaScriptEngine.PasScriptOnNeedFile(Sender: TObject;
-  const OriginFileName: tbtstring; var FileName, Output: tbtstring): boolean;
+function cEmutecaScriptEngine.PasScriptOnNeedFile(Sender : TObject;
+  const OriginFileName : tbtstring;
+  var FileName, Output : tbtstring) : Boolean;
 begin
   Result := inherited PasScriptOnNeedFile(Sender, OriginFileName,
     FileName, Output);

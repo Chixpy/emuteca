@@ -2327,12 +2327,6 @@ msgstr ""
 "%0:s\n"
 "no encontrado."
 
-#: uchxrscstr.rsfmtitemcount
-#, object-pascal-format
-msgctxt "uchxrscstr.rsfmtitemcount"
-msgid "%0:d / %0:d"
-msgstr "%0:d / %0:d"
-
 #: uchxrscstr.rsrenamefile
 msgid "Rename this file:"
 msgstr "Renombre este fichero:"

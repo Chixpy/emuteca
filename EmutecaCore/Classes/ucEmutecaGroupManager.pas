@@ -11,8 +11,7 @@ unit ucEmutecaGroupManager;
 interface
 
 uses
-  Classes, SysUtils, FileUtil, LazFileUtils, LazUTF8,
-  LConvEncoding, LResources,
+  Classes, SysUtils, FileUtil, LazFileUtils, LazUTF8, LConvEncoding, LResources,
   // CHX abstracts
   uaCHXStorable,
   // Emuteca Core units
@@ -39,11 +38,14 @@ type
     property System: caEmutecaCustomSystem read FSystem write SetSystem;
     {< Owner, as a shorcut to access it. }
 
+    property FullList: cEmutecaGroupList read FFullList;
+    {< Actual list where the parents are stored. }
+
     property VisibleList: cEmutecaGroupList read FVisibleList;
     {< Parents with soft. Updated by System when loading. }
 
     procedure ClearData;
-    function AddGroup(aID: string): integer;
+    function AddGroup(const aID: string): integer;
 
     // Inherited abstracts
     // -------------------
@@ -56,13 +58,8 @@ type
     {< Saves groups' common data for importing.
     }
 
-    constructor Create(aOwner: TComponent); override;
+    constructor Create;
     destructor Destroy; override;
-
-  published
-    property FullList: cEmutecaGroupList read FFullList;
-    {< Actual list where the parents are stored. }
-
   end;
 
 implementation
@@ -111,7 +108,7 @@ begin
   i := 1; // Skipping Header
   while i < aTxtFile.Count do
   begin
-    aGroup := cEmutecaGroup.Create(nil);
+    aGroup := cEmutecaGroup.Create;
     aGroup.CommaText := aTxtFile[i];
     aGroup.CachedSystem := System;
     aGrpLst.Add(aGroup);
@@ -246,7 +243,7 @@ begin
         end
         else
         begin // Creating new group
-          aExpGroup := cEmutecaGroup.Create(nil);
+          aExpGroup := cEmutecaGroup.Create;
           aExpGroup.ID := aGroup.ID;
           aExpGroup.ImportFrom(aGroup);
           ExpGroupList.Add(aExpGroup);
@@ -325,11 +322,11 @@ begin
     ProgressCallBack('', '', 0, 0, False);
 end;
 
-function cEmutecaGroupManager.AddGroup(aID: string): integer;
+function cEmutecaGroupManager.AddGroup(const aID: string): integer;
 var
   TempGroup: cEmutecaGroup;
 begin
-  TempGroup := cEmutecaGroup.Create(nil);
+  TempGroup := cEmutecaGroup.Create;
   TempGroup.ID := aID;
   TempGroup.CachedSystem := System;
   Result := FullList.Add(TempGroup);
@@ -380,9 +377,9 @@ begin
     ProgressCallBack('', '', 0, 0, False);
 end;
 
-constructor cEmutecaGroupManager.Create(aOwner: TComponent);
+constructor cEmutecaGroupManager.Create;
 begin
-  inherited Create(aOwner);
+  inherited Create;
   FFullList := cEmutecaGroupList.Create(True);
   FVisibleList := cEmutecaGroupList.Create(False);
 end;

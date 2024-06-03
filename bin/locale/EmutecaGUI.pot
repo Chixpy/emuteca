@@ -2242,12 +2242,6 @@ msgid ""
 "not found."
 msgstr ""
 
-#: uchxrscstr.rsfmtitemcount
-#, object-pascal-format
-msgctxt "uchxrscstr.rsfmtitemcount"
-msgid "%0:d / %0:d"
-msgstr ""
-
 #: uchxrscstr.rsrenamefile
 msgid "Rename this file:"
 msgstr ""

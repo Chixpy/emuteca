@@ -7,72 +7,25 @@ program EmutecaGUI;
   Copyright (C) 2006-2019 Chixpy
 }
 {$mode objfpc}{$H+}
-{$DEFINE PS_USESSUPPORT}
 
-uses {$IFDEF UNIX} {$IFDEF UseCThreads}
-  cthreads, {$ENDIF} {$ENDIF}
-  Interfaces, // this includes the LCL widgetset
-  Forms,
-  lazcontrols,
-  pascalscript,
+{$DEFINE PS_USESSUPPORT} // Doesn't work here..
+
+uses {$IFDEF UNIX} {$IFDEF UseCThreads} cthreads, {$ENDIF} {$ENDIF}
+  Interfaces, Forms, lazcontrols, pascalscript,
   // CHX units
-  uCHXConst,
-  uCHXDlgUtils,
-  uCHXExecute,
-  uCHXImageUtils,
-  uCHXMenuUtils,
-  uCHXRscStr,
+  uCHXConst, uCHXDlgUtils, uCHXExecute, uCHXImageUtils, uCHXMenuUtils,uCHXRscStr,
   // CHX abstract classes
-  uaCHXConfig,
-  uaCHXStorable,
+  uaCHXConfig, uaCHXStorable,
   // CHX frames
-  ufCHXAbout,
-  ufCHXChkLstPropEditor,
-  ufCHXFileListPreview,
-  ufCHXFrame,
-  ufCHXImgListPreview,
-  ufCHXImgViewer,
-  ufCHXListPreview,
-  ufCHXMultiFolderEditor,
-  ufCHXProgressBar,
-  ufCHXPropEditor,
-  ufCHXScriptManager,
-  ufCHXTagTree,
-  ufCHXTxtListPreview,
+  ufCHXAbout, ufCHXChkLstPropEditor,ufCHXFileListPreview,ufCHXFrame,ufCHXImgListPreview, ufCHXImgViewer,ufCHXListPreview, ufCHXMultiFolderEditor,ufCHXProgressBar,ufCHXPropEditor,ufCHXScriptManager,ufCHXTagTree,ufCHXTxtListPreview,
   // CHX Pascal Script imported units
-  uPSI_CHXBasic,
-  uPSI_FPCDateUtils,
-  uPSI_FPCFileUtil,
-  uPSI_FPCLazUTF8,
-  uPSI_FPCSysUtils,
-  uPSI_uaCHXStorable,
+  uPSI_CHXBasic,uPSI_FPCDateUtils,uPSI_FPCFileUtil,uPSI_FPCLazUTF8,uPSI_FPCSysUtils,uPSI_uaCHXStorable,
   // Emuteca units
-  uEmutecaConst,
-  uEmutecaRscStr,
+  uEmutecaConst, uEmutecaRscStr,
   // Emuteca abstract classes
-  uaEmutecaCustomEmu,
-  uaEmutecaCustomGroup,
-  uaEmutecaCustomManager,
-  uaEmutecaCustomSGItem,
-  uaEmutecaCustomSoft,
-  uaEmutecaCustomSystem,
+  uaEmutecaCustomEmu, uaEmutecaCustomGroup, uaEmutecaCustomManager,uaEmutecaCustomSGItem,uaEmutecaCustomSoft,uaEmutecaCustomSystem,
   // Emuteca classes
-  ucEmuteca,
-  ucEmutecaConfig,
-  ucEmutecaEmulator,
-  ucEmutecaEmulatorList,
-  ucEmutecaEmulatorManager,
-  ucEmutecaGroup,
-  ucEmutecaGroupList,
-  ucEmutecaGroupManager,
-  ucEmutecaScriptEngine,
-  ucEmutecaSoftList,
-  ucEmutecaSoftManager,
-  ucEmutecaSoftware,
-  ucEmutecaSystem,
-  ucEmutecaSystemList,
-  ucEmutecaSystemManager,
-  ucEmutecaTagsFile,
+  ucEmuteca,ucEmutecaConfig,ucEmutecaEmulator,ucEmutecaEmulatorList,ucEmutecaEmulatorManager,ucEmutecaGroup,ucEmutecaGroupList, ucEmutecaGroupManager,ucEmutecaScriptEngine,ucEmutecaSoftList,ucEmutecaSoftManager,ucEmutecaSoftware,ucEmutecaSystem,ucEmutecaSystemList,ucEmutecaSystemManager,ucEmutecaTagsFile,
   // Emuteca frames
   ufEmutecaActAddFolder,
   ufEmutecaActAddSoft,
@@ -89,10 +42,7 @@ uses {$IFDEF UNIX} {$IFDEF UseCThreads}
   ufEmutecaSoftTxtPreview,
   ufEmutecaSystemCBX,
   ufEmutecaSystemEditor,
-  ufEmutecaSystemITFEditor,
-  ufEmutecaSystemImgEditor,
-  ufEmutecaSystemMVFEditor,
-  ufEmutecaTagTree,
+  ufEmutecaSystemITFEditor, ufEmutecaSystemImgEditor,ufEmutecaSystemMVFEditor, ufEmutecaTagTree,
   // Emuteca Pascal Script imported units
   uPSI_uEmutecaConst,
   uPSI_uEmutecaGUIDialogs,

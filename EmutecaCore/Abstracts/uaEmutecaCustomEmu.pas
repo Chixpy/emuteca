@@ -1,17 +1,16 @@
 unit uaEmutecaCustomEmu;
-
 {< caEmutecaEmulator abstract class unit.
 
   This file is part of Emuteca Core.
 
-  Copyright (C) 2006-2023 Chixpy
+  Copyright (C) 2006-2024 Chixpy
 }
 {$mode objfpc}{$H+}
 
 interface
 
 uses Classes, SysUtils, FileUtil, StrUtils, LazUTF8, LazFileUtils,
-  IniFiles, lclintf,
+  IniFiles, LCLIntf,
   // CHX units
   uCHXStrUtils, uCHXExecute,
   // CHX abstracts
@@ -39,7 +38,7 @@ const
   krsEmutecaROMPathNoExtKey = '%ROMNOEXT%';
   {< ROM filename without extension. }
   //kEmutecaROMDirKey = '%ROMDIR%'; <- Same as Working Folders
-  {< ROM's directory key. }
+  //{< ROM's directory key. }
   krsEmutecaROMLastFolderKey = '%ROMLASTDIR%';
   {< ROM's last folder key. }
   krsEmutecaROMFileNameKey = '%ROMNAME%';
@@ -53,7 +52,7 @@ const
   krsEmutecaROMExtensionParamKey = '%EXTPARAM%';
   {< Extra parameter from System.CoreID key. }
   krsEmutecaROMExtraParamKey = '%EXTRA%';
-{< Extra parameters from Software.ExtraParameter key. }
+  {< Extra parameters from Software.ExtraParameter key. }
 
 type
   { caEmutecaCustomEmu class.
@@ -61,96 +60,40 @@ type
     Stores all basic info of an emulator. }
   caEmutecaCustomEmu = class(caCHXStorableIni)
   private
-    FCoreIDKey: string;
-    FCoreIDParamFormat: string;
-    FDeveloper: string;
-    FExtensionParamFormat: TStringList;
-    FTitle: string;
-    FEnabled: boolean;
-    FExeFile: string;
-    FExitCode: integer;
-    FExtraParamFormat: TStringList;
-    FFileExt: TStringList;
-    FIconFile: string;
-    FID: string;
-    FInfoFile: string;
-    FParameters: string;
-    FStats: cEmutecaPlayingStats;
-    FWebPage: string;
-    FWorkingFolder: string;
-    procedure SetCoreIDKey(AValue: string);
-    procedure SetCoreIDParamFormat(AValue: string);
-    procedure SetDeveloper(AValue: string);
-    procedure SetTitle(AValue: string);
-    procedure SetEnabled(AValue: boolean);
-    procedure SetExeFile(AValue: string);
-    procedure SetExitCode(AValue: integer);
-    procedure SetIconFile(AValue: string);
-    procedure SetID(AValue: string);
-    procedure SetInfoFile(AValue: string);
-    procedure SetParameters(AValue: string);
-    procedure SetWebPage(AValue: string);
-    procedure SetWorkingFolder(AValue: string);
+    FExtensionParamFormat : TStringList;
+    FExeFile : string;
+    FExtraParamFormat : TStringList;
+    FFileExt : TStringList;
+    FIconFile : string;
+    FID : string;
+    FInfoFile : string;
+    FStats : cEmutecaPlayingStats;
+    FWorkingFolder : string;
+    procedure SetExeFile(aValue : string);
+    procedure SetIconFile(aValue : string);
+    procedure SetID(aValue : string);
+    procedure SetInfoFile(aValue : string);
+    procedure SetWorkingFolder(aValue : string);
 
   protected
-    procedure DoSaveToIni(aIniFile: TMemIniFile; ExportMode: boolean); virtual;
+    procedure DoSaveToIni(aIniFile : TMemIniFile; ExportMode : Boolean); virtual;
     {< Saves emulator config to ini file. }
 
   public
-    function CompareID(aID: string): integer;
-    {< Compares Emulator.ID with aID. It's case insensitive. }
-    function MatchID(aID: string): boolean;
-    {< Returns @true if aID matchs Emulator.ID. }
+    // Properties with empty getter and setter
 
-    function Execute(GameFile: string; ExtraParameters: TStringList;
-      SysID: string): integer;
-    {< Executes emulator with a game file.
-
-       @param(GameFile is a string with game filename. Used with Parameters
-          property. )
-       @param(ExtraParameters is a string list with the extra parameters values
-         stored with game. )
-       @param(SysID is a string with ID of system. Used with multicore
-         emulators. )
-       @returns(Integer with emulator exit code. 0 if matches
-         Emulator.ExitCode value. -1 if Something is wrong before launch. )
-  }
-    function ExecuteAlone: integer;
-    {< Executes emulator without parameters. }
-
-    procedure LoadFromIni(aIniFile: TMemIniFile); override;
-    procedure SaveToIni(aIniFile: TMemIniFile); override;
-    procedure ImportFromIni(aIniFile: TMemIniFile); virtual;
-    procedure ExportToIni(aIniFile: TMemIniFile); virtual;
-
-    constructor Create(aOwner: TComponent); override;
-    destructor Destroy; override;
-
-  published
-    property ID: string read FID write SetID;
-    {< ID of the Emulator. }
-
-    property Enabled: boolean read FEnabled write SetEnabled;
+    {property} Enabled : Boolean;
     {< Is it enabled? }
 
-    property Title: string read FTitle write SetTitle;
+    {property} Title : string;
     {< Emulator's name. }
-    property ExeFile: string read FExeFile write SetExeFile;
-    {< Path to executable. }
-    property WorkingFolder: string read FWorkingFolder write SetWorkingFolder;
-    {< Working folder. Emuteca will change to that folder before launching the
-         emulator. Following key items can be used:
 
-       @definitionList(
-         @itemLabel(%EMUDIR% (default))
-         @item(Change to emulator's folder.)
-         @itemLabel(%ROMDIR%)
-         @item(Change to ROM's folder.)
-         @itemLabel(%CURRENTDIR%)
-         @item(Use current folder.)
-       )
-    }
-    property Parameters: string read FParameters write SetParameters;
+    {property} Developer : string;
+    {< Developers. }
+    {property} WebPage : string;
+    {< WebPage. }
+
+    {property} Parameters : string;
     {< Parameters used with the executable.
 
        Tip: Following key items can be used:
@@ -178,86 +121,112 @@ type
          @item(Extra parameters from software ExtraParameter property.)
        )
     }
-    property CoreIDKey: string read FCoreIDKey write SetCoreIDKey;
+
+    {property} CoreIDKey : string;
     {< Key to search core parameter in system. }
-    property CoreIDParamFormat: string
-      read FCoreIDParamFormat write SetCoreIDParamFormat;
+    {property} CoreIDParamFormat : string;
     {< String for %SYSID% parameter. }
-    property ExtensionParamFormat: TStringList read FExtensionParamFormat;
+
+    {property} ExitCode : Integer;
+    {< Code returned by emulator in usual conditions. Emuteca will not show
+         an error message if this code is returned. }
+
+    property ID : string read FID write SetID;
+    {< ID of the Emulator. }
+
+    property ExeFile : string read FExeFile write SetExeFile;
+    {< Path to executable. }
+    property WorkingFolder : string read FWorkingFolder write SetWorkingFolder;
+    {< Working folder. Emuteca will change to that folder before launching the
+         emulator. Following key items can be used:
+
+       @definitionList(
+         @itemLabel(%EMUDIR% (default))
+         @item(Change to emulator's folder.)
+         @itemLabel(%ROMDIR%)
+         @item(Change to ROM's folder.)
+         @itemLabel(%CURRENTDIR%)
+         @item(Use current folder.)
+       )
+    }
+
+    property ExtensionParamFormat : TStringList read FExtensionParamFormat;
     {< Strings to encapsulate %EXTPARAM% parameters from extension of ROM.
     }
-    property ExtraParamFormat: TStringList read FExtraParamFormat;
+    property ExtraParamFormat : TStringList read FExtraParamFormat;
     {< Strings to encapsulate %EXTRA% parameters from software.
     }
 
-    property FileExt: TStringList read FFileExt;
+    property FileExt : TStringList read FFileExt;
     {< Extensions used by the emulator.
 
     Only one extension in every string, without dot.
     }
 
-    property ExitCode: integer read FExitCode write SetExitCode default 0;
-    {< Code returned by emulator in usual conditions. Emuteca will not show
-         an error message if this code is returned. }
-
-    // Additional info data
-    // --------------------
-    property Developer: string read FDeveloper write SetDeveloper;
-    {< Developers. }
-    property WebPage: string read FWebPage write SetWebPage;
-    {< WebPage. }
-    property IconFile: string read FIconFile write SetIconFile;
+    property IconFile : string read FIconFile write SetIconFile;
     {< Icon for emulator. }
-    property InfoFile: string read FInfoFile write SetInfoFile;
+    property InfoFile : string read FInfoFile write SetInfoFile;
     {< Text info file for emulator. }
 
-    // Usage statitics
-    // ---------------
-    property Stats: cEmutecaPlayingStats read FStats;
+    property Stats : cEmutecaPlayingStats read FStats;
+    {< Statistics }
+
+    function CompareID(aID : string) : Integer; inline;
+    {< Compares Emulator.ID with aID. It's case insensitive. }
+    function MatchID(aID : string) : Boolean; inline;
+    {< Returns @true if aID matchs Emulator.ID. }
+
+    function Execute(GameFile : string; ExtraParameters : TStringList;
+      SysID : string) : Integer;
+    {< Executes emulator with a game file.
+
+       @param(GameFile is a string with game filename. Used with Parameters
+          property. )
+       @param(ExtraParameters is a string list with the extra parameters values
+         stored with game. )
+       @param(SysID is a string with ID of system. Used with multicore
+         emulators. )
+       @returns(Integer with emulator exit code. 0 if matches
+         Emulator.ExitCode value. -1 if Something is wrong before launch. )
+  }
+    function ExecuteAlone : Integer;
+    {< Executes emulator without parameters. }
+
+    procedure LoadFromIni(aIniFile : TMemIniFile); override;
+    procedure SaveToIni(aIniFile : TMemIniFile); override;
+    procedure ImportFromIni(aIniFile : TMemIniFile); virtual;
+    procedure ExportToIni(aIniFile : TMemIniFile); virtual;
+
+    constructor Create;
+    destructor Destroy; override;
   end;
 
 implementation
 
 { caEmutecaCustomEmu }
 
-procedure caEmutecaCustomEmu.SetID(AValue: string);
+procedure caEmutecaCustomEmu.SetID(aValue : string);
 begin
-  AValue := UTF8Trim(AValue);
-  if FID = AValue then
+  aValue := UTF8Trim(aValue);
+  if FID = aValue then
     Exit;
-  FID := AValue;
+  FID := aValue;
 
   FPONotifyObservers(Self, ooChange, nil);
 end;
 
-procedure caEmutecaCustomEmu.SetInfoFile(AValue: string);
+procedure caEmutecaCustomEmu.SetInfoFile(aValue : string);
 begin
-  FInfoFile := SetAsFile(UTF8Trim(AValue));
+  FInfoFile := SetAsFile(aValue);
 end;
 
-procedure caEmutecaCustomEmu.SetParameters(AValue: string);
+procedure caEmutecaCustomEmu.SetWorkingFolder(aValue : string);
 begin
-  AValue := UTF8Trim(AValue);
-  if FParameters = AValue then
-    Exit;
-  FParameters := AValue;
+  FWorkingFolder := SetAsFolder(aValue);
 end;
 
-procedure caEmutecaCustomEmu.SetWebPage(AValue: string);
-begin
-  AValue := UTF8Trim(AValue);
-  if FWebPage = AValue then
-    Exit;
-  FWebPage := AValue;
-end;
-
-procedure caEmutecaCustomEmu.SetWorkingFolder(AValue: string);
-begin
-  FWorkingFolder := SetAsFolder(AValue);
-end;
-
-procedure caEmutecaCustomEmu.DoSaveToIni(aIniFile: TMemIniFile;
-  ExportMode: boolean);
+procedure caEmutecaCustomEmu.DoSaveToIni(aIniFile : TMemIniFile;
+  ExportMode : Boolean);
 begin
   if not assigned(aIniFile) then
     Exit;
@@ -298,67 +267,21 @@ begin
   Stats.WriteToIni(aIniFile, ID, ExportMode);
 end;
 
-procedure caEmutecaCustomEmu.SetEnabled(AValue: boolean);
+procedure caEmutecaCustomEmu.SetExeFile(aValue : string);
 begin
-  if FEnabled = AValue then
-    Exit;
-  FEnabled := AValue;
+  FExeFile := SetAsFile(aValue);
 end;
 
-procedure caEmutecaCustomEmu.SetTitle(AValue: string);
+procedure caEmutecaCustomEmu.SetIconFile(aValue : string);
 begin
-  AValue := UTF8Trim(AValue);
-  if FTitle = AValue then
-    Exit;
-  FTitle := AValue;
+  FIconFile := SetAsFile(aValue);
 end;
 
-procedure caEmutecaCustomEmu.SetDeveloper(AValue: string);
+constructor caEmutecaCustomEmu.Create;
 begin
-  AValue := UTF8Trim(AValue);
-  if FDeveloper = AValue then
-    Exit;
-  FDeveloper := AValue;
-end;
+  inherited Create;
 
-procedure caEmutecaCustomEmu.SetCoreIDKey(AValue: string);
-begin
-  AValue := UTF8Trim(AValue);
-  if FCoreIDKey = AValue then
-    Exit;
-  FCoreIDKey := AValue;
-end;
-
-procedure caEmutecaCustomEmu.SetCoreIDParamFormat(AValue: string);
-begin
-  AValue := UTF8Trim(AValue);
-  if FCoreIDParamFormat = AValue then
-    Exit;
-  FCoreIDParamFormat := AValue;
-end;
-
-procedure caEmutecaCustomEmu.SetExeFile(AValue: string);
-begin
-  FExeFile := SetAsFile(AValue);
-end;
-
-procedure caEmutecaCustomEmu.SetExitCode(AValue: integer);
-begin
-  if FExitCode = AValue then
-    Exit;
-  FExitCode := AValue;
-end;
-
-procedure caEmutecaCustomEmu.SetIconFile(AValue: string);
-begin
-  FIconFile := SetAsFile(UTF8Trim(AValue));
-end;
-
-constructor caEmutecaCustomEmu.Create(aOwner: TComponent);
-begin
-  inherited Create(aOwner);
-
-  FStats := cEmutecaPlayingStats.Create(Self);
+  FStats := cEmutecaPlayingStats.Create;
 
   WorkingFolder := krsEmutecaEmuDirKey;
   Parameters := '"' + krsEmutecaROMPathKey + '"';
@@ -384,23 +307,23 @@ begin
   inherited Destroy;
 end;
 
-function caEmutecaCustomEmu.CompareID(aID: string): integer;
+function caEmutecaCustomEmu.CompareID(aID : string) : Integer;
 begin
-  Result := UTF8CompareText(ID, UTF8Trim(aID));
+  Result := UTF8CompareText(ID, aID);
 end;
 
-function caEmutecaCustomEmu.MatchID(aID: string): boolean;
+function caEmutecaCustomEmu.MatchID(aID : string) : Boolean;
 begin
   Result := CompareID(aID) = 0;
 end;
 
-function caEmutecaCustomEmu.Execute(GameFile: string;
-  ExtraParameters: TStringList; SysID: string): integer;
+function caEmutecaCustomEmu.Execute(GameFile : string;
+  ExtraParameters : TStringList; SysID : string) : Integer;
 var
-  i, j: integer;
-  ActualWorkDir, sOutput, sError: string;
-  ActualParam, Extra, TempExtra: string;
-  aSL: TStringList;
+  i, j : Integer;
+  ActualWorkDir, sOutput, sError : string;
+  ActualParam, Extra, TempExtra : string;
+  aSL : TStringList;
 begin
   Result := -1;
 
@@ -545,13 +468,12 @@ begin
   }
   if Result = ExitCode then
     Result := 0;
-
 end;
 
-function caEmutecaCustomEmu.ExecuteAlone: integer;
+function caEmutecaCustomEmu.ExecuteAlone : Integer;
 var
-  TempDir: string;
-  sError, sOutput: string;
+  TempDir : string;
+  sError, sOutput : string;
 begin
   Result := -1;
 
@@ -574,7 +496,7 @@ begin
     Result := 0;
 end;
 
-procedure caEmutecaCustomEmu.LoadFromIni(aIniFile: TMemIniFile);
+procedure caEmutecaCustomEmu.LoadFromIni(aIniFile : TMemIniFile);
 begin
   if not assigned(aIniFile) then
     Exit;
@@ -611,17 +533,17 @@ begin
   Stats.LoadFromIni(aIniFile, ID);
 end;
 
-procedure caEmutecaCustomEmu.ExportToIni(aIniFile: TMemIniFile);
+procedure caEmutecaCustomEmu.ExportToIni(aIniFile : TMemIniFile);
 begin
   DoSaveToIni(aIniFile, True);
 end;
 
-procedure caEmutecaCustomEmu.SaveToIni(aIniFile: TMemIniFile);
+procedure caEmutecaCustomEmu.SaveToIni(aIniFile : TMemIniFile);
 begin
   DoSaveToIni(aIniFile, False);
 end;
 
-procedure caEmutecaCustomEmu.ImportFromIni(aIniFile: TMemIniFile);
+procedure caEmutecaCustomEmu.ImportFromIni(aIniFile : TMemIniFile);
 begin
   // Simply load from file, when exporting user data is removed
   LoadFromIni(aIniFile);

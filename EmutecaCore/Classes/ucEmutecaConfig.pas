@@ -3,7 +3,7 @@ unit ucEmutecaConfig;
 
   This file is part of Emuteca
 
-  Copyright (C) 2006-2020 Chixpy
+  Copyright (C) 2006-2024 Chixpy
 }
 {$mode objfpc}{$H+}
 
@@ -66,54 +66,54 @@ type
   { cEmutecaConfig }
   cEmutecaConfig = class(caCHXConfig)
   private
-    FAutoSysFoldersFile: string;
-    FCompressedExtensions: TStringList;
-    FEmulatorsFile: string;
-    FSysDataFolder: string;
-    FMinPlayTime: integer;
-    FSystemsFile: string;
-    FTagsFolder: string;
-    FTempFile: string;
-    FTempSubFolder: string;
-    FSoftFile: string;
-    Fz7CMExecutable: string;
-    Fz7GExecutable: string;
-    procedure SetAutoSysFoldersFile(AValue: string);
-    procedure SetEmulatorsFile(const AValue: string);
-    procedure SetSysDataFolder(AValue: string);
-    procedure SetMinPlayTime(AValue: integer);
-    procedure SetSystemsFile(const AValue: string);
-    procedure SetTagsFolder(AValue: string);
-    procedure SetTempFile(const AValue: string);
-    procedure SetTempSubFolder(const AValue: string);
-    procedure SetSoftFile(AValue: string);
-    procedure Setz7CMExecutable(const AValue: string);
-    procedure Setz7GExecutable(const AValue: string);
+    FAutoSysFoldersFile : string;
+    FCompressedExtensions : TStringList;
+    FEmulatorsFile : string;
+    FSysDataFolder : string;
+    FMinPlayTime : Integer;
+    FSystemsFile : string;
+    FTagsFolder : string;
+    FTempFile : string;
+    FTempSubFolder : string;
+    FSoftFile : string;
+    Fz7CMExecutable : string;
+    Fz7GExecutable : string;
+    procedure SetAutoSysFoldersFile(aValue : string);
+    procedure SetEmulatorsFile(const aValue : string);
+    procedure SetSysDataFolder(aValue : string);
+    procedure SetMinPlayTime(aValue : Integer);
+    procedure SetSystemsFile(const aValue : string);
+    procedure SetTagsFolder(aValue : string);
+    procedure SetTempFile(const aValue : string);
+    procedure SetTempSubFolder(const aValue : string);
+    procedure SetSoftFile(aValue : string);
+    procedure Setz7CMExecutable(const aValue : string);
+    procedure Setz7GExecutable(const aValue : string);
 
-  protected
-
-  published
+  public
     // Tools
-    property z7CMExecutable: string read Fz7CMExecutable write Setz7CMExecutable;
+    property z7CMExecutable : string read Fz7CMExecutable
+      write Setz7CMExecutable;
     {< 7z.exe path. }
-    property z7GExecutable: string read Fz7GExecutable write Setz7GExecutable;
+    property z7GExecutable : string read Fz7GExecutable write Setz7GExecutable;
     {< 7zG.exe path. }
-     property CompressedExtensions: TStringList read FCompressedExtensions;
+    property CompressedExtensions : TStringList read FCompressedExtensions;
     {< List of compressed file extensions. }
 
     // Config/Data
-    property EmulatorsFile: string read FEmulatorsFile write SetEmulatorsFile;
+    property EmulatorsFile : string read FEmulatorsFile write SetEmulatorsFile;
     {< Emulators file. }
-    property SystemsFile: string read FSystemsFile write SetSystemsFile;
+    property SystemsFile : string read FSystemsFile write SetSystemsFile;
     {< Systems file. }
-    property SysDataFolder: string read FSysDataFolder write SetSysDataFolder;
+    property SysDataFolder : string read FSysDataFolder write SetSysDataFolder;
     {< Systems' data folder (cvs and egl). }
-    property AutoSysFolder: string read FAutoSysFoldersFile write SetAutoSysFoldersFile;
+    property AutoSysFolder : string read FAutoSysFoldersFile
+      write SetAutoSysFoldersFile;
     {< File with automatic folder structure.
 
       TODO: It's a Emuteca GUI config.
     }
-    property TagsFolder: string read FTagsFolder write SetTagsFolder;
+    property TagsFolder : string read FTagsFolder write SetTagsFolder;
     {< Folder with tags files.
 
       TODO: Is it a Emuteca GUI config?.
@@ -121,26 +121,26 @@ type
 
 
     // Temp folder/file
-    property TempSubfolder: string read FTempSubFolder write SetTempSubFolder;
+    property TempSubfolder : string read FTempSubFolder write SetTempSubFolder;
     {< Subfolder for temporal files.
 
       It can be a full path folder, or if a relative path is stored
         a subfolder for system's temporal folder. }
-    property TempFile: string read FTempFile write SetTempFile;
+    property TempFile : string read FTempFile write SetTempFile;
     {< Temp filename...
 
       TODO: Not used...}
 
     // Misc
-    property MinPlayTime: integer read FMinPlayTime write SetMinPlayTime default 60;
+    property MinPlayTime : Integer
+      read FMinPlayTime write SetMinPlayTime;
     {< Minimal time playing needed to store in statistics. }
 
-  public
-    procedure LoadFromIni(aIniFile: TMemIniFile); override;
-    procedure SaveToIni(aIniFile: TMemIniFile); override;
+    procedure LoadFromIni(aIniFile : TMemIniFile); override;
+    procedure SaveToIni(aIniFile : TMemIniFile); override;
     procedure ResetDefaultConfig; override;
 
-    constructor Create(aOwner: TComponent); override;
+    constructor Create;
     destructor Destroy; override;
   end;
   {< Class wich has all general options and configurations for Emuteca Core.
@@ -150,114 +150,112 @@ type
 implementation
 
 { cEmutecaConfig }
-procedure cEmutecaConfig.SetAutoSysFoldersFile(AValue: string);
+procedure cEmutecaConfig.SetAutoSysFoldersFile(aValue : string);
 begin
-  if FAutoSysFoldersFile = AValue then
-    Exit;
-  FAutoSysFoldersFile := AValue;
+  FAutoSysFoldersFile := SetAsFile(aValue);
 end;
 
-procedure cEmutecaConfig.SetEmulatorsFile(const AValue: string);
+procedure cEmutecaConfig.SetEmulatorsFile(const aValue : string);
 begin
-  FEmulatorsFile := SetAsFile(AValue);
+  FEmulatorsFile := SetAsFile(aValue);
 end;
 
-procedure cEmutecaConfig.SetSysDataFolder(AValue: string);
+procedure cEmutecaConfig.SetSysDataFolder(aValue : string);
 begin
-  FSysDataFolder := SetAsFolder(AValue);
+  FSysDataFolder := SetAsFolder(aValue);
 end;
 
-procedure cEmutecaConfig.SetMinPlayTime(AValue: integer);
+procedure cEmutecaConfig.SetMinPlayTime(aValue : Integer);
 begin
-  if FMinPlayTime = AValue then
-    Exit;
-  FMinPlayTime := AValue;
+  FMinPlayTime := aValue;
 
   if MinPlayTime < 1 then
     FMinPlayTime := 60;
 end;
 
-procedure cEmutecaConfig.SetSystemsFile(const AValue: string);
+procedure cEmutecaConfig.SetSystemsFile(const aValue : string);
 begin
-  FSystemsFile := SetAsFile(AValue);
+  FSystemsFile := SetAsFile(aValue);
 end;
 
-procedure cEmutecaConfig.SetTagsFolder(AValue: string);
+procedure cEmutecaConfig.SetTagsFolder(aValue : string);
 begin
-  FTagsFolder :=  SetAsFolder(AValue);
+  FTagsFolder := SetAsFolder(aValue);
 end;
 
-procedure cEmutecaConfig.SetTempFile(const AValue: string);
+procedure cEmutecaConfig.SetTempFile(const aValue : string);
 begin
-  FTempFile := SetAsFile(AValue);
+  FTempFile := SetAsFile(aValue);
 end;
 
-procedure cEmutecaConfig.SetTempSubFolder(const AValue: string);
+procedure cEmutecaConfig.SetTempSubFolder(const aValue : string);
 begin
-  FTempSubFolder := SetAsFolder(AValue);
+  FTempSubFolder := SetAsFolder(aValue);
 end;
 
-procedure cEmutecaConfig.SetSoftFile(AValue: string);
+procedure cEmutecaConfig.SetSoftFile(aValue : string);
 begin
-  FSoftFile := SetAsFile(AValue);
+  FSoftFile := SetAsFile(aValue);
 end;
 
-procedure cEmutecaConfig.Setz7CMExecutable(const AValue: string);
+procedure cEmutecaConfig.Setz7CMExecutable(const aValue : string);
 begin
-  Fz7CMExecutable := SetAsFile(AValue);
+  Fz7CMExecutable := SetAsFile(aValue);
 
-   // TODO: This must be done by cEmuteca and use cEmuteca.BaseDir as base
+  // TODO: This must be done by cEmuteca and use cEmuteca.BaseDir as base
   if not FilenameIsAbsolute(z7CMExecutable) then
-    w7zSetPathTo7zexe(CreateAbsoluteSearchPath(z7CMExecutable, GetCurrentDirUTF8));
+    w7zSetPathTo7zexe(CreateAbsoluteSearchPath(z7CMExecutable,
+      GetCurrentDirUTF8));
 end;
 
-procedure cEmutecaConfig.Setz7GExecutable(const AValue: string);
+procedure cEmutecaConfig.Setz7GExecutable(const aValue : string);
 begin
-  Fz7GExecutable := SetAsFile(AValue);
+  Fz7GExecutable := SetAsFile(aValue);
 
   // TODO: This must be done by cEmuteca and use cEmuteca.BaseDir as base
   if not FilenameIsAbsolute(z7GExecutable) then
-    w7zSetPathTo7zGexe(CreateAbsoluteSearchPath(z7GExecutable, GetCurrentDirUTF8));
+    w7zSetPathTo7zGexe(CreateAbsoluteSearchPath(z7GExecutable,
+      GetCurrentDirUTF8));
 end;
 
-procedure cEmutecaConfig.LoadFromIni(aIniFile: TMemIniFile);
+procedure cEmutecaConfig.LoadFromIni(aIniFile : TMemIniFile);
 begin
-     // Config/Data
-    EmulatorsFile := aIniFile.ReadString(krsIniSecConfig,
-      krsIniKeyEmulatorsFile, EmulatorsFile);
-    SystemsFile := aIniFile.ReadString(krsIniSecConfig,
-      krsIniKeySystemsFile, SystemsFile);
-    AutoSysFolder := aIniFile.ReadString(krsIniSecConfig,
-      krsIniKeyAutoSysFoldersFile, AutoSysFolder);
-    SysDataFolder := aIniFile.ReadString(krsIniSecConfig,
-      krsIniKeySysDataFolder, SysDataFolder);
-    TagsFolder := aIniFile.ReadString(krsIniSecConfig,
-      krsIniKeyTagsFolder, TagsFolder);
+  // Config/Data
+  EmulatorsFile := aIniFile.ReadString(krsIniSecConfig,
+    krsIniKeyEmulatorsFile, EmulatorsFile);
+  SystemsFile := aIniFile.ReadString(krsIniSecConfig,
+    krsIniKeySystemsFile, SystemsFile);
+  AutoSysFolder := aIniFile.ReadString(krsIniSecConfig,
+    krsIniKeyAutoSysFoldersFile, AutoSysFolder);
+  SysDataFolder := aIniFile.ReadString(krsIniSecConfig,
+    krsIniKeySysDataFolder, SysDataFolder);
+  TagsFolder := aIniFile.ReadString(krsIniSecConfig,
+    krsIniKeyTagsFolder, TagsFolder);
 
-    // Tools
-    z7CMExecutable := aIniFile.ReadString(krsIniSecTools,
-      krsIniKey7zCMExecutable, z7CMExecutable);
-    z7GExecutable := aIniFile.ReadString(krsIniSecTools,
-      krsIniKey7zGExecutable, z7GExecutable);
+  // Tools
+  z7CMExecutable := aIniFile.ReadString(krsIniSecTools,
+    krsIniKey7zCMExecutable, z7CMExecutable);
+  z7GExecutable := aIniFile.ReadString(krsIniSecTools,
+    krsIniKey7zGExecutable, z7GExecutable);
 
-    // File extensions
-    CompressedExtensions.CommaText :=
-      Trim(UTF8LowerCase(aIniFile.ReadString(krsIniSecExtensions,
-      krsIniKeyCompressedExtensions, CompressedExtensions.CommaText)));
+  // File extensions
+  CompressedExtensions.CommaText :=
+    Trim(UTF8LowerCase(aIniFile.ReadString(krsIniSecExtensions,
+    krsIniKeyCompressedExtensions, CompressedExtensions.CommaText)));
 
-    // Temp
-    TempSubfolder := aIniFile.ReadString(krsIniSecTemp,
-      krsIniKeyTempSubfolder, TempSubfolder);
-    TempFile := aIniFile.ReadString(krsIniSecTemp,
-      krsIniKeyTempFile, TempFile);
+  // Temp
+  TempSubfolder := aIniFile.ReadString(krsIniSecTemp,
+    krsIniKeyTempSubfolder, TempSubfolder);
+  TempFile := aIniFile.ReadString(krsIniSecTemp,
+    krsIniKeyTempFile, TempFile);
 
-    // Misc
-    MinPlayTime := aIniFile.ReadInteger(krsIniSecMisc,
-      krsIniKeyMinPlayTime, MinPlayTime);
+  // Misc
+  MinPlayTime := aIniFile.ReadInteger(krsIniSecMisc,
+    krsIniKeyMinPlayTime, MinPlayTime);
 
 end;
 
-procedure cEmutecaConfig.SaveToIni(aIniFile: TMemIniFile);
+procedure cEmutecaConfig.SaveToIni(aIniFile : TMemIniFile);
 begin
   // Config/Data
   aIniFile.WriteString(krsIniSecConfig, krsIniKeyEmulatorsFile,
@@ -299,7 +297,7 @@ begin
   // Tools
   z7CMExecutable := krsDefz7CMExecutable;
   z7GExecutable := krsDefz7CMExecutable;
-  CompressedExtensions.CommaText :=krsDefCompressedExtensions;
+  CompressedExtensions.CommaText := krsDefCompressedExtensions;
 
   // Temp
   TempSubfolder := krsDefTempSubfolder;
@@ -310,20 +308,20 @@ begin
 
 end;
 
-constructor cEmutecaConfig.Create(aOwner: TComponent);
+constructor cEmutecaConfig.Create;
 begin
   // We must create objects before inherited Create, because it calls
-  //    self.ResetDefaultConfig
+  //    Self.ResetDefaultConfig
   FCompressedExtensions := TStringList.Create;
   CompressedExtensions.Sorted := True;
   CompressedExtensions.CaseSensitive := False;
 
-  inherited Create(aOwner);
+  inherited Create;
 end;
 
 destructor cEmutecaConfig.Destroy;
 begin
-  FreeAndNil(FCompressedExtensions);
+  CompressedExtensions.Free;
   inherited Destroy;
 end;
 

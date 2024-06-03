@@ -95,7 +95,6 @@ type
   }
   cETKGUIConfig = class(caCHXConfig)
   private
-    FCurrSystem : string;
     FETKDBEditor : string;
     FDefImgFolder : string;
     FEmutecaIni : string;
@@ -115,7 +114,6 @@ type
     FGUIIcnFile : string;
     FSearchFile : string;
     FDumpIcnFolder : string;
-    procedure SetCurrSystem(AValue : string);
     procedure SetETKDBEditor(AValue : string);
     procedure SetDefImgFolder(AValue : string);
     procedure SetEmutecaIni(AValue : string);
@@ -131,18 +129,12 @@ type
     procedure SetGUIIcnFile(AValue : string);
     procedure SetSearchFile(AValue : string);
     procedure SetDumpIcnFolder(AValue : string);
+
   public
-    procedure ResetDefaultConfig; override;
+    {property} CurrSystem : string;
+    //< Last system used.
 
-    procedure LoadFromIni(IniFile : TMemIniFile); override;
-    procedure SaveToIni(IniFile : TMemIniFile); override;
-
-
-    constructor Create(aOwner : TComponent); override;
-    destructor Destroy; override;
-
-  published
-    // Images
+        // Images
     // ------
     property DefImgFolder : string read FDefImgFolder write SetDefImgFolder;
     //< Folder with default images and icons for soft, parents and systems.
@@ -183,8 +175,6 @@ type
     //< Emuteca config file.
     property LangFolder : string read FLangFolder write SetLangFolder;
     //< Folder of languajes files.
-    property CurrSystem : string read FCurrSystem write SetCurrSystem;
-    //< Last system used.
     property HelpFolder : string read FHelpFolder write SetHelpFolder;
     //< Folder with help.
     property SearchFile : string read FSearchFile write SetSearchFile;
@@ -195,6 +185,14 @@ type
 
     property w7zErrorFileName : string read Fw7zErrorFileName
       write Setw7zErrorFileName;
+
+    procedure ResetDefaultConfig; override;
+
+    procedure LoadFromIni(IniFile : TMemIniFile); override;
+    procedure SaveToIni(IniFile : TMemIniFile); override;
+
+    constructor Create;
+    destructor Destroy; override;
   end;
 
 implementation
@@ -204,13 +202,6 @@ implementation
 procedure cETKGUIConfig.SetDefImgFolder(AValue : string);
 begin
   FDefImgFolder := SetAsFolder(AValue);
-end;
-
-procedure cETKGUIConfig.SetCurrSystem(AValue : string);
-begin
-  if FCurrSystem = AValue then
-    Exit;
-  FCurrSystem := AValue;
 end;
 
 procedure cETKGUIConfig.SetETKDBEditor(AValue : string);
@@ -420,7 +411,7 @@ begin
   IniFile.WriteString(krsSectionExperimental, krsKeyw7zErrorFileName, w7zErrorFileName);
 end;
 
-constructor cETKGUIConfig.Create(aOwner : TComponent);
+constructor cETKGUIConfig.Create;
 begin
 
   // We must create objects before calling inherited, because
@@ -441,7 +432,7 @@ begin
   MusicExtensions.Sorted := True;
   MusicExtensions.CaseSensitive := False;
 
-  inherited Create(aOwner);
+  inherited Create;
 end;
 
 destructor cETKGUIConfig.Destroy;

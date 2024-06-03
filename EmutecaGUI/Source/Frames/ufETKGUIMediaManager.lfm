@@ -942,7 +942,6 @@ inherited fmETKGUIMediaManager: TfmETKGUIMediaManager
       Action = actOpenTargetFolder
       Align = alTop
       TabOrder = 7
-      OnClick = bOpenFolderClick
     end
   end
   object ActionList: TActionList[7]

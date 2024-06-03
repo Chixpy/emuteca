@@ -29,6 +29,8 @@ type
     FFullList: cEmutecaEmulatorList;
 
   public
+    property FullList: cEmutecaEmulatorList read FFullList;
+    {< All emulators. }
     property EnabledList: cEmutecaEmulatorList read FEnabledList;
     {< Enabled emulators. }
 
@@ -44,18 +46,13 @@ type
     procedure LoadFromIni(aIniFile: TMemIniFile); override;
     procedure SaveToIni(aIniFile: TMemIniFile); override;
     procedure ImportFromIni(aIniFile: TMemIniFile); override;
-    {< Updates emulators' data from Ini. It don't add any emulator to the list.
-    }
+    {< Updates emulators' data from Ini. It don't add any emulator to
+         the list. }
     procedure ExportToIni(aIniFile: TMemIniFile); override;
-    {< Saves emulators' common data for importing.
-    }
+    {< Saves emulators' common data for importing. }
 
-    constructor Create(aOwner: TComponent); override;
+    constructor Create;
     destructor Destroy; override;
-
-  published
-    property FullList: cEmutecaEmulatorList read FFullList;
-    {< All emulators. }
   end;
 
 
@@ -100,7 +97,7 @@ function cEmutecaEmulatorManager.AddEmulator(aID: string): cEmutecaEmulator;
 var
   TempEmulator: cEmutecaEmulator;
 begin
-  TempEmulator := cEmutecaEmulator.Create(nil);
+  TempEmulator := cEmutecaEmulator.Create;
   TempEmulator.ID := aID;
   TempEmulator.DefaultFileName := DefaultFileName;
   FullList.Add(TempEmulator);
@@ -215,9 +212,9 @@ begin
     ProgressCallBack('', '', 0, 0, False);
 end;
 
-constructor cEmutecaEmulatorManager.Create(aOwner: TComponent);
+constructor cEmutecaEmulatorManager.Create;
 begin
-  inherited Create(aOwner);
+  inherited Create;
 
   FFullList := cEmutecaEmulatorList.Create(True);
   FEnabledList := cEmutecaEmulatorList.Create(False);

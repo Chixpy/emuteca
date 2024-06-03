@@ -4,7 +4,7 @@ unit ufETKGUIFullSoftEditor;
 
   This file is part of Emuteca GUI.
 
-  Copyright (C) 2011-2023 Chixpy
+  Copyright (C) 2011-2024 Chixpy
 }
 {$mode objfpc}{$H+}
 
@@ -67,7 +67,7 @@ type
     procedure SaveFrameData; override;
 
     class function SimpleModalForm(aSoft: cEmutecaSoftware;
-      NewTitle, aGUIConfigIni, aGUIIconsIni: string): integer;
+      const NewTitle, aGUIConfigIni, aGUIIconsIni: string): integer;
 
   published
     property Software: cEmutecaSoftware read FSoftware write SetSoftware;
@@ -106,7 +106,7 @@ begin
   if InputQuery('New group', 'Name of the new group.', GroupTitle) = False then
     Exit;
 
-  aGroup := cEmutecaGroup.Create(nil);
+  aGroup := cEmutecaGroup.Create;
   aGroup.ID := GroupTitle;
   aGroup.Title := GroupTitle;
 
@@ -267,8 +267,9 @@ begin
   inherited Destroy;
 end;
 
-class function TfmETKGUIFullSoftEditor.SimpleModalForm(aSoft: cEmutecaSoftware;
-  NewTitle, aGUIConfigIni, aGUIIconsIni: string): integer;
+class function TfmETKGUIFullSoftEditor.SimpleModalForm(
+  aSoft : cEmutecaSoftware; const NewTitle, aGUIConfigIni,
+  aGUIIconsIni : string) : integer;
 var
   fmFullSoftEditor: TfmETKGUIFullSoftEditor;
 begin

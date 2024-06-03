@@ -3,7 +3,7 @@ unit uaEmutecaCustomManager;
 
   This file is part of Emuteca Core.
 
-  Copyright (C) 2006-2018 Chixpy
+  Copyright (C) 2006-2024 Chixpy
 }
 
 {$mode objfpc}{$H+}
@@ -23,14 +23,13 @@ type
 
   caEmutecaCustomManagerTxt = class(caCHXStorableTxt)
   private
-    FProgressCallBack: TEmutecaProgressCallBack;
+    FProgressCallBack : TEmutecaProgressCallBack;
 
   protected
-    procedure SetProgressCallBack(AValue: TEmutecaProgressCallBack); virtual;
+    procedure SetProgressCallBack(const aValue : TEmutecaProgressCallBack); virtual;
 
   public
-    property ProgressCallBack: TEmutecaProgressCallBack
-      read FProgressCallBack write SetProgressCallBack;
+    property ProgressCallBack: TEmutecaProgressCallBack read FProgressCallBack write SetProgressCallBack;
 
     procedure ImportFromFile(const aFilename: string); virtual;
     procedure ImportFromStrLst(aTxtFile: TStrings); virtual; abstract;
@@ -42,14 +41,13 @@ type
 
   caEmutecaCustomManagerIni = class(caCHXStorableIni)
   private
-    FProgressCallBack: TEmutecaProgressCallBack;
+    FProgressCallBack : TEmutecaProgressCallBack;
 
   protected
-    procedure SetProgressCallBack(AValue: TEmutecaProgressCallBack); virtual;
+    procedure SetProgressCallBack(const aValue : TEmutecaProgressCallBack); virtual;
 
   public
-    property ProgressCallBack: TEmutecaProgressCallBack
-      read FProgressCallBack write SetProgressCallBack;
+    property ProgressCallBack: TEmutecaProgressCallBack read FProgressCallBack write SetProgressCallBack;
 
     procedure ImportFromFile(const aFilename: string); virtual;
     procedure ImportFromIni(aIniFile: TMemIniFile); virtual; abstract;
@@ -62,11 +60,10 @@ implementation
 { caEmutecaCustomManagerIni }
 
 procedure caEmutecaCustomManagerIni.SetProgressCallBack(
-  AValue: TEmutecaProgressCallBack);
+  const aValue : TEmutecaProgressCallBack);
 begin
-  if FProgressCallBack = AValue then
-    Exit;
-  FProgressCallBack := AValue;
+  if FProgressCallBack = aValue then Exit;
+  FProgressCallBack := aValue;
 end;
 
 procedure caEmutecaCustomManagerIni.ImportFromFile(const aFilename: string);
@@ -83,11 +80,10 @@ end;
 { caEmutecaCustomManagerTxt }
 
 procedure caEmutecaCustomManagerTxt.SetProgressCallBack(
-  AValue: TEmutecaProgressCallBack);
+  const aValue : TEmutecaProgressCallBack);
 begin
-  if FProgressCallBack = AValue then
-    Exit;
-  FProgressCallBack := AValue;
+  if FProgressCallBack = aValue then Exit;
+  FProgressCallBack := aValue;
 end;
 
 procedure caEmutecaCustomManagerTxt.ImportFromFile(const aFilename: string);

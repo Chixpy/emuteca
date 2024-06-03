@@ -191,22 +191,21 @@ type
     procedure actRenameGroupTitleWithFilenameExecute(Sender : TObject);
     procedure actRenameSoftTitleWithFilenameExecute(Sender : TObject);
     procedure actRunSoftwareExecute(Sender : TObject);
-    procedure bOpenFolderClick(Sender : TObject);
     procedure cbxFolderSelected(Sender : TObject);
     procedure chkSimilarFilesChange(Sender : TObject);
-    procedure eOtherFolderAcceptDirectory(Sender : TObject; var Value : string);
-    procedure lbxFolderSelectionChange(Sender : TObject; User : boolean);
-    procedure lbxImagesClick(Sender : TObject);
+    procedure eOtherFolderAcceptDirectory(Sender : TObject;
+      var Value : string);
     procedure pcSourceChange(Sender : TObject);
     procedure pcTargetChange(Sender : TObject);
     procedure rgbFilterModeSelectionChanged(Sender : TObject);
     procedure tbSimilarThresoldClick(Sender : TObject);
     procedure vstFileCompareNodes(Sender : TBaseVirtualTree;
-      Node1, Node2 : PVirtualNode; Column : TColumnIndex; var Result : integer);
-    procedure vstFileKeyDown(Sender : TObject; var Key : word;
+      Node1, Node2 : PVirtualNode; Column : TColumnIndex;
+      var Result : Integer);
+    procedure vstFileKeyDown(Sender : TObject; var Key : Word;
       Shift : TShiftState);
     procedure vstFilesGetNodeDataSize(Sender : TBaseVirtualTree;
-      var NodeDataSize : integer);
+      var NodeDataSize : Integer);
     procedure vstFilesOtherFolderChange(Sender : TBaseVirtualTree;
       Node : PVirtualNode);
     procedure vstFilesChange(Sender : TBaseVirtualTree;
@@ -214,20 +213,23 @@ type
     procedure vstNodeClick(Sender : TBaseVirtualTree;
       const HitInfo : THitInfo);
     procedure vstGroupCompareNodes(Sender : TBaseVirtualTree;
-      Node1, Node2 : PVirtualNode; Column : TColumnIndex; var Result : integer);
-    procedure vstSGKeyDown(Sender : TObject; var Key : word;
+      Node1, Node2 : PVirtualNode; Column : TColumnIndex;
+      var Result : Integer);
+    procedure vstSGKeyDown(Sender : TObject; var Key : Word;
       Shift : TShiftState);
     procedure vstFileFreeNode(Sender : TBaseVirtualTree; Node : PVirtualNode);
     procedure vstFileGetText(Sender : TBaseVirtualTree;
       Node : PVirtualNode; Column : TColumnIndex; TextType : TVSTTextType;
       var CellText : string);
-    procedure vstSoftGroupChange(Sender : TBaseVirtualTree; Node : PVirtualNode);
+    procedure vstSoftGroupChange(Sender : TBaseVirtualTree;
+      Node : PVirtualNode);
     procedure vstGroupsAllInitNode(Sender : TBaseVirtualTree;
       ParentNode, Node : PVirtualNode;
       var InitialStates : TVirtualNodeInitStates);
     procedure vstKeyPress(Sender : TObject; var Key : char);
     procedure vstSoftCompareNodes(Sender : TBaseVirtualTree;
-      Node1, Node2 : PVirtualNode; Column : TColumnIndex; var Result : integer);
+      Node1, Node2 : PVirtualNode; Column : TColumnIndex;
+      var Result : Integer);
     procedure vstSoftGetText(Sender : TBaseVirtualTree;
       Node : PVirtualNode; Column : TColumnIndex; TextType : TVSTTextType;
       var CellText : string);
@@ -236,9 +238,7 @@ type
       var CellText : string);
 
   private
-    FCurrentSG : caEmutecaCustomSGItem;
     FCurrExtFilter : TStringList;
-    FCurrPreview : TfmCHXFileListPreview;
     FCurrSystem : cEmutecaSystem;
     FEmuteca : cEmuteca;
     FfmImagePreview : TfmCHXImgListPreview;
@@ -252,36 +252,39 @@ type
     FSourceFolder : string;
     FTargetFile : string;
     FTargetFolder : string;
-    procedure SetCurrentSG(AValue : caEmutecaCustomSGItem);
-    procedure SetCurrPreview(AValue : TfmCHXFileListPreview);
-    procedure SetCurrSystem(AValue : cEmutecaSystem);
-    procedure SetEmuteca(AValue : cEmuteca);
-    procedure SetGUIConfig(AValue : cETKGUIConfig);
-    procedure SetSHA1Folder(const AValue : string);
-    procedure SetSourceFile(const AValue : string);
-    procedure SetSourceFolder(const AValue : string);
-    procedure SetTargetFile(const AValue : string);
-    procedure SetTargetFolder(const AValue : string);
+    procedure SetCurrSystem(aValue : cEmutecaSystem);
+    procedure SetEmuteca(aValue : cEmuteca);
+    procedure SetGUIConfig(aValue : cETKGUIConfig);
+    procedure SetSHA1Folder(const aValue : string);
+    procedure SetSourceFile(const aValue : string);
+    procedure SetSourceFolder(const aValue : string);
+    procedure SetTargetFile(const aValue : string);
+    procedure SetTargetFolder(const aValue : string);
 
   protected
+    {property} CurrentSG : caEmutecaCustomSGItem;
+    {< Current selected soft or group. }
+    {property} CurrPreview : TfmCHXFileListPreview;
+    {< Current selected file list. }
+
+
     // Frames
     // ------
+
     property fmSystemCBX : TfmEmutecaSystemCBX read FfmSystemCBX;
     property fmImagePreview : TfmCHXImgListPreview read FfmImagePreview;
     property fmTextPreview : TfmCHXTxtListPreview read FfmTextPreview;
     property fmProgressBar : TfmCHXProgressBar read FfmProgressBar;
 
+
     // Properties
     // ----------
+
     property CurrSystem : cEmutecaSystem read FCurrSystem write SetCurrSystem;
     {< Current selected system. }
-    property CurrentSG : caEmutecaCustomSGItem
-      read FCurrentSG write SetCurrentSG;
-    {< Current selected soft or group. }
+
     property CurrExtFilter : TStringList read FCurrExtFilter;
     {< Extensions of the current selected Media. }
-    property CurrPreview : TfmCHXFileListPreview
-      read FCurrPreview write SetCurrPreview;
     property MediaFiles : TStringList read FMediaFiles;
     {< Mediafiles assigned to the current game or group. }
 
@@ -305,7 +308,7 @@ type
     procedure UpdateListCount;
     {< Updates status bars with item count. }
 
-    function SelectSystem(aSystem : cEmutecaSystem) : boolean;
+    function SelectSystem(aSystem : cEmutecaSystem) : Boolean;
     {< Selects a system. }
 
     procedure LoadSysFolders;
@@ -314,27 +317,28 @@ type
     {< Loads software from the system in vstSoftAll, except software wich
       its filename is the same of its group's filename. }
 
+
     // File lists
     // ----------
 
     function GetCurrentFilesVST : TCustomVirtualStringTree;
     {< Returns the current file list shown. }
 
-    function AddFileCB(aFolder : string; Info : TSearchRec) : boolean;
+    function AddFileCB(const aFolder : string; const Info : TSearchRec) : Boolean;
     {< Adds a file to the lists.
       For use with IterateFolder.
       @param(aFolder Folder where the file is in. @(Not used@))
       @param(Info TSearchRec with file data.)
       @return(Always @true; needed for IterateFolder.)
     }
-    function AddFileVSTAllFiles(aName : string) : boolean;
+    function AddFileVSTAllFiles(const aName : string) : Boolean;
     {< Adds a file to the lists.
 
       @param(aName Name of the file with extension.)
       @return(Always @true @(useless until a reason to stop batch operations
         will be found when adding automatically.@).)
     }
-    procedure RemoveFileVSTFiles(aFile : string);
+    procedure RemoveFileVSTFiles(const aFile : string);
     {< Remove a file from lists (not physically).
       If TargetFolder <> SourceFolder then removed from vstFilesOtherFolder.
       Used for hacky updates.
@@ -348,7 +352,7 @@ type
     function GetCurrentGSVST : TCustomVirtualStringTree;
     {< Returns the current file list shown. }
 
-    procedure RemoveGroupSoftWOFile(aFile : string);
+    procedure RemoveGroupSoftWOFile(const aFile : string);
     {< Remove groups from vstGroupsWOFile and  vstSoftWOFile lists that have
          aFile.
       Used for hacky updates.
@@ -364,14 +368,14 @@ type
       @param(SGItem The soft or  group with it's media will be previewed.)
     }
 
-    procedure ChangeFileMedia(aFolder, aFileName : string);
+    procedure ChangeFileMedia(const aFolder, aFileName : string);
     {< Change the media preview to the file.
       @param(aFolder Folder were the file is.)
       @param(aName Name of the file.)
     }
 
-    function AddFilesOtherFolderCB(aFolder : string;
-      Info : TSearchRec) : boolean;
+    function AddFilesOtherFolderCB(const aFolder : string;
+      const Info : TSearchRec) : Boolean;
     {< Add files or folders to vstFilesOtherFolder.
       @param(aFolder Folder where the file is in. @(not used@))
       @param(Info TSearchRec with folder or file data.)
@@ -380,9 +384,9 @@ type
 
     procedure UpdateFileOtherFolder(aFolder : string);
 
-    procedure OpenGroupEditor(NewTitle : string = '');
+    procedure OpenGroupEditor(const NewTitle : string = '');
     {< Opens GroupEditor with current selected group, and set a new name.}
-    procedure OpenSoftEditor(NewTitle : string = '');
+    procedure OpenSoftEditor(const NewTitle : string = '');
     {< Opens SoftEditor with current selected group, and set a new name.}
 
     procedure DoLoadGUIConfig(aIniFile : TIniFile); override;
@@ -402,7 +406,7 @@ type
 
     class function SimpleForm(aEmuteca : cEmuteca;
       SelectedSystem : cEmutecaSystem; aGUIConfig : cETKGUIConfig;
-      const aGUIIconsIni : string) : integer;
+      const aGUIIconsIni : string) : Integer;
     {< Creates a form with Media Manager. }
 
     constructor Create(TheOwner : TComponent); override;
@@ -415,32 +419,32 @@ implementation
 
 { TfmETKGUIMediaManager }
 
-procedure TfmETKGUIMediaManager.SetSHA1Folder(const AValue : string);
+procedure TfmETKGUIMediaManager.SetSHA1Folder(const aValue : string);
 begin
-  FSHA1Folder := SetAsFolder(AValue);
+  FSHA1Folder := SetAsFolder(aValue);
 end;
 
-procedure TfmETKGUIMediaManager.SetSourceFile(const AValue : string);
+procedure TfmETKGUIMediaManager.SetSourceFile(const aValue : string);
 begin
-  FSourceFile := SetAsFile(AValue);
+  FSourceFile := SetAsFile(aValue);
   sbSource.Panels[1].Text := SourceFolder + SourceFile;
 end;
 
-procedure TfmETKGUIMediaManager.SetSourceFolder(const AValue : string);
+procedure TfmETKGUIMediaManager.SetSourceFolder(const aValue : string);
 begin
-  FSourceFolder := SetAsFolder(AValue);
+  FSourceFolder := SetAsFolder(aValue);
   sbSource.Panels[1].Text := SourceFolder + SourceFile;
 end;
 
-procedure TfmETKGUIMediaManager.SetTargetFile(const AValue : string);
+procedure TfmETKGUIMediaManager.SetTargetFile(const aValue : string);
 begin
-  FTargetFile := SetAsFile(AValue);
+  FTargetFile := SetAsFile(aValue);
   sbTarget.Panels[1].Text := TargetFolder + TargetFile;
 end;
 
-procedure TfmETKGUIMediaManager.SetTargetFolder(const AValue : string);
+procedure TfmETKGUIMediaManager.SetTargetFolder(const aValue : string);
 begin
-  FTargetFolder := SetAsFolder(AValue);
+  FTargetFolder := SetAsFolder(aValue);
   sbTarget.Panels[1].Text := TargetFolder + TargetFile;
 end;
 
@@ -449,7 +453,8 @@ procedure TfmETKGUIMediaManager.DoLoadGUIIcons(aIconsIni : TIniFile;
 begin
   inherited DoLoadGUIIcons(aIconsIni, aBaseFolder);
 
-  ReadActionsIconsIni(aIconsIni, aBaseFolder, Self.Name, ilActions, ActionList);
+  ReadActionsIconsIni(aIconsIni, aBaseFolder, Self.Name,
+    ilActions, ActionList);
 end;
 
 procedure TfmETKGUIMediaManager.UpdateVST(aFolder : string);
@@ -462,7 +467,7 @@ var
   aSoft : cEmutecaSoftware;
   pSoft : ^cEmutecaSoftware;
   TmpStr : string;
-  FileComp, SkipComp : integer;
+  FileComp, SkipComp : Integer;
 begin
   aFolder := SetAsFolder(aFolder);
   if not DirectoryExistsUTF8(aFolder) then
@@ -487,7 +492,8 @@ begin
   // vstFilesAll -> vstFilesWOGroup and
   //   vstGroupsAll -> vstGroupsWOFile.
   // ----------------------------------
-  fmProgressBar.UpdTextAndBar(rsETKMMSearching, rsETKMMFilesGroups, 2, 4, False);
+  fmProgressBar.UpdTextAndBar(rsETKMMSearching, rsETKMMFilesGroups,
+    2, 4, False);
 
   // Sorting vstFilesAll and vstGroupsAll to iterate them;
   vstFilesAll.SortTree(0, VirtualTrees.sdAscending, True); // By filename
@@ -691,7 +697,8 @@ begin
   UpdateListCount;
 end;
 
-function TfmETKGUIMediaManager.SelectSystem(aSystem : cEmutecaSystem) : boolean;
+function TfmETKGUIMediaManager.SelectSystem(aSystem : cEmutecaSystem)
+: Boolean;
 begin
   Result := True;
   CurrSystem := aSystem;
@@ -767,7 +774,6 @@ procedure TfmETKGUIMediaManager.FilterLists;
     end;
     aVST.EndUpdate;
   end;
-
 var
   aVST : TCustomVirtualStringTree;
 begin // procedure TfmETKGUIMediaManager.FilterLists;
@@ -827,8 +833,8 @@ begin
     sbTargetList.SimpleText := Format(rsFmtNItems, [aVST.VisibleCount]);
 end;
 
-function TfmETKGUIMediaManager.AddFileCB(aFolder : string;
-  Info : TSearchRec) : boolean;
+function TfmETKGUIMediaManager.AddFileCB(const aFolder : string;
+  const Info : TSearchRec) : Boolean;
 begin
   Result := True;
   if (Info.Attr and faDirectory) <> 0 then
@@ -841,7 +847,8 @@ begin
     Result := AddFileVSTAllFiles(Info.Name);
 end;
 
-function TfmETKGUIMediaManager.AddFileVSTAllFiles(aName : string) : boolean;
+function TfmETKGUIMediaManager.AddFileVSTAllFiles(
+  const aName : string) : Boolean;
 var
   pFile : PFileRow;
 begin
@@ -875,7 +882,7 @@ begin
   end;
 end;
 
-procedure TfmETKGUIMediaManager.RemoveFileVSTFiles(aFile : string);
+procedure TfmETKGUIMediaManager.RemoveFileVSTFiles(const aFile : string);
 
   procedure RemoveFileFromVST(aVST : TBaseVirtualTree; aFile : string);
   var
@@ -917,7 +924,6 @@ procedure TfmETKGUIMediaManager.RemoveFileVSTFiles(aFile : string);
     //  aVST.Selected[NextSelected] := true;
     //end;
   end;
-
 begin
   if CompareFilenames(SourceFolder, TargetFolder) = 0 then
   begin
@@ -949,7 +955,7 @@ begin
   end;
 end;
 
-procedure TfmETKGUIMediaManager.RemoveGroupSoftWOFile(aFile : string);
+procedure TfmETKGUIMediaManager.RemoveGroupSoftWOFile(const aFile : string);
 var
   Nodo : PVirtualNode;
   PGroup : ^cEmutecaGroup;
@@ -1003,7 +1009,8 @@ begin
   CurrPreview.FileList := MediaFiles;
 end;
 
-procedure TfmETKGUIMediaManager.ChangeFileMedia(aFolder, aFileName : string);
+procedure TfmETKGUIMediaManager.ChangeFileMedia(const aFolder,
+  aFileName : string);
 begin
   if not Assigned(CurrPreview) then
     Exit;
@@ -1031,8 +1038,8 @@ begin
   CurrPreview.FileList := MediaFiles;
 end;
 
-function TfmETKGUIMediaManager.AddFilesOtherFolderCB(aFolder : string;
-  Info : TSearchRec) : boolean;
+function TfmETKGUIMediaManager.AddFilesOtherFolderCB(const aFolder : string;
+  const Info : TSearchRec) : Boolean;
 var
   pFile : PFileRow;
 begin
@@ -1084,9 +1091,9 @@ begin
   UpdateListCount;
 end;
 
-procedure TfmETKGUIMediaManager.OpenGroupEditor(NewTitle : string);
+procedure TfmETKGUIMediaManager.OpenGroupEditor(const NewTitle : string);
 var
-  FormResult : integer;
+  FormResult : Integer;
   aIconFile, aConfigFile : string;
 begin
   if (not Assigned(CurrentSG)) or (not (CurrentSG is cEmutecaGroup)) then
@@ -1111,9 +1118,9 @@ begin
   FilterLists;
 end;
 
-procedure TfmETKGUIMediaManager.OpenSoftEditor(NewTitle : string);
+procedure TfmETKGUIMediaManager.OpenSoftEditor(const NewTitle : string);
 var
-  FormResult : integer;
+  FormResult : Integer;
   aIconFile, aConfigFile : string;
 begin
   if (not Assigned(CurrentSG)) or (not (CurrentSG is cEmutecaSoftware)) then
@@ -1142,7 +1149,7 @@ procedure TfmETKGUIMediaManager.DoLoadGUIConfig(aIniFile : TIniFile);
 
   procedure LoadVSTConfig(aIniFile : TIniFile; aVST : TVirtualStringTree);
   var
-    i : integer;
+    i : Integer;
   begin
     i := 0;
     while i < aVST.Header.Columns.Count do
@@ -1195,7 +1202,7 @@ procedure TfmETKGUIMediaManager.DoSaveGUIConfig(aIniFile : TIniFile);
 
   procedure SaveVSTConfig(aIniFile : TIniFile; aVST : TVirtualStringTree);
   var
-    i : integer;
+    i : Integer;
   begin
     i := 0;
     while i < aVST.Header.Columns.Count do
@@ -1208,7 +1215,6 @@ procedure TfmETKGUIMediaManager.DoSaveGUIConfig(aIniFile : TIniFile);
       Inc(i);
     end;
   end;
-
 begin
   inherited DoSaveGUIConfig(aIniFile);
 
@@ -1297,7 +1303,7 @@ end;
 
 procedure TfmETKGUIMediaManager.LoadSystemSoft;
 var
-  i : integer;
+  i : Integer;
   pSoft : ^cEmutecaSoftware;
   aSoft : cEmutecaSoftware;
 begin
@@ -1338,16 +1344,6 @@ begin
   end;
 end;
 
-procedure TfmETKGUIMediaManager.lbxFolderSelectionChange(Sender : TObject;
-  User : boolean);
-begin
-end;
-
-procedure TfmETKGUIMediaManager.lbxImagesClick(Sender : TObject);
-begin
-
-end;
-
 procedure TfmETKGUIMediaManager.pcSourceChange(Sender : TObject);
 var
   aVST : TCustomVirtualStringTree;
@@ -1381,7 +1377,8 @@ begin
     sbTargetList.SimpleText := format(rsFmtNItems, [aVST.VisibleCount]);
 end;
 
-procedure TfmETKGUIMediaManager.rgbFilterModeSelectionChanged(Sender : TObject);
+procedure TfmETKGUIMediaManager.rgbFilterModeSelectionChanged(
+  Sender : TObject);
 begin
   FilterLists;
 end;
@@ -1393,7 +1390,7 @@ begin
 end;
 
 procedure TfmETKGUIMediaManager.vstFileCompareNodes(Sender : TBaseVirtualTree;
-  Node1, Node2 : PVirtualNode; Column : TColumnIndex; var Result : integer);
+  Node1, Node2 : PVirtualNode; Column : TColumnIndex; var Result : Integer);
 var
   pFile1, pFile2 : PFileRow;
 begin
@@ -1412,7 +1409,7 @@ begin
 end;
 
 procedure TfmETKGUIMediaManager.vstFileKeyDown(Sender : TObject;
-  var Key : word; Shift : TShiftState);
+  var Key : Word; Shift : TShiftState);
 begin
   // Secret shortcut
   if Shift = [] then
@@ -1426,7 +1423,7 @@ begin
 end;
 
 procedure TfmETKGUIMediaManager.vstFilesGetNodeDataSize(
-  Sender : TBaseVirtualTree; var NodeDataSize : integer);
+  Sender : TBaseVirtualTree; var NodeDataSize : Integer);
 begin
   NodeDataSize := SizeOf(TFileRow);
 end;
@@ -1497,7 +1494,7 @@ begin
 end;
 
 procedure TfmETKGUIMediaManager.vstGroupCompareNodes(Sender : TBaseVirtualTree;
-  Node1, Node2 : PVirtualNode; Column : TColumnIndex; var Result : integer);
+  Node1, Node2 : PVirtualNode; Column : TColumnIndex; var Result : Integer);
 var
   pGroup1, pGroup2 : ^cEmutecaGroup;
 begin
@@ -1515,7 +1512,7 @@ begin
 end;
 
 procedure TfmETKGUIMediaManager.vstSGKeyDown(Sender : TObject;
-  var Key : word; Shift : TShiftState);
+  var Key : Word; Shift : TShiftState);
 begin
   // Secret shortcut when the list is the current component
   if Shift = [] then
@@ -1543,8 +1540,8 @@ procedure TfmETKGUIMediaManager.actAssignFileExecute(Sender : TObject);
 var
   TargetPath : string;
   SourcePath : string;
-  SourceIsFolder : boolean;
-  AllOK : boolean;
+  SourceIsFolder : Boolean;
+  AllOK : Boolean;
 begin
   if (SourceFolder = PathDelim) or (SourceFolder = EmptyStr) then
     Exit;
@@ -1737,8 +1734,8 @@ var
   PTarget : ^caEmutecaCustomSGItem;
   pFileName : PFileRow;
   NodoF, NodoT : PVirtualNode;
-  ContinueOp : boolean;
-  Cont : integer;
+  ContinueOp : Boolean;
+  Cont : Integer;
 begin
   aVSTFiles := GetCurrentFilesVST;
 
@@ -1796,7 +1793,7 @@ var
   aVSTFiles : TCustomVirtualStringTree;
   aNode : PVirtualNode;
   pFile : PFileRow;
-  IsFolder, aBool : boolean;
+  IsFolder, aBool : Boolean;
   SourcePath : string;
 begin
   aVSTFiles := GetCurrentFilesVST;
@@ -1897,7 +1894,7 @@ var
   aVSTFiles : TCustomVirtualStringTree;
   aNode : PVirtualNode;
   pFile : pFileRow;
-  IsFolder, aBool : boolean;
+  IsFolder, aBool : Boolean;
   SourcePath, TargetPath : string;
 begin
   aVSTFiles := GetCurrentFilesVST;
@@ -1978,7 +1975,7 @@ end;
 procedure TfmETKGUIMediaManager.actMoveFileExecute(Sender : TObject);
 var
   SourcePath, TargetPath : string;
-  IsFolder, aBool : boolean;
+  IsFolder, aBool : Boolean;
 begin
   if (SourceFile = EmptyStr) or (SourceFolder = EmptyStr) then
     Exit;
@@ -2044,7 +2041,7 @@ end;
 
 procedure TfmETKGUIMediaManager.actOpenFileDefAppExecute(Sender : TObject);
 var
-  aFileName: string;
+  aFileName : string;
 begin
   // Removing fake folder extension
   aFileName := UTF8TextReplace(SourceFile, krsVirtualFolderExt, EmptyStr);
@@ -2110,11 +2107,6 @@ begin
   if (not Assigned(CurrentSG)) or (not (CurrentSG is cEmutecaSoftware)) then
     Exit;
   Emuteca.RunSoftware(cEmutecaSoftware(CurrentSG));
-end;
-
-procedure TfmETKGUIMediaManager.bOpenFolderClick(Sender : TObject);
-begin
-
 end;
 
 procedure TfmETKGUIMediaManager.cbxFolderSelected(Sender : TObject);
@@ -2235,7 +2227,7 @@ procedure TfmETKGUIMediaManager.vstSoftGroupChange(Sender : TBaseVirtualTree;
 
   procedure LoadGroupSoft(aVST : TVirtualStringTree; aGroup : cEmutecaGroup);
   var
-    i : integer;
+    i : Integer;
     aSoft : cEmutecaSoftware;
     pSoft : ^cEmutecaSoftware;
   begin
@@ -2257,7 +2249,6 @@ procedure TfmETKGUIMediaManager.vstSoftGroupChange(Sender : TBaseVirtualTree;
     end;
     aVST.EndUpdate;
   end;
-
 var
   PData : ^caEmutecaCustomSGItem;
 begin
@@ -2289,7 +2280,6 @@ begin
     LoadGroupSoft(vstSoftOfGroupsWOFile, cEmutecaGroup(CurrentSG));
   end;
 
-
   TargetFile := CurrentSG.MediaFileName;
   ChangeSGMedia(CurrentSG);
 
@@ -2319,7 +2309,7 @@ begin
 end;
 
 procedure TfmETKGUIMediaManager.vstSoftCompareNodes(Sender : TBaseVirtualTree;
-  Node1, Node2 : PVirtualNode; Column : TColumnIndex; var Result : integer);
+  Node1, Node2 : PVirtualNode; Column : TColumnIndex; var Result : Integer);
 var
   pSoft1, pSoft2 : ^cEmutecaSoftware;
 begin
@@ -2391,11 +2381,11 @@ begin
   end;
 end;
 
-procedure TfmETKGUIMediaManager.SetEmuteca(AValue : cEmuteca);
+procedure TfmETKGUIMediaManager.SetEmuteca(aValue : cEmuteca);
 begin
-  if FEmuteca = AValue then
+  if FEmuteca = aValue then
     Exit;
-  FEmuteca := AValue;
+  FEmuteca := aValue;
 
   if Assigned(Emuteca) then
     fmSystemCBX.SystemList := Emuteca.SystemManager.EnabledList
@@ -2406,11 +2396,11 @@ begin
   LoadFrameData;
 end;
 
-procedure TfmETKGUIMediaManager.SetGUIConfig(AValue : cETKGUIConfig);
+procedure TfmETKGUIMediaManager.SetGUIConfig(aValue : cETKGUIConfig);
 begin
-  if FGUIConfig = AValue then
+  if FGUIConfig = aValue then
     Exit;
-  FGUIConfig := AValue;
+  FGUIConfig := aValue;
 
   if assigned(GUIConfig) then
   begin
@@ -2424,31 +2414,18 @@ begin
   end;
 end;
 
-procedure TfmETKGUIMediaManager.SetCurrSystem(AValue : cEmutecaSystem);
+procedure TfmETKGUIMediaManager.SetCurrSystem(aValue : cEmutecaSystem);
 begin
-  if FCurrSystem = AValue then
+  if FCurrSystem = aValue then
     Exit;
-  FCurrSystem := AValue;
+  FCurrSystem := aValue;
 
   LoadSysFolders;
 end;
 
-procedure TfmETKGUIMediaManager.SetCurrentSG(AValue : caEmutecaCustomSGItem);
-begin
-  if FCurrentSG = AValue then Exit;
-  FCurrentSG := AValue;
-end;
-
-procedure TfmETKGUIMediaManager.SetCurrPreview(AValue : TfmCHXFileListPreview);
-begin
-  if FCurrPreview = AValue then
-    Exit;
-  FCurrPreview := AValue;
-end;
-
 class function TfmETKGUIMediaManager.SimpleForm(aEmuteca : cEmuteca;
   SelectedSystem : cEmutecaSystem; aGUIConfig : cETKGUIConfig;
-  const aGUIIconsIni : string) : integer;
+  const aGUIIconsIni : string) : Integer;
 var
   aFrame : TfmETKGUIMediaManager;
 begin
@@ -2487,7 +2464,6 @@ constructor TfmETKGUIMediaManager.Create(TheOwner : TComponent);
 
     FfmProgressBar := TfmCHXProgressBar.SimpleForm('');
   end;
-
 begin
   inherited Create(TheOwner);
 
